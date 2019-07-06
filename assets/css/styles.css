@@ -1,0 +1,9 @@
+:root {
+    --color-one: #ffffff;
+    --color-two: #fff333;
+    --color-three: #fff444;
+}
+
+p {
+    color: var(--color-three);
+}
