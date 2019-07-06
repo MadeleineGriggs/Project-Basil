@@ -8,7 +8,32 @@
     messagingSenderId: "107913695337",
     appId: "1:107913695337:web:323e2e145c63685e"
   };
+
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
-  
+
   var database = firebase.database();
+
+
+
+
+//   Food2Fork API Key: 6c25094e2b7ba0e57995415ce749ed94
+
+var searchTerm = "chicken"
+var queryURL = "https://www.food2fork.com/api/search?key=6c25094e2b7ba0e57995415ce749ed94&q=" + searchTerm;
+
+$.ajax({
+    url: queryURL,
+    method: "GET"
+  })
+  .then(function(response) {
+      var results = response;
+      console.log(JSON.stringify(results))
+  })
+
+  $(document).ready(function() {
+    var name = "Let's see if that works.";
+    database.ref().push({
+        username: name,
+    });
+  })
