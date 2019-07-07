@@ -46,28 +46,55 @@ function displayRecipes(response) {
   newRecipes = results.recipes;
   for (i = 0; i < recipeCount; i ++) {
     newDiv = $("<div>")
-    .attr("id", newRecipes[i].recipe_id);
+    .attr("id", newRecipes[i].recipe_id)
+    .addClass("card")
+    .css("width", "18rem")
     newP = newRecipes[i].title;
     newImage = $("<img>")
-    .attr("src", newRecipes[i].image_url);
-    newBreak = $("<br>");
+    .attr("src", newRecipes[i].image_url)
+    .addClass("card-img-top")
+    .attr("alt", "an image of the cooked recipe");
+    divBody = $("<div>")
+    .addClass("card-body");
+    cardTitle = $("<h5>")
+    .addClass("card-title")
+    .text(newRecipes[i].title);
+    cardText = $("<p>")
+    .addClass("card-text")
+    .text("testing card text");
     newButton = $("<button>")
     .attr("id", newRecipes[i].recipe_id)
+    .attr("recipe-name", newRecipes[i].title)
     .addClass("recipe-btn btn btn-primary")
     .attr("data-toggle", "modal")
     .attr("data-target", "#recipeModal")
     .text("Click here to see the recipe");
-    newDiv.append(newP, newBreak, newImage, newButton);
-    
+    newDiv.append(newImage, divBody);
+    divBody.append(cardTitle, cardText, newButton)
     $("#recipe-search-wrapper").append(newDiv);
   }
 }
+
+
+{/* <div class="card" style="width: 18rem;">
+  <img src="..." class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div> */}
+
+
+
 
 // Retrieves the ingredient information of a single recipe.
 function retrieveSingleRecipe() {
   event.preventDefault();
   recipeID = $(this).attr("id");
-
+  recipeTitle = $(this).attr("recipe-name");
+  $(".modal-title").empty();
+  $(".modal-title").text(recipeTitle);
   queryURL = "https://www.food2fork.com/api/get?key=" + key + "&rId=" + recipeID;
 
   $.ajax({
@@ -80,12 +107,15 @@ function retrieveSingleRecipe() {
   })
 }
 
-
+// Displays a single recipe's ingredients in a modal window.
 function displaySingleRecipe(response) {
   var results = JSON.parse(response);
+  // recipeIngredients is an array. We will need to send this information to Edamam for nutritional information.
   recipeIngredients = results.recipe.ingredients;
+  $(".modal-body").empty();
   for( i = 0 ; i < recipeIngredients.length; i++) {
-    console.log("Ingredient: " + recipeIngredients[i]);
+    newP = $("<p>").text(recipeIngredients[i])
+    $(".modal-body").append(newP);
   }
   // console.log("Recipe Ingredients: " + ingredientsArray);
 }
