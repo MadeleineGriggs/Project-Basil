@@ -19,7 +19,7 @@
 
 //   Food2Fork API Key (Main): 6c25094e2b7ba0e57995415ce749ed94
 //   Second Test API Key: b11d8301b0ecfac319569f557e520e48
-var key = "b11d8301b0ecfac319569f557e520e48"
+var key = "6c25094e2b7ba0e57995415ce749ed94"
 
 
 // Food2Fork Search API Call
@@ -38,6 +38,7 @@ $("#recipe-search-btn").on("click", function() {
       })
 })
 
+// Displays the recipes the user is searching for.
 function displayRecipes(response) {
   var results = JSON.parse(response);
 
@@ -52,7 +53,9 @@ function displayRecipes(response) {
     newBreak = $("<br>");
     newButton = $("<button>")
     .attr("id", newRecipes[i].recipe_id)
-    .addClass("recipe-btn")
+    .addClass("recipe-btn btn btn-primary")
+    .attr("data-toggle", "modal")
+    .attr("data-target", "#recipeModal")
     .text("Click here to see the recipe");
     newDiv.append(newP, newBreak, newImage, newButton);
     
@@ -60,6 +63,7 @@ function displayRecipes(response) {
   }
 }
 
+// Retrieves the ingredient information of a single recipe.
 function retrieveSingleRecipe() {
   event.preventDefault();
   recipeID = $(this).attr("id");
@@ -76,9 +80,14 @@ function retrieveSingleRecipe() {
   })
 }
 
+
 function displaySingleRecipe(response) {
   var results = JSON.parse(response);
-  console.log("The response result for single recipe is: " + results);
+  recipeIngredients = results.recipe.ingredients;
+  for( i = 0 ; i < recipeIngredients.length; i++) {
+    console.log("Ingredient: " + recipeIngredients[i]);
+  }
+  // console.log("Recipe Ingredients: " + ingredientsArray);
 }
 
 
