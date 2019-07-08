@@ -1,8 +1,90 @@
 :root {
-    --color-one: #ffffff;
-    --color-two: #fff333;
-    --color-three: #fff444;
+    --charcoal: #0B0B0C;
+    --dark-taupe: #78736F;
+    --cream: #EBECE4;
+    --dark-cream: #cccec3;
+    --olive: #92a361;
+    --olive-light: #b7ce73;
+    --olive-dark: #7b8a50;
+    --title-font: 'Playfair Display', serif;
+    --body-font: 'Montserrat', sans-serif;
 }
+
+/* Custom styles for the landing area. */
+
+.landing-container {
+    width: 100vw;
+    height: 100vh;
+    background-image: url("../images/flatlay_baking.jpg");
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.landing-card {
+    background-color: var(--cream);
+    border: 6px double var(--dark-cream);
+    padding: 2rem 5rem;
+    border-radius: 3px;
+}
+
+.landing-container h1 {
+    font-family: var(--title-font);
+    text-align: center;
+    font-size: 5rem;
+    color: var(--olive-dark);
+    margin-bottom: 2rem;
+}
+
+.landing-container h2 {
+    font-family: var(--title-font);
+    text-align: center;
+    font-size: 2rem;
+    color: var(--olive);
+    margin-bottom: 3rem;
+}
+
+
+.landing-container label {
+    font-family: var(--body-font);
+    color: var(--charcoal);
+    font-size: 1.15rem;
+    margin-bottom: 1rem;
+}
+
+.landing-card input[type=text] {
+    width: 20rem;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+    padding: 10px 15px;
+    font-family: var(--body-font);
+    border: 1px solid var(--dark-cream);
+    color: var(--dark-taupe);
+    outline-color: var(--olive-light);
+    border-radius: 3px;
+}
+
+.landing-card button {
+    width: 20rem;
+    margin: 0 auto;
+    margin-bottom: 2rem;
+    background-color: var(--dark-taupe);
+    border: 1px solid var(--dark-taupe);
+    color: var(--cream);
+    font-family: var(--body-font);
+    padding: 5px 10px;
+    font-size: 1.25rem;
+    border-radius: 3px;
+}
+
+#new-user-container, #existing-user-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
 
 #recipe-search-wrapper {
     display: flex;
