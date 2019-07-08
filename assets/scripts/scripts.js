@@ -75,19 +75,6 @@ function displayRecipes(response) {
   }
 }
 
-
-{/* <div class="card" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
-</div> */}
-
-
-
-
 // Retrieves the ingredient information of a single recipe.
 function retrieveSingleRecipe() {
   event.preventDefault();
@@ -123,6 +110,10 @@ function displaySingleRecipe(response) {
 
 }
 
+function hideArea() {
+  event.preventDefault();
+ $(".landing-container").addClass("d-none");
+}
 
   // Testing firebase
   $(document).ready(function() {
@@ -132,7 +123,9 @@ function displaySingleRecipe(response) {
     });
   })
 
-  $(document).on("click", ".recipe-btn", retrieveSingleRecipe)
+  $(document).on("click", ".recipe-btn", retrieveSingleRecipe);
+  $(document).on("click", "#new-user-btn", hideArea);
+  $(document).on("click", "#existing-user-btn", hideArea);
 
 
 /* ---------------Edamam--------------- */

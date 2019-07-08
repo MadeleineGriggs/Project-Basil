@@ -22,39 +22,53 @@
             <label for="new-user-input">
             Create a New User
             </label>
-            <input type="text" id="new-user-input" placeholder="Your username here" />
+            <input type="text" id="new-user-input" placeholder="Username..." />
             <button type="button" id="new-user-btn">Create New User</button>
         </div>
-            
+            <div class="horizontal-line"></div>
             <div id="existing-user-container">
                 <label for="existing-user-input">
                 Go to an Existing User
                 </label>
-            <input type="text" id="existing-user-input" placeholder="Your username here" />
+            <input type="text" id="existing-user-input" placeholder="Existing User..." />
                 <button type="button" id="existing-user-btn">Display Existing Recipes</button>
             </div>
     </div>
   </div>
 
 
+<div class="recipe-area-container">
+    <h1>Welcome, <span id="users-name">User</span>.</h1>
+    <label for="recipe-search">
+    Discover New Recipes
+    </label>
+        <br>
+    <input type="text" id="recipe-search" placeholder="Search for your recipe">
+    <button type="button" id="recipe-search-btn">Search</button>
 
-<label for="recipe-search">
-Recipe Search: 
-<input type="text" id="recipe-search" placeholder="Search for your recipe">
-</label>
-<button type="button" id="recipe-search-btn">Search for Recipes!</button>
-
-<div id="recipe-search-display">
-<h2>Searched Recipes</h2>
-    <div id="recipe-search-wrapper">
-        
+    <div class="img-btn-container">
+        <div class="img-button" id="fav-recipe-img-button">
+            <p>Your Favourited Recipes</p>
+        </div>
+        <div class="img-button" id="top-recipe-img-button">
+                <p>Top Recipes This Week</p>
+            </div>
+        <div class="img-button" id="recipe-img-button">
+                <p>Another Button to Click</p>
+            </div>
     </div>
-</div>
+    <div id="recipe-search-display">
+    <h2>Searched Recipes</h2>
+        <div id="recipe-search-wrapper">
+            
+        </div>
+    </div>
 
-<div id="user-recipe-favs-display">
-    <h2>Your Fav Recipes</h2>
-    <div id="user-fav-wrapper">
+    <div id="user-recipe-favs-display">
+        <h2>Your Fav Recipes</h2>
+        <div id="user-fav-wrapper">
 
+        </div>
     </div>
 </div>
 
