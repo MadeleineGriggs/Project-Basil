@@ -19,7 +19,7 @@
 
 //   Food2Fork API Key (Main): 6c25094e2b7ba0e57995415ce749ed94
 //   Second Test API Key: b11d8301b0ecfac319569f557e520e48
-var key = "6c25094e2b7ba0e57995415ce749ed94"
+var key = "49d0a6d68d5cc628b7d10db08a79038e"
 
 
 // Food2Fork Search API Call
@@ -117,7 +117,10 @@ function displaySingleRecipe(response) {
     newP = $("<p>").text(recipeIngredients[i])
     $(".modal-body").append(newP);
   }
-  // console.log("Recipe Ingredients: " + ingredientsArray);
+
+//Added call to display calorie data   
+ displayCaloriesJSON(recipeIngredients, results.recipe.title);
+
 }
 
 
@@ -130,3 +133,36 @@ function displaySingleRecipe(response) {
   })
 
   $(document).on("click", ".recipe-btn", retrieveSingleRecipe)
+
+
+/* ---------------Edamam--------------- */
+
+
+//Retrieve Nutrition Data for single ingredient
+ function displayCaloriesJSON (recipeIngredients, title){
+  
+  var data = {
+    title: title,
+    ingr: recipeIngredients
+  } 
+
+var  url = 'https://api.edamam.com/api/nutrition-details?app_id=b134a78c&app_key=ef4e767c7f1d336096dc31d4396b7964'
+   $.ajax({
+      'type': 'POST',
+      'url': url,
+      'contentType': 'application/json',
+      'data': JSON.stringify(data),
+      'dataType': 'json',
+      'success': function(data) {
+        // console.log(data.calories);
+        $(".modal-body").append("<p> Calories: "+data.calories+"</p>");   
+    },
+    'error': function(data) {
+        successmessage = 'Error';
+        $("label#successmessage").text(successmessage);
+    },
+  });
+
+}
+
+
