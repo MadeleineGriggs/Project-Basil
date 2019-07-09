@@ -13,7 +13,6 @@
   firebase.initializeApp(firebaseConfig);
 
   var database = firebase.database();
-
   var currentUser = null;
   var dbState;
   var tempUserName;
