@@ -13,19 +13,44 @@
   firebase.initializeApp(firebaseConfig);
 
   var database = firebase.database();
+  var currentUser = null;
+  var dbState;
+  var tempUserName;
 
+  database.ref().once("value", function(snapshot){
+    dbState = snapshot;
+});
 
+$("#new-user-btn").on("click", function() {
+  tempUserName = $("#new-user-input").val().toUpperCase().trim();
+  if (!dbState.child("/" + tempUserName).exists()) {
+    hideArea();
+  currentUser = database.ref("/" +tempUserName );
+  currentUser.set({
+      username : $("#new-user-input").val().trim()
+  });
+  } else alert('Username Already Exists');
+});
 
+$("#existing-user-btn").on("click", function() {
+  tempUserName = $("#existing-user-input").val().toUpperCase().trim();
+  if (dbState.child("/" + tempUserName).exists()) {
+    hideArea()
+      currentUser = database.ref("/" + tempUserName);
+      console.log('you are "logged in"');
+  }
+});
 
 //   Food2Fork API Key (Main): 6c25094e2b7ba0e57995415ce749ed94
 //   Second Test API Key: b11d8301b0ecfac319569f557e520e48
-var key = "49d0a6d68d5cc628b7d10db08a79038e"
+var key = "6c25094e2b7ba0e57995415ce749ed94"
 
 
 // Food2Fork Search API Call
 
 $("#recipe-search-btn").on("click", function() {
     event.preventDefault();
+
     searchTerm = $("#recipe-search").val();
     var queryURL = "https://www.food2fork.com/api/search?key=" + key + "&q=" + searchTerm;
 
@@ -36,32 +61,39 @@ $("#recipe-search-btn").on("click", function() {
       .then(function(response) {
         displayRecipes(response);
       })
+
 })
 
 // Displays the recipes the user is searching for.
 function displayRecipes(response) {
   var results = JSON.parse(response);
 
+  $(".recipe-search-container").removeClass("hidden");
   recipeCount = results.count;
   newRecipes = results.recipes;
   for (i = 0; i < recipeCount; i ++) {
     newDiv = $("<div>")
     .attr("id", newRecipes[i].recipe_id)
     .addClass("card")
-    .css("width", "18rem")
     newP = newRecipes[i].title;
+    newSourceURL = newRecipes[i].source_url;
     newImage = $("<img>")
     .attr("src", newRecipes[i].image_url)
     .addClass("card-img-top")
-    .attr("alt", "an image of the cooked recipe");
+    .attr("alt", "an image of the cooked recipe")
     divBody = $("<div>")
     .addClass("card-body");
     cardTitle = $("<h5>")
     .addClass("card-title")
     .text(newRecipes[i].title);
+    sourceLink = $("<a>")
+    .attr("href", newSourceURL)
+    .attr("target", "_blank")
+    .text(newSourceURL);
     cardText = $("<p>")
     .addClass("card-text")
-    .text("testing card text");
+    .prepend("Source URL: ")
+    .append(sourceLink);
     newButton = $("<button>")
     .attr("id", newRecipes[i].recipe_id)
     .attr("recipe-name", newRecipes[i].title)
@@ -75,26 +107,13 @@ function displayRecipes(response) {
   }
 }
 
-
-{/* <div class="card" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
-</div> */}
-
-
-
-
 // Retrieves the ingredient information of a single recipe.
 function retrieveSingleRecipe() {
   event.preventDefault();
   recipeID = $(this).attr("id");
   recipeTitle = $(this).attr("recipe-name");
-  $(".modal-title").empty();
-  $(".modal-title").text(recipeTitle);
+  $("#ingredient-modal-title").empty();
+  $("#ingredient-modal-title").text(recipeTitle);
   queryURL = "https://www.food2fork.com/api/get?key=" + key + "&rId=" + recipeID;
 
   $.ajax({
@@ -112,10 +131,10 @@ function displaySingleRecipe(response) {
   var results = JSON.parse(response);
   // recipeIngredients is an array. We will need to send this information to Edamam for nutritional information.
   recipeIngredients = results.recipe.ingredients;
-  $(".modal-body").empty();
+  $("#ingredient-modal-body").empty();
   for( i = 0 ; i < recipeIngredients.length; i++) {
     newP = $("<p>").text(recipeIngredients[i])
-    $(".modal-body").append(newP);
+    $("#ingredient-modal-body").append(newP);
   }
 
 //Added call to display calorie data   
@@ -123,16 +142,40 @@ function displaySingleRecipe(response) {
 
 }
 
+function hideArea() {
+  event.preventDefault();
+ $(".landing-container").addClass("d-none");
+ $(".recipe-area-container").removeClass("hidden");
+}
+
+
+
+
 
   // Testing firebase
   $(document).ready(function() {
-    var name = "Let's see if that works.";
+
+    // this function allows the page to smoothly scroll to whichever
+// id or class you call it from.
+$.fn.scrollView = function () {
+  return this.each(function () {
+      $('html, body').animate({
+          scrollTop: $(this).offset().top
+      }, 1000);
+  });
+}
+
+$("#recipe-search-btn").on("click", function() {
+  $(".recipe-search-container").scrollView();
+})
     database.ref().push({
         username: name,
     });
   })
 
-  $(document).on("click", ".recipe-btn", retrieveSingleRecipe)
+  $(document).on("click", ".recipe-btn", retrieveSingleRecipe);
+  // $(document).on("click", "#new-user-btn", hideArea);
+  // $(document).on("click", "#existing-user-btn", hideArea);
 
 
 /* ---------------Edamam--------------- */
@@ -154,15 +197,26 @@ var  url = 'https://api.edamam.com/api/nutrition-details?app_id=b134a78c&app_key
       'data': JSON.stringify(data),
       'dataType': 'json',
       'success': function(data) {
+<<<<<<< HEAD
         console.log(JSON.stringify(data));
         $(".modal-body").append("<p> Calories: "+data.calories+"</p>");   
+=======
+        console.log(data);
+        var calDisplay = "<p> Calories: " + data.calories + "</p>";
+        var fatDisplay = "<p> Total Fat: " + Math.round(data.totalNutrients.FAT.quantity) + " grams</p>";
+        var fatSatDisplay = "<p> Total Saturated Fat: " + Math.round(data.totalNutrients.FASAT.quantity) + " grams</p>";
+        var fatPolyDisplay = "<p> Total Polyunsaturated Fat: " + Math.round(data.totalNutrients.FAPU.quantity) + " grams</p>";
+        var fatMonoDisplay = "<p> Total Monounsaturated Fat: " + Math.round(data.totalNutrients.FAMS.quantity) + " grams</p>";
+        var fatTrnDisplay = "<p> Total Trans Fat: " + Math.round(data.totalNutrients.FATRN.quantity) + " grams</p>";
+        var carbsDisplay = "<p> Total Carbs: " + Math.round(data.totalNutrients.CHOCDF.quantity) + " grams</p>";
+        $("#nutrition-modal-body").append(calDisplay, fatDisplay, fatSatDisplay, fatPolyDisplay, fatMonoDisplay, fatTrnDisplay, carbsDisplay);   
+>>>>>>> master
     },
     'error': function(data) {
         successmessage = 'Error';
         $("label#successmessage").text(successmessage);
     },
   });
-
 }
 
 

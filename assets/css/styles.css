@@ -1,16 +1,353 @@
 :root {
-    --color-one: #ffffff;
-    --color-two: #fff333;
-    --color-three: #fff444;
+    --charcoal: #0B0B0C;
+    --dark-taupe: #78736F;
+    --cream: #EBECE4;
+    --dark-cream: #cccec3;
+    --olive: #92a361;
+    --olive-light: #b7ce73;
+    --olive-dark: #7b8a50;
+    --title-font: 'Playfair Display', serif;
+    --body-font: 'Montserrat', sans-serif;
 }
+
+body {
+    background-image: url(../images/funky-lines.png);
+    background-repeat: repeat;
+    background-color: var(--dark-taupe);
+}
+
+.hidden {
+    display: none;
+}
+/* Custom styles for the landing area. */
+
+.landing-container {
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-image: url("../images/flatlay_baking.jpg");
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.landing-card {
+    background-color: var(--cream);
+    border: 6px double var(--dark-cream);
+    padding: 2rem 5rem;
+    border-radius: 3px;
+}
+
+.landing-container h1 {
+    font-family: var(--title-font);
+    text-align: center;
+    font-size: 5rem;
+    color: var(--olive-dark);
+    margin-bottom: 1.5rem;
+}
+
+.landing-container h2 {
+    font-family: var(--title-font);
+    text-align: center;
+    font-size: 2rem;
+    color: var(--olive);
+    margin-bottom: 2rem;
+}
+
+
+.landing-container label {
+    font-family: var(--body-font);
+    color: var(--charcoal);
+    font-size: 1.15rem;
+    margin-bottom: 1rem;
+}
+
+.landing-card input[type=text] {
+    width: 20rem;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+    padding: 10px 15px;
+    font-family: var(--body-font);
+    border: 1px solid var(--dark-cream);
+    color: var(--dark-taupe);
+    outline-color: var(--olive-light);
+    border-radius: 3px;
+}
+
+.landing-card button {
+    width: 20rem;
+    margin: 0 auto;
+    margin-bottom: 2rem;
+    background-color: var(--dark-taupe);
+    border: 1px solid var(--dark-taupe);
+    color: var(--cream);
+    font-family: var(--title-font);
+    padding: 5px 10px;
+    font-size: 1.5rem;
+    border-radius: 3px;
+}
+
+#new-user-container, #existing-user-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.horizontal-line {
+    width: 25rem;
+    height: 2px;
+    background-color: var(--dark-cream);
+    margin: 0 auto;
+    margin-bottom: 1rem;
+}
+
+/* Styling related to the recipe-area-container */
+
+
+.recipe-area-container {
+    padding-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.recipe-area-container h1 {
+    font-family: var(--title-font);
+    font-size: 5rem;
+    color: var(--cream);
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.recipe-area-container label {
+    font-family: var(--title-font);
+    color: var(--cream);
+    font-size: 2rem;
+    text-align: center;
+}
+
+.recipe-area-container input[type=text] {
+    width: 20rem;
+    margin: 0 auto;
+    padding: 10px 15px;
+    font-family: var(--body-font);
+    border: 1px solid var(--dark-cream);
+    color: var(--dark-taupe);
+    outline-color: var(--olive-light);
+    border-radius: 3px;
+    margin-bottom: 1rem;
+}
+
+.img-btn-container {
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+}
+
+.img-button {
+    width: 15rem;
+    height: 15rem;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    border-radius: 3px;
+    border: 3px double var(--dark-cream);
+}
+
+.img-button p {
+    color: var(--cream);
+    font-family: var(--title-font);
+    font-size: 2.5rem;
+    text-align: center;
+    text-shadow: -1px -1px 0 rgba(36, 36, 36, 0.25), 1px -1px 0 rgba(36, 36, 36, 0.25), -1px 1px 0 rgba(36, 36, 36, 0.25), 1px 1px 0 rgba(36, 36, 36, 0.25);
+}
+
+.img-button p:hover {
+    color: var(--dark-cream);
+}
+a:hover {
+    text-decoration: none;
+}
+
+#fav-recipe-img-button {
+    background-image: url(../images/cookie_and_coffee.jpg);
+    background-size: auto 150%;
+    background-position: center;
+}
+
+#top-recipe-img-button {
+    background-image: url(../images/sandwich.jpg);
+    background-size: auto 150%;
+    background-position: center;
+}
+
+#recipe-img-button {
+    background-image: url(../images/cookie_and_coffee.jpg);
+    background-size: auto 150%;
+    background-position: center;
+}
+
+
+.recipe-area-container button {
+    width: 20rem;
+    margin: 0 auto;
+    margin-bottom: 2rem;
+    background-color: var(--olive);
+    border: 1px solid var(--dark-taupe);
+    color: var(--cream);
+    font-family: var(--title-font);
+    padding: 5px 10px;
+    font-size: 1.5rem;
+    border-radius: 3px;
+    outline-color: var(--cream);
+}
+
+/* Styles related to the recipe search area */
 
 #recipe-search-wrapper {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    width: 90vw;
+    margin: 0 auto;
+}
+
+#recipe-search-display {
+    margin-top: 5rem;
+}
+
+#recipe-search-display h2 {
+    font-family: var(--title-font);
+    color: var(--cream);
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 4rem;
 }
 
 .card {
-    margin-bottom: 20px;
+    margin-bottom: 3rem;
+    margin-right: 1rem;
+    border-radius: 3px;
+    padding: 15px;
+    background-color: var(--cream);
+}
+
+.card a {
+    color: var(--olive-light);
+    font-size: 0.75rem;
+}
+
+.card a:hover {
+    color: var(--olive);
+}
+
+.card button {
+    width: 23rem;
+    padding: 5px 30px;
+    margin-top: 1.5rem;
+}
+.card button:focus {
+    outline-color: var(--olive-light);
+}
+
+.card button:hover {
+    background-color: var(--olive-dark);
+}
+
+.card-text {
+    font-family: var(--body-font);
+    color: var(--dark-taupe);
+}
+
+.card-title {
+    font-family: var(--title-font);
+    color: var(--charcoal);
+    font-size: 1.5rem;
+}
+.card img {
+    border-radius: 3px;
+    max-width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: cover;
+}
+
+/* Styles related to the ingredient modal */
+
+.modal-content {
+    background-color: var(--cream);
+}
+
+.modal-title {
+    font-family: var(--title-font);
+    color: var(--olive-dark);
+    font-size: 2rem;
+}
+
+.modal-body {
+    font-family: var(--body-font);
+    color: var(--charcoal);
+    padding: 3rem;
+}
+
+.modal-footer .btn-secondary {
+    font-family: var(--title-font);
+    font-size: 1.15rem;
+    background-color: var(--dark-taupe);
+    color: var(--cream);
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-right: 20px;
+    border-radius: 3px;
+}
+
+.modal-footer .btn-primary {
+    font-family: var(--title-font);
+    font-size: 1.15rem;
+    background-color: var(--olive);
+    color: var(--cream);
+    padding-left: 20px;
+    padding-right: 20px;
+    border: 0px solid white;
+    border-radius: 3px;
+}
+
+
+.modal-footer .btn-primary:focus {
+    outline: 3px solid vaR(--olive-light);
+    border-radius: 3px;
+    outline: 0;
+    box-shadow: none;
+}
+
+.modal-footer .btn-primary:active {
+    background-color: var(--olive-dark) !important;
+}
+
+.modal-dialog {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 8rem;
+    width: 100%;
+    max-width: 80vw;
+}
+
+.ingredient-modal-content {
+width: 40rem;
+}
+
+.nutrition-modal-content {
+    margin-left: 3rem;
+    width: 40rem;
 }
