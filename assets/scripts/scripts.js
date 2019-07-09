@@ -154,7 +154,7 @@ var  url = 'https://api.edamam.com/api/nutrition-details?app_id=b134a78c&app_key
       'data': JSON.stringify(data),
       'dataType': 'json',
       'success': function(data) {
-        // console.log(data.calories);
+        console.log(JSON.stringify(data));
         $(".modal-body").append("<p> Calories: "+data.calories+"</p>");   
     },
     'error': function(data) {
