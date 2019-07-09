@@ -14,8 +14,31 @@
 
   var database = firebase.database();
 
+  var currentUser = null;
+  var dbState;
+  var tempUserName;
 
+  database.ref().once("value", function(snapshot){
+    dbState = snapshot;
+});
 
+$("#new-user-btn").on("click", function() {
+  tempUserName = $("#new-user-input").val().toUpperCase().trim();
+  if (!dbState.child("/" + tempUserName).exists()) {
+  currentUser = database.ref("/" +tempUserName );
+  currentUser.set({
+      username : $("#new-user-input").val().trim()
+  });
+  } else alert('Username Already Exists');
+});
+
+$("#existing-user-btn").on("click", function() {
+  tempUserName = $("#existing-user-input").val().toUpperCase().trim();
+  if (dbState.child("/" + tempUserName).exists()) {
+      currentUser = database.ref("/" + tempUserName);
+      console.log('you are "logged in"');
+  }
+});
 
 //   Food2Fork API Key (Main): 6c25094e2b7ba0e57995415ce749ed94
 //   Second Test API Key: b11d8301b0ecfac319569f557e520e48
