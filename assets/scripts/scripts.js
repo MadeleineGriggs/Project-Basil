@@ -13,7 +13,6 @@
   firebase.initializeApp(firebaseConfig);
 
   var database = firebase.database();
-
   var currentUser = null;
   var dbState;
   var tempUserName;
@@ -25,6 +24,7 @@
 $("#new-user-btn").on("click", function() {
   tempUserName = $("#new-user-input").val().toUpperCase().trim();
   if (!dbState.child("/" + tempUserName).exists()) {
+    hideArea();
   currentUser = database.ref("/" +tempUserName );
   currentUser.set({
       username : $("#new-user-input").val().trim()
@@ -35,6 +35,7 @@ $("#new-user-btn").on("click", function() {
 $("#existing-user-btn").on("click", function() {
   tempUserName = $("#existing-user-input").val().toUpperCase().trim();
   if (dbState.child("/" + tempUserName).exists()) {
+    hideArea()
       currentUser = database.ref("/" + tempUserName);
       console.log('you are "logged in"');
   }
@@ -173,8 +174,8 @@ $("#recipe-search-btn").on("click", function() {
   })
 
   $(document).on("click", ".recipe-btn", retrieveSingleRecipe);
-  $(document).on("click", "#new-user-btn", hideArea);
-  $(document).on("click", "#existing-user-btn", hideArea);
+  // $(document).on("click", "#new-user-btn", hideArea);
+  // $(document).on("click", "#existing-user-btn", hideArea);
 
 
 /* ---------------Edamam--------------- */
