@@ -37,7 +37,7 @@
   </div>
 
 
-<div class="recipe-area-container">
+<div class="recipe-area-container hidden">
     <h1>Welcome, <span id="users-name">User</span>.</h1>
     <label for="recipe-search">
     Discover New Recipes
@@ -46,28 +46,40 @@
     <input type="text" id="recipe-search" placeholder="Search for your recipe">
     <button type="button" id="recipe-search-btn">Search</button>
 
+
     <div class="img-btn-container">
-        <div class="img-button" id="fav-recipe-img-button">
-            <p>Your Favourited Recipes</p>
-        </div>
-        <div class="img-button" id="top-recipe-img-button">
-                <p>Top Recipes This Week</p>
+        <a href="#user-recipe-favs-display">
+            <div class="img-button" id="fav-recipe-img-button">
+                <p>Your Favourited Recipes</p>
             </div>
-        <div class="img-button" id="recipe-img-button">
-                <p>Another Button to Click</p>
-            </div>
+        </a>
+        <a href="#">
+            <div class="img-button" id="top-recipe-img-button">
+                    <p>Top Recipes This Week</p>
+                </div>
+        </a>
+        <a href="#">
+            <div class="img-button" id="recipe-img-button">
+                    <p>Another Button to Click</p>
+                </div>
+        </a>
     </div>
-    <div id="recipe-search-display">
-    <h2>Searched Recipes</h2>
-        <div id="recipe-search-wrapper">
-            
+
+    <div class="recipe-search-container hidden">
+        <div id="recipe-search-display">
+        <h2>Searched Recipes</h2>
+            <div id="recipe-search-wrapper">
+                
+            </div>
         </div>
     </div>
 
-    <div id="user-recipe-favs-display">
-        <h2>Your Fav Recipes</h2>
-        <div id="user-fav-wrapper">
+    <div class="user-recipe-fav-container hidden">
+        <div id="user-recipe-favs-display">
+            <h2>Your Fav Recipes</h2>
+            <div id="user-fav-wrapper">
 
+            </div>
         </div>
     </div>
 </div>
@@ -76,21 +88,34 @@
 <!-- Modal which displays recipe ingredient information -->
 <div class="modal fade" id="recipeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
+      <div class="modal-content ingredient-modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <h5 class="modal-title" id="ingredient-modal-title">Ingredient Modal</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" id="ingredient-modal-body">
           ...
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-primary">Save Recipe</button>
         </div>
       </div>
+
+      <div class="modal-content nutrition-modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="nutrition-modal">Nutritional Information</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body" id="nutrition-modal-body">
+            </div>
+            <div class="modal-footer">
+            </div>
+          </div>
     </div>
   </div>
 
