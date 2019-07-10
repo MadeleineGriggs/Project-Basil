@@ -43,7 +43,7 @@ $("#existing-user-btn").on("click", function() {
 
 //   Food2Fork API Key (Main): 6c25094e2b7ba0e57995415ce749ed94
 //   Second Test API Key: b11d8301b0ecfac319569f557e520e48
-var key = "6c25094e2b7ba0e57995415ce749ed94"
+var key = "b11d8301b0ecfac319569f557e520e48"
 
 
 // Food2Fork Search API Call
@@ -67,6 +67,7 @@ $("#recipe-search-btn").on("click", function() {
 // Displays the recipes the user is searching for.
 function displayRecipes(response) {
   var results = JSON.parse(response);
+  console.log(results);
 
   $(".recipe-search-container").removeClass("hidden");
   recipeCount = results.count;
