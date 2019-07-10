@@ -12,7 +12,7 @@
 </head>
 <body>
 
-  <div class="landing-container">
+  <!-- <div class="landing-container">
 
     <div class="landing-card">
 
@@ -34,10 +34,32 @@
                 <button type="button" id="existing-user-btn">Display Existing Recipes</button>
             </div>
     </div>
+  </div> -->
+  <div class="container-fluid" id="custom-recipe-container">
+    <form id="recipe-form-group">
+        <div class="form-group form-group-1">
+            <label for="recipe-form-item-1">Title</label>
+            <input type="text" class="form-control" id="recipe-form-item-title" placeholder="Recipe Title">
+          </div>
+      <div class="form-group form-group-1">
+        <label for="recipe-form-item-1">Ingredient</label>
+        <input type="text" class="form-control" id="recipe-form-item-1" placeholder="1 cup flour">
+      </div>
+      <div class="form-group form-group-2">
+        <label for="recipe-form-item-2">Ingredient</label>
+        <input type="text" class="form-control" id="recipe-form-item-2" placeholder="2 cups sugar">
+        <button type="button" class="close form-close" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+    </form>
+    <button type="button" class="btn btn-primary" id="add-recipe-item-btn">Add Another Item</button>
+    <button type="button" class="btn btn-primary">Save Recipe</button>
   </div>
 
 
-<div class="recipe-area-container hidden">
+<div class="recipe-area-container d-none">
     <h1>Welcome, <span id="users-name">User</span>.</h1>
     <label for="recipe-search">
     Discover New Recipes

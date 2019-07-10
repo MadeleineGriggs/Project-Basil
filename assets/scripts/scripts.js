@@ -22,6 +22,7 @@
     dbState = snapshot;
 });
 
+
 $("#new-user-btn").on("click", function() {
   tempUserName = $("#new-user-input").val().toUpperCase().trim();
   if (!dbState.child("/" + tempUserName).exists()) {
@@ -33,6 +34,8 @@ $("#new-user-btn").on("click", function() {
   });
   } else alert('Username Already Exists');
 });
+
+
 
 $("#existing-user-btn").on("click", function() {
   tempUserName = $("#existing-user-input").val().toUpperCase().trim();
@@ -54,16 +57,10 @@ currentUser.on("value", function(snapshot){
 
 //   Food2Fork API Key (Main): 6c25094e2b7ba0e57995415ce749ed94
 //   Second Test API Key: b11d8301b0ecfac319569f557e520e48
-<<<<<<< HEAD
-var key = "b11d8301b0ecfac319569f557e520e48"
-
-=======
 var key = "4247b53c340768859ea9ae29a96ea93f";
 // 4247b53c340768859ea9ae29a96ea93f third key
->>>>>>> 5da02b8fe974ca5b591f425201b8a3cd78444931
 
 // Food2Fork Search API Call
-
 $("#recipe-search-btn").on("click", function() {
     event.preventDefault();
 
@@ -143,6 +140,40 @@ function retrieveSingleRecipe() {
   });
 }
 
+// Adds another ingredient field to the custom recipe maker form
+
+var recipeItemCounter = 2;
+
+$("#add-recipe-item-btn").on("click", function() {
+  var recipeForm = $("#recipe-form-group");
+  recipeItemCounter++;
+  var newFormGroup = $("<div>")
+    .addClass("form-group form-group-" + recipeItemCounter);
+  var newLabel = $("<label>")
+    .attr("for", "recipe-form-item-" + recipeItemCounter)
+    .text("Ingredient");
+  var newInput = $("<input>")
+    .attr("type", "text")
+    .addClass("form-control")
+    .attr("id", "recipe-form-item-" + recipeItemCounter)
+    .attr("placeholder", "a fresh new ingredient");
+    var newDismiss = $("<button>")
+    .attr("type", "button")
+    .addClass("close form-close")
+    .attr("aria-label", "close");
+    var newBtnSpan = $("<span>")
+    .attr("aria-hidden", "true")
+    .html("&times;");
+    newDismiss.append(newBtnSpan);
+    newFormGroup.append(newLabel, newInput, newDismiss);
+    recipeForm.append(newFormGroup); 
+})
+
+function dismissIngredient() {
+  $(this).parent().remove();
+  recipeItemCounter--;
+}
+
 class recipeConstructor {
   constructor(name, id, url, image, count) {
     this.recipeName = name;
@@ -216,6 +247,7 @@ $("#recipe-search-btn").on("click", function() {
   });
 
   $(document).on("click", ".recipe-btn", retrieveSingleRecipe);
+  $(document).on("click", ".form-close", dismissIngredient);
   // $(document).on("click", "#new-user-btn", hideArea);
   // $(document).on("click", "#existing-user-btn", hideArea);
 

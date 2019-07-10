@@ -351,3 +351,21 @@ width: 40rem;
     margin-left: 3rem;
     width: 40rem;
 }
+
+/* Styling related to the custom user recipe area. */
+
+#custom-recipe-container {
+    width: 80vw;
+    margin-top: 3rem;
+}
+
+#custom-recipe-container .form-control {
+    width: 90%;
+}
+
+#custom-recipe-container .close {
+    background-color: var(--cream);
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+}
