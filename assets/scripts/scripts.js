@@ -140,22 +140,19 @@ function retrieveSingleRecipe() {
   });
 }
 
-// Adds another ingredient field to the custom recipe maker form
-
 var recipeItemCounter = 2;
-
+// Adds another ingredient field to the custom recipe maker form
 $("#add-recipe-item-btn").on("click", function() {
   var recipeForm = $("#recipe-form-group");
   recipeItemCounter++;
   var newFormGroup = $("<div>")
-    .addClass("form-group form-group-" + recipeItemCounter);
+    .addClass("form-group form-group-item");
   var newLabel = $("<label>")
-    .attr("for", "recipe-form-item-" + recipeItemCounter)
+    .attr("for", "recipe-form-item")
     .text("Ingredient");
   var newInput = $("<input>")
     .attr("type", "text")
-    .addClass("form-control")
-    .attr("id", "recipe-form-item-" + recipeItemCounter)
+    .addClass("form-control form-item")
     .attr("placeholder", "a fresh new ingredient");
     var newDismiss = $("<button>")
     .attr("type", "button")
@@ -169,9 +166,37 @@ $("#add-recipe-item-btn").on("click", function() {
     recipeForm.append(newFormGroup); 
 })
 
+// Removes whichever recipe ingredient field the user clicked to dismiss.
 function dismissIngredient() {
   $(this).parent().remove();
   recipeItemCounter--;
+}
+
+// When the user clicks to save a recipe, this function creates a json object
+// to send to the Edamam API for nutritional information
+// Should also use this to save to firebase.
+function saveRecipe() {
+  var recipeTitle = $(".form-title").val();
+  var ingredientArray = [];
+  $(".form-item").each(function() {
+    var ingredient = $(this).val();
+    ingredientArray.push(ingredient);
+  })
+  var data = {
+    title: recipeTitle,
+    ingr: ingredientArray
+  } 
+  displayCaloriesJSON(ingredientArray, recipeTitle);
+}
+
+
+
+
+
+// After a user has saved their new recipe, this function
+// displays the new recipe and the new nutritional information in the modal.
+function displayNewUserRecipe() {
+
 }
 
 class recipeConstructor {
@@ -187,9 +212,6 @@ class recipeConstructor {
 // Displays a single recipe's ingredients in a modal window.
 function displaySingleRecipe(response) {
   results = JSON.parse(response);
-  console.log(results);
-  
-  
   // recipeIngredients is an array. We will need to send this information to Edamam for nutritional information.
   recipeIngredients = results.recipe.ingredients;
   $("#ingredient-modal-body").empty();
@@ -203,8 +225,7 @@ function displaySingleRecipe(response) {
     currentUserRecipes.push({
       
       recipe_name: results.recipe.title, recipe_id: results.recipe.recipe_id, recipe_url: results.recipe.source_url, recipe_image: results.recipe.image_url, usage_count: 0
-      
-
+    
   });
  results= null;
     });
@@ -248,6 +269,7 @@ $("#recipe-search-btn").on("click", function() {
 
   $(document).on("click", ".recipe-btn", retrieveSingleRecipe);
   $(document).on("click", ".form-close", dismissIngredient);
+  $(document).on("click", "#saveRecipe", saveRecipe);
   // $(document).on("click", "#new-user-btn", hideArea);
   // $(document).on("click", "#existing-user-btn", hideArea);
 
@@ -277,9 +299,9 @@ var  url = 'https://api.edamam.com/api/nutrition-details?app_id=b134a78c&app_key
         var fatSatDisplay = "<p> Total Saturated Fat: " + Math.round(data.totalNutrients.FASAT.quantity) + " grams</p>";
         var fatPolyDisplay = "<p> Total Polyunsaturated Fat: " + Math.round(data.totalNutrients.FAPU.quantity) + " grams</p>";
         var fatMonoDisplay = "<p> Total Monounsaturated Fat: " + Math.round(data.totalNutrients.FAMS.quantity) + " grams</p>";
-        var fatTrnDisplay = "<p> Total Trans Fat: " + Math.round(data.totalNutrients.FATRN.quantity) + " grams</p>";
+        // var fatTrnDisplay = "<p> Total Trans Fat: " + Math.round(data.totalNutrients.FATRN.quantity) + " grams</p>";
         var carbsDisplay = "<p> Total Carbs: " + Math.round(data.totalNutrients.CHOCDF.quantity) + " grams</p>";
-        $("#nutrition-modal-body").append(calDisplay, fatDisplay, fatSatDisplay, fatPolyDisplay, fatMonoDisplay, fatTrnDisplay, carbsDisplay);   
+        $("#nutrition-modal-body").append(calDisplay, fatDisplay, fatSatDisplay, fatPolyDisplay, fatMonoDisplay, carbsDisplay);   
     },
     'error': function(data) {
         successmessage = 'Error';

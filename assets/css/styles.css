@@ -357,8 +357,16 @@ width: 40rem;
 #custom-recipe-container {
     width: 80vw;
     margin-top: 3rem;
+    background-color: var(--cream);
+    padding: 2rem;
 }
 
+#custom-recipe-container h2 {
+    font-family: var(--title-font);
+    text-align: center;
+    font-size: 2rem;
+    color: var(--olive);
+}
 #custom-recipe-container .form-control {
     width: 90%;
 }
