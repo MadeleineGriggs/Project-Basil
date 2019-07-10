@@ -35,16 +35,23 @@ $("#new-user-btn").on("click", function() {
 $("#existing-user-btn").on("click", function() {
   tempUserName = $("#existing-user-input").val().toUpperCase().trim();
   if (dbState.child("/" + tempUserName).exists()) {
-    hideArea()
+    hideArea();
       currentUser = database.ref("/" + tempUserName);
       console.log('you are "logged in"');
-  }
+  } else alert("Username not found");
 });
+
+if (currentUser !== null){
+currentUser.on("value", function(snapshot){
+  dbState = snapshot;
+}
+)}
+
 
 //   Food2Fork API Key (Main): 6c25094e2b7ba0e57995415ce749ed94
 //   Second Test API Key: b11d8301b0ecfac319569f557e520e48
-var key = "6c25094e2b7ba0e57995415ce749ed94"
-
+var key = "4247b53c340768859ea9ae29a96ea93f";
+// 4247b53c340768859ea9ae29a96ea93f third key
 
 // Food2Fork Search API Call
 
@@ -123,19 +130,47 @@ function retrieveSingleRecipe() {
   .then(function(response) {
     displaySingleRecipe(response)
 
-  })
+  });
+}
+
+class recipeConstructor {
+  constructor(name, id, url, image, count) {
+    this.recipeName = name;
+    this.recipeId = id;
+    this.recipeUrl = url;
+    this.recipeImage = image;
+    this.usageCount = count;
+  }
 }
 
 // Displays a single recipe's ingredients in a modal window.
 function displaySingleRecipe(response) {
-  var results = JSON.parse(response);
+  results = JSON.parse(response);
+  console.log(results);
+  
+  
   // recipeIngredients is an array. We will need to send this information to Edamam for nutritional information.
   recipeIngredients = results.recipe.ingredients;
   $("#ingredient-modal-body").empty();
   for( i = 0 ; i < recipeIngredients.length; i++) {
-    newP = $("<p>").text(recipeIngredients[i])
+    newP = $("<p>").text(recipeIngredients[i]);
     $("#ingredient-modal-body").append(newP);
   }
+  $("#saveRecipe").on("click", function(){
+    console.log(results.recipe.title, results.recipe.recipe_id, results.recipe.source_url, results.recipe.image_url);
+    // selectedRecipe = new recipeConstructor(results.recipe.title, results.recipe.recipe_id, results.recipe.source_url, results.recipe.image_url, 0);
+    currentUser.push({
+      recipe_name: results.recipe.title,
+      recipe_id: results.recipe.recipe_id,
+      recipe_url: results.recipe.source_url,
+      recipe_image: results.recipe.image_url,
+      usage_count: 0
+      
+
+  });
+ results= null;
+    });
+
 
 //Added call to display calorie data   
  displayCaloriesJSON(recipeIngredients, results.recipe.title);
@@ -168,10 +203,10 @@ $.fn.scrollView = function () {
 $("#recipe-search-btn").on("click", function() {
   $(".recipe-search-container").scrollView();
 })
-    database.ref().push({
-        username: name,
-    });
-  })
+    // database.ref().push({
+    //     username: name,
+    // });
+  });
 
   $(document).on("click", ".recipe-btn", retrieveSingleRecipe);
   // $(document).on("click", "#new-user-btn", hideArea);
