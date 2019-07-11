@@ -68,11 +68,8 @@ currentUser.on("value", function(snapshot){
 //   Food2Fork API Key (Main): 6c25094e2b7ba0e57995415ce749ed94
 //   Second Test API Key: b11d8301b0ecfac319569f557e520e48
 var key = "6c25094e2b7ba0e57995415ce749ed94";
-<<<<<<< HEAD
 // 4247b53c340768859ea9ae29a96ea93f third key
-=======
 
->>>>>>> added ability to save recipes to fb. error with saving duplicates exists
 
 // Food2Fork Search API Call
 function retreiveRecipes() {
@@ -155,7 +152,6 @@ function retrieveSingleRecipe() {
   });
 }
 
-<<<<<<< HEAD
 var recipeItemCounter = 2;
 // Adds another ingredient field to the custom recipe maker form
 $("#add-recipe-item-btn").on("click", function() {
@@ -222,8 +218,6 @@ function displayNewUserRecipe(recipeData) {
   
 }
 
-=======
->>>>>>> added ability to save recipes to fb. error with saving duplicates exists
 class recipeConstructor {
   constructor(name, id, url, image, count) {
     this.recipeName = name;
@@ -236,14 +230,11 @@ class recipeConstructor {
 
 // Displays a single recipe's ingredients in a modal window.
 function displaySingleRecipe(response) {
-<<<<<<< HEAD
   results = JSON.parse(response);
-=======
   var results = JSON.parse(response);
   console.log(results.title);
   
   
->>>>>>> added ability to save recipes to fb. error with saving duplicates exists
   // recipeIngredients is an array. We will need to send this information to Edamam for nutritional information.
   recipeIngredients = results.recipe.ingredients;
   newSource = $("<p>")
@@ -255,7 +246,6 @@ function displaySingleRecipe(response) {
     $("#ingredient-modal-body").append(newP);
   }
   $("#saveRecipe").on("click", function(){
-<<<<<<< HEAD
     console.log(results.recipe.title, results.recipe.recipe_id, results.recipe.source_url, results.recipe.image_url);
     // selectedRecipe = new recipeConstructor(results.recipe.title, results.recipe.recipe_id, results.recipe.source_url, results.recipe.image_url, 0);
     currentUserRecipes.push({
@@ -267,21 +257,19 @@ function displaySingleRecipe(response) {
     });
 
 
-=======
-    // selectedRecipe = new recipeConstructor(results.recipe.title, results.recipe.recipe_id, results.recipe.source_url, results.recipe.image_url, 0);
-    currentUser.push({
-      recipe_name: results.recipe.title,
-      recipe_id: results.recipe.recipe_id,
-      recipe_url: results.recipe.source_url,
-      recipe_image: results.recipe.image_url,
-      usage_count: 0
+  //   // selectedRecipe = new recipeConstructor(results.recipe.title, results.recipe.recipe_id, results.recipe.source_url, results.recipe.image_url, 0);
+  //   currentUser.push({
+  //     recipe_name: results.recipe.title,
+  //     recipe_id: results.recipe.recipe_id,
+  //     recipe_url: results.recipe.source_url,
+  //     recipe_image: results.recipe.image_url,
+  //     usage_count: 0
       
 
-  });
+  // });
  
-    });
+  //   });
 
->>>>>>> added ability to save recipes to fb. error with saving duplicates exists
 
 //Added call to display calorie data   
  displayCaloriesJSON(recipeIngredients, results.recipe.title);
@@ -332,19 +320,12 @@ $(window).scroll(function() {
 
 $("#recipe-search-btn").on("click", function() {
   $(".recipe-search-container").scrollView();
-<<<<<<< HEAD
 });
-=======
-})
->>>>>>> added ability to save recipes to fb. error with saving duplicates exists
+// })
     // database.ref().push({
     //     username: name,
     // });
-  });
-<<<<<<< HEAD
-
-=======
->>>>>>> added ability to save recipes to fb. error with saving duplicates exists
+  // });
 
   $(document).on("click", ".recipe-btn", retrieveSingleRecipe);
   $(document).on("click", ".form-close", dismissIngredient);
