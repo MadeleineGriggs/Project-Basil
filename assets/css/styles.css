@@ -306,6 +306,9 @@ a:hover {
     padding: 3rem;
 }
 
+.modal-body span a{
+    color: var(--olive-dark)!important;
+}
 .modal-footer .btn-secondary {
     font-family: var(--title-font);
     font-size: 1.15rem;

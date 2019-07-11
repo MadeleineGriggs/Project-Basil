@@ -57,7 +57,7 @@ currentUser.on("value", function(snapshot){
 
 //   Food2Fork API Key (Main): 6c25094e2b7ba0e57995415ce749ed94
 //   Second Test API Key: b11d8301b0ecfac319569f557e520e48
-var key = "4247b53c340768859ea9ae29a96ea93f";
+var key = "6c25094e2b7ba0e57995415ce749ed94";
 // 4247b53c340768859ea9ae29a96ea93f third key
 
 // Food2Fork Search API Call
@@ -107,7 +107,8 @@ function displayRecipes(response) {
     cardText = $("<p>")
     .addClass("card-text")
     .prepend("Source URL: ")
-    .append(sourceLink);
+    .append(sourceLink)
+    .append("<p> Popularity Rank: " + newRecipes[i].social_rank + "</p>");
     newButton = $("<button>")
     .attr("id", newRecipes[i].recipe_id)
     .attr("recipe-name", newRecipes[i].title)
@@ -198,10 +199,12 @@ function displayNewUserRecipe(recipeData) {
   $("#ingredient-modal-title").empty();
   $("#ingredient-modal-body").empty();
   $("#ingredient-modal-title").text(recipeData.title);
+$("#ingredient-modal-body").prepend(newSource);
   for( i=0 ; i < recipeData.ingr.length ; i++ ) {
     newP = $("<p>").text(recipeData.ingr[i]);
     $("#ingredient-modal-body").append(newP);
   }
+
   
 }
 
@@ -220,7 +223,10 @@ function displaySingleRecipe(response) {
   results = JSON.parse(response);
   // recipeIngredients is an array. We will need to send this information to Edamam for nutritional information.
   recipeIngredients = results.recipe.ingredients;
+  newSource = $("<p>")
+  .html("See Full Recipe at: " + "<span><a href='" + results.recipe.source_url +"' target='_blank'>" + results.recipe.source_url + "</span>");
   $("#ingredient-modal-body").empty();
+  $("#ingredient-modal-body").prepend(newSource);
   for( i = 0 ; i < recipeIngredients.length; i++) {
     newP = $("<p>").text(recipeIngredients[i]);
     $("#ingredient-modal-body").append(newP);
