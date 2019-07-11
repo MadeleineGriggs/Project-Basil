@@ -22,6 +22,7 @@
     dbState = snapshot;
 });
 
+
 $(document).on("click", "#fav-recipe-img-button", function(){
   currentUserRecipes.once("value", function(snapshot){
     
@@ -30,6 +31,7 @@ $(document).on("click", "#fav-recipe-img-button", function(){
     });
   });
 });
+
 
 $("#new-user-btn").on("click", function() {
   tempUserName = $("#new-user-input").val().toUpperCase().trim();
@@ -42,6 +44,8 @@ $("#new-user-btn").on("click", function() {
   });
   } else alert('Username Already Exists');
 });
+
+
 
 $("#existing-user-btn").on("click", function() {
   tempUserName = $("#existing-user-input").val().toUpperCase().trim();
@@ -63,12 +67,11 @@ currentUser.on("value", function(snapshot){
 
 //   Food2Fork API Key (Main): 6c25094e2b7ba0e57995415ce749ed94
 //   Second Test API Key: b11d8301b0ecfac319569f557e520e48
-var key = "4247b53c340768859ea9ae29a96ea93f";
+var key = "6c25094e2b7ba0e57995415ce749ed94";
 // 4247b53c340768859ea9ae29a96ea93f third key
 
 // Food2Fork Search API Call
-
-$("#recipe-search-btn").on("click", function() {
+function retreiveRecipes() {
     event.preventDefault();
 
     searchTerm = $("#recipe-search").val();
@@ -82,11 +85,12 @@ $("#recipe-search-btn").on("click", function() {
         displayRecipes(response);
       })
 
-})
+}
 
 // Displays the recipes the user is searching for.
 function displayRecipes(response) {
   var results = JSON.parse(response);
+  console.log(results);
 
   $(".recipe-search-container").removeClass("hidden");
   recipeCount = results.count;
@@ -113,7 +117,8 @@ function displayRecipes(response) {
     cardText = $("<p>")
     .addClass("card-text")
     .prepend("Source URL: ")
-    .append(sourceLink);
+    .append(sourceLink)
+    .append("<p> Popularity Rank: " + newRecipes[i].social_rank + "</p>");
     newButton = $("<button>")
     .attr("id", newRecipes[i].recipe_id)
     .attr("recipe-name", newRecipes[i].title)
@@ -146,6 +151,72 @@ function retrieveSingleRecipe() {
   });
 }
 
+var recipeItemCounter = 2;
+// Adds another ingredient field to the custom recipe maker form
+$("#add-recipe-item-btn").on("click", function() {
+  var recipeForm = $("#recipe-form-group");
+  recipeItemCounter++;
+  var newFormGroup = $("<div>")
+    .addClass("form-group form-group-item");
+  var newLabel = $("<label>")
+    .attr("for", "recipe-form-item")
+    .text("Ingredient");
+  var newInput = $("<input>")
+    .attr("type", "text")
+    .addClass("form-control form-item")
+    .attr("placeholder", "a fresh new ingredient");
+    var newDismiss = $("<button>")
+    .attr("type", "button")
+    .addClass("close form-close")
+    .attr("aria-label", "close");
+    var newBtnSpan = $("<span>")
+    .attr("aria-hidden", "true")
+    .html("&times;");
+    newDismiss.append(newBtnSpan);
+    newFormGroup.append(newLabel, newInput, newDismiss);
+    recipeForm.append(newFormGroup); 
+})
+
+// Removes whichever recipe ingredient field the user clicked to dismiss.
+function dismissIngredient() {
+  $(this).parent().remove();
+  recipeItemCounter--;
+}
+
+// When the user clicks to save a recipe, this function creates a json object
+// to send to the Edamam API for nutritional information
+// Should also use this to save to firebase.
+function saveUserRecipe() {
+  var recipeTitle = $(".form-title").val();
+  var ingredientArray = [];
+  $(".form-item").each(function() {
+    var ingredient = $(this).val();
+    ingredientArray.push(ingredient);
+  })
+  var customRecipedata = {
+    title: recipeTitle,
+    ingr: ingredientArray
+  } 
+  displayCaloriesJSON(ingredientArray, recipeTitle);
+  displayNewUserRecipe(customRecipedata);
+}
+
+
+
+// After a user has saved their new recipe, this function
+// displays the new recipe and the new nutritional information in the modal.
+function displayNewUserRecipe(recipeData) {
+  $("#ingredient-modal-title").empty();
+  $("#ingredient-modal-body").empty();
+  $("#ingredient-modal-title").text(recipeData.title);
+  for( i=0 ; i < recipeData.ingr.length ; i++ ) {
+    newP = $("<p>").text(recipeData.ingr[i]);
+    $("#ingredient-modal-body").append(newP);
+  }
+
+  
+}
+
 class recipeConstructor {
   constructor(name, id, url, image, count) {
     this.recipeName = name;
@@ -159,12 +230,12 @@ class recipeConstructor {
 // Displays a single recipe's ingredients in a modal window.
 function displaySingleRecipe(response) {
   results = JSON.parse(response);
-  console.log(results);
-  
-  
   // recipeIngredients is an array. We will need to send this information to Edamam for nutritional information.
   recipeIngredients = results.recipe.ingredients;
+  newSource = $("<p>")
+  .html("See Full Recipe at: " + "<span><a href='" + results.recipe.source_url +"' target='_blank'>" + results.recipe.source_url + "</span>");
   $("#ingredient-modal-body").empty();
+  $("#ingredient-modal-body").prepend(newSource);
   for( i = 0 ; i < recipeIngredients.length; i++) {
     newP = $("<p>").text(recipeIngredients[i]);
     $("#ingredient-modal-body").append(newP);
@@ -175,8 +246,7 @@ function displaySingleRecipe(response) {
     currentUserRecipes.push({
       
       recipe_name: results.recipe.title, recipe_id: results.recipe.recipe_id, recipe_url: results.recipe.source_url, recipe_image: results.recipe.image_url, usage_count: 0
-      
-
+    
   });
  results= null;
     });
@@ -195,21 +265,40 @@ function hideArea() {
 }
 
 
-
-
-
   // Testing firebase
-  $(document).ready(function() {
+  // $(document).ready(function() {
 
     // this function allows the page to smoothly scroll to whichever
 // id or class you call it from.
-$.fn.scrollView = function () {
-  return this.each(function () {
-      $('html, body').animate({
-          scrollTop: $(this).offset().top
-      }, 1000);
-  });
-}
+// $.fn.scrollView = function () {
+//   return this.each(function () {
+//       $('html, body').animate({
+//           scrollTop: $(this).offset().top
+//       }, 1000);
+//   });
+// }
+
+// $("#recipe-search-btn").on("click", function() {
+//   $("#recipe-search-display").scrollView();
+// })
+
+
+
+
+// Sticky Nav: When it is at top, make visible
+
+var distance = 750;
+
+$(window).scroll(function() {
+    if ( $(this).scrollTop() >= distance ) {
+      console.log("is in top");
+        $("#sticky-nav").removeClass("hidden-nav");
+        $("#sticky-nav").addClass("visible-nav");
+    } else {
+      $("#sticky-nav").removeClass("visible-nav");
+      $("#sticky-nav").addClass(" fixed-top hidden-nav");
+    }
+});
 
 $("#recipe-search-btn").on("click", function() {
   $(".recipe-search-container").scrollView();
@@ -219,7 +308,12 @@ $("#recipe-search-btn").on("click", function() {
     // });
   });
 
+
   $(document).on("click", ".recipe-btn", retrieveSingleRecipe);
+  $(document).on("click", ".form-close", dismissIngredient);
+  $(document).on("click", "#saveRecipe", saveUserRecipe);
+  $(document).on("click", "#top-recipe-img-button", retreiveRecipes);
+  $(document).on("click", "#recipe-search-btn", retreiveRecipes);
   // $(document).on("click", "#new-user-btn", hideArea);
   // $(document).on("click", "#existing-user-btn", hideArea);
 
@@ -228,7 +322,7 @@ $("#recipe-search-btn").on("click", function() {
 
 
 //Retrieve Nutrition Data for single ingredient
- function displayCaloriesJSON (recipeIngredients, title){
+ function displayCaloriesJSON(recipeIngredients, title){
   
   var data = {
     title: title,
@@ -249,9 +343,9 @@ var  url = 'https://api.edamam.com/api/nutrition-details?app_id=b134a78c&app_key
         var fatSatDisplay = "<p> Total Saturated Fat: " + Math.round(data.totalNutrients.FASAT.quantity) + " grams</p>";
         var fatPolyDisplay = "<p> Total Polyunsaturated Fat: " + Math.round(data.totalNutrients.FAPU.quantity) + " grams</p>";
         var fatMonoDisplay = "<p> Total Monounsaturated Fat: " + Math.round(data.totalNutrients.FAMS.quantity) + " grams</p>";
-        var fatTrnDisplay = "<p> Total Trans Fat: " + Math.round(data.totalNutrients.FATRN.quantity) + " grams</p>";
+        // var fatTrnDisplay = "<p> Total Trans Fat: " + Math.round(data.totalNutrients.FATRN.quantity) + " grams</p>";
         var carbsDisplay = "<p> Total Carbs: " + Math.round(data.totalNutrients.CHOCDF.quantity) + " grams</p>";
-        $("#nutrition-modal-body").append(calDisplay, fatDisplay, fatSatDisplay, fatPolyDisplay, fatMonoDisplay, fatTrnDisplay, carbsDisplay);   
+        $("#nutrition-modal-body").append(calDisplay, fatDisplay, fatSatDisplay, fatPolyDisplay, fatMonoDisplay, carbsDisplay);   
     },
     'error': function(data) {
         successmessage = 'Error';
@@ -259,5 +353,4 @@ var  url = 'https://api.edamam.com/api/nutrition-details?app_id=b134a78c&app_key
     },
   });
 }
-
 
