@@ -199,7 +199,6 @@ function displayNewUserRecipe(recipeData) {
   $("#ingredient-modal-title").empty();
   $("#ingredient-modal-body").empty();
   $("#ingredient-modal-title").text(recipeData.title);
-$("#ingredient-modal-body").prepend(newSource);
   for( i=0 ; i < recipeData.ingr.length ; i++ ) {
     newP = $("<p>").text(recipeData.ingr[i]);
     $("#ingredient-modal-body").append(newP);
