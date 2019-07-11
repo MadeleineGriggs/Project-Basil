@@ -25,23 +25,38 @@
 
 $(document).on("click", "#fav-recipe-img-button", function(){
   currentUserRecipes.once("value", function(snapshot){
-    
     snapshot.forEach((child) => {
       console.log(child.val().recipe_name, 'recipe id', child.val().recipe_id);
+      displaySavedRecipes(child.val().recipe_name, child.val().recipe_id, child.val().recipe_url, child.val().recipe_image );
     });
   });
 });
+
+
+function displaySavedRecipes(rName, rID, rURL, rImageURL){
+  $(".recipe-search-container").removeClass("hidden")
+  newCard = $("<div class='card'></div>");
+  $(newCard).append("<img class='card-img-top' src='"+ rImageURL +"' alt=Card Image Cap>");
+  $(newCard).append("<div class='card-body'>");
+  $(newCard).append("<h5 class='card-title'>" + rName + "</h5>");
+  $(newCard).append("<p class='card-text'>" + 'test' + "</p>");
+  $(newCard).append("<button id='" + rID + "' recipe-name='" + rName + "' class='recipe-btn btn btn-primary' data-toggle='modal' data-target='#recipeModal'>" + 'Click here to see the recipe' + "</button>");
+  $("#recipe-search-wrapper").append(newCard);
+  
+  
+}
 
 
 $("#new-user-btn").on("click", function() {
   tempUserName = $("#new-user-input").val().toUpperCase().trim();
   if (!dbState.child("/" + tempUserName).exists()) {
     hideArea();
-  currentUser = database.ref("/" +tempUserName );
-  currentUserRecipes = database.ref("/" + tempUserName + "/recipes");
-  currentUser.set({
+    currentUser = database.ref("/" +tempUserName );
+    currentUserRecipes = database.ref("/" + tempUserName + "/recipes");
+    currentUser.set({
       username : $("#new-user-input").val().trim()
-  });
+    });
+    $("#users-name").text($("#new-user-input").val().trim());
   } else alert('Username Already Exists');
 });
 
@@ -52,17 +67,19 @@ $("#existing-user-btn").on("click", function() {
   console.log(tempUserName);
   if (dbState.child("/" + tempUserName).exists()) {
     hideArea();
-      currentUser = database.ref("/" + tempUserName);
-      currentUserRecipes = database.ref("/" + tempUserName + "/recipes");
-      console.log('you are "logged in"');
+    currentUser = database.ref("/" + tempUserName);
+    currentUserRecipes = database.ref("/" + tempUserName + "/recipes");
+    console.log('you are "logged in"');
+    $("#users-name").text($("#existing-user-input").val().trim());
   } else alert("Username not found");
 });
 
 if (currentUser !== null){
-currentUser.on("value", function(snapshot){
-  dbState = snapshot;
-}
-)}
+  currentUser.on("value", function(snapshot){
+    dbState = snapshot;
+  }
+  )};
+  
 
 
 //   Food2Fork API Key (Main): 6c25094e2b7ba0e57995415ce749ed94
@@ -92,7 +109,7 @@ function retreiveRecipes() {
 function displayRecipes(response) {
   var results = JSON.parse(response);
   console.log(results);
-
+  
   $(".recipe-search-container").removeClass("hidden");
   recipeCount = results.count;
   newRecipes = results.recipes;
@@ -246,7 +263,7 @@ function displaySingleRecipe(response) {
     $("#ingredient-modal-body").append(newP);
   }
   $("#saveRecipe").on("click", function(){
-    console.log(results.recipe.title, results.recipe.recipe_id, results.recipe.source_url, results.recipe.image_url);
+    console.log(results, results.recipe.title, results.recipe.recipe_id, results.recipe.source_url, results.recipe.image_url);
     // selectedRecipe = new recipeConstructor(results.recipe.title, results.recipe.recipe_id, results.recipe.source_url, results.recipe.image_url, 0);
     currentUserRecipes.push({
       
@@ -318,9 +335,9 @@ $(window).scroll(function() {
     }
 });
 
-$("#recipe-search-btn").on("click", function() {
-  $(".recipe-search-container").scrollView();
-});
+// $("#recipe-search-btn").on("click", function() {
+//   $(".recipe-search-container").scrollView();
+// });
 // })
     // database.ref().push({
     //     username: name,
