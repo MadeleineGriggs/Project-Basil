@@ -22,6 +22,15 @@
     dbState = snapshot;
 });
 
+$(document).on("click", "#fav-recipe-img-button", function(){
+  currentUserRecipes.once("value", function(snapshot){
+    
+    snapshot.forEach((child) => {
+      console.log(child.val().recipe_name, 'recipe id', child.val().recipe_id);
+    });
+  });
+});
+
 $("#new-user-btn").on("click", function() {
   tempUserName = $("#new-user-input").val().toUpperCase().trim();
   if (!dbState.child("/" + tempUserName).exists()) {
@@ -173,6 +182,7 @@ function displaySingleRecipe(response) {
     });
 
 
+
 //Added call to display calorie data   
  displayCaloriesJSON(recipeIngredients, results.recipe.title);
 
@@ -203,7 +213,7 @@ $.fn.scrollView = function () {
 
 $("#recipe-search-btn").on("click", function() {
   $(".recipe-search-container").scrollView();
-})
+});
     // database.ref().push({
     //     username: name,
     // });
@@ -223,7 +233,7 @@ $("#recipe-search-btn").on("click", function() {
   var data = {
     title: title,
     ingr: recipeIngredients
-  } 
+  }; 
 
 var  url = 'https://api.edamam.com/api/nutrition-details?app_id=b134a78c&app_key=ef4e767c7f1d336096dc31d4396b7964'
    $.ajax({
