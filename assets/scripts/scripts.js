@@ -70,6 +70,7 @@ currentUser.on("value", function(snapshot){
 var key = "6c25094e2b7ba0e57995415ce749ed94";
 // 4247b53c340768859ea9ae29a96ea93f third key
 
+
 // Food2Fork Search API Call
 function retreiveRecipes() {
     event.preventDefault();
@@ -230,6 +231,10 @@ class recipeConstructor {
 // Displays a single recipe's ingredients in a modal window.
 function displaySingleRecipe(response) {
   results = JSON.parse(response);
+  var results = JSON.parse(response);
+  console.log(results.title);
+  
+  
   // recipeIngredients is an array. We will need to send this information to Edamam for nutritional information.
   recipeIngredients = results.recipe.ingredients;
   newSource = $("<p>")
@@ -251,6 +256,19 @@ function displaySingleRecipe(response) {
  results= null;
     });
 
+
+  //   // selectedRecipe = new recipeConstructor(results.recipe.title, results.recipe.recipe_id, results.recipe.source_url, results.recipe.image_url, 0);
+  //   currentUser.push({
+  //     recipe_name: results.recipe.title,
+  //     recipe_id: results.recipe.recipe_id,
+  //     recipe_url: results.recipe.source_url,
+  //     recipe_image: results.recipe.image_url,
+  //     usage_count: 0
+      
+
+  // });
+ 
+  //   });
 
 
 //Added call to display calorie data   
@@ -303,11 +321,11 @@ $(window).scroll(function() {
 $("#recipe-search-btn").on("click", function() {
   $(".recipe-search-container").scrollView();
 });
+// })
     // database.ref().push({
     //     username: name,
     // });
-  });
-
+  // });
 
   $(document).on("click", ".recipe-btn", retrieveSingleRecipe);
   $(document).on("click", ".form-close", dismissIngredient);
