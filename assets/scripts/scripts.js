@@ -74,8 +74,11 @@ var key = "6c25094e2b7ba0e57995415ce749ed94";
 // Food2Fork Search API Call
 function retreiveRecipes() {
     event.preventDefault();
-
+  if( $(this).is("#recipe-nav-search-btn")) {
+    searchTerm = $("#nav-recipe-search").val();
+  } else {
     searchTerm = $("#recipe-search").val();
+  }
     var queryURL = "https://www.food2fork.com/api/search?key=" + key + "&q=" + searchTerm;
 
     $.ajax({
@@ -293,7 +296,7 @@ $(window).scroll(function() {
   $(document).on("click", ".form-close", dismissIngredient);
   $(document).on("click", "#saveRecipe", saveUserRecipe);
   $(document).on("click", "#top-recipe-img-button, #top-recipe-nav-btn", retreiveRecipes);
-  $(document).on("click", "#recipe-search-btn", retreiveRecipes);
+  $(document).on("click", "#recipe-search-btn, #recipe-nav-search-btn", retreiveRecipes);
   // $(document).on("click", "#new-user-btn", hideArea);
   // $(document).on("click", "#existing-user-btn", hideArea);
 
