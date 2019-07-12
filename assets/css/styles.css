@@ -267,6 +267,15 @@ a:hover {
     outline-color: var(--olive-light);
 }
 
+.card .recipe-btn:active {
+    background-color: var(--olive-dark) !important;
+}
+
+.card .recipe-btn:focus {
+    border: 0px solid white !important;
+    box-shadow: 1px 1px 5px 2px rgba(120, 115, 111,0.50);
+}
+
 .card button:hover {
     background-color: var(--olive-dark);
 }
