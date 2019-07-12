@@ -467,7 +467,7 @@ border-radius: 35px;
 }
 
 .visible-nav {
-    display: block;
+    display: flex;
     height: auto;
     max-height: 15rem;
 }
@@ -491,11 +491,23 @@ border-radius: 35px;
 }
 
 #sticky-nav input {
+   align-self: right;
    margin-bottom: 0rem;
-   margin-left: 5rem;
+   margin-left: 25rem;
    font-family: var(--body-font);
    color: var(--charcoal);
    background-color: var(--cream);
    padding: 5px 5px;
-   margin-top: 0.25rem;
+}
+
+#recipe-nav-search-btn {
+    font-size: 1rem;
+    margin: 0;
+    width: 6rem;
+    margin-left: 0.5rem;
+    background-color: var(--olive-dark);
+}
+#recipe-nav-search-btn:hover {
+    color: var(--dark-cream);
+    box-shadow: 1px 1px 5px 2px rgba(120, 115, 111,0.50);
 }

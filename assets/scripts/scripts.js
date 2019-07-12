@@ -80,6 +80,10 @@ function retreiveRecipes() {
     searchTerm = $("#recipe-search").val();
   }
     var queryURL = "https://www.food2fork.com/api/search?key=" + key + "&q=" + searchTerm;
+    //smooth scroll to the searched recipes area.
+    $('html, body').animate({
+      scrollTop: $("#recipe-search-display").offset().top
+  }, 800);
 
     $.ajax({
         url: queryURL,
@@ -93,9 +97,10 @@ function retreiveRecipes() {
 
 // Displays the recipes the user is searching for.
 function displayRecipes(response) {
+
   var results = JSON.parse(response);
   console.log(results);
-
+$("#recipe-search-wrapper").empty();
   $(".recipe-search-container").removeClass("hidden");
   recipeCount = results.count;
   newRecipes = results.recipes;
@@ -276,12 +281,9 @@ function hideArea() {
 
 
 // Sticky Nav: When it is at top, make visible
-
 var distance = 750;
-
 $(window).scroll(function() {
     if ( $(this).scrollTop() >= distance ) {
-      console.log("is in top");
         $("#sticky-nav").removeClass("hidden-nav");
         $("#sticky-nav").addClass("visible-nav");
     } else {
@@ -290,8 +292,13 @@ $(window).scroll(function() {
     }
 });
 
+  function scrolltoCustomRecipeArea() {
+    $('html, body').animate({
+      scrollTop: $("#custom-recipe-container").offset().top
+  }, 800);
+  }
 
-
+  $(document).on("click", "#recipe-img-button, #recipe-nav-custom-btn", scrolltoCustomRecipeArea);
   $(document).on("click", ".recipe-btn", retrieveSingleRecipe);
   $(document).on("click", ".form-close", dismissIngredient);
   $(document).on("click", "#saveRecipe", saveUserRecipe);
