@@ -23,7 +23,7 @@
 });
 
 
-$(document).on("click", "#fav-recipe-img-button", function(){
+$(document).on("click", "#fav-recipe-img-button, #fav-recipe-nav-btn", function(){
   currentUserRecipes.once("value", function(snapshot){
     
     snapshot.forEach((child) => {
@@ -77,9 +77,16 @@ var key = "4fd67c41f3d8810dc0255a68010ca17d"
 // Food2Fork Search API Call
 function retreiveRecipes() {
     event.preventDefault();
-
+  if( $(this).is("#recipe-nav-search-btn")) {
+    searchTerm = $("#nav-recipe-search").val();
+  } else {
     searchTerm = $("#recipe-search").val();
+  }
     var queryURL = "https://www.food2fork.com/api/search?key=" + key + "&q=" + searchTerm;
+    //smooth scroll to the searched recipes area.
+    $('html, body').animate({
+      scrollTop: $("#recipe-search-display").offset().top
+  }, 800);
 
     $.ajax({
         url: queryURL,
@@ -93,9 +100,10 @@ function retreiveRecipes() {
 
 // Displays the recipes the user is searching for.
 function displayRecipes(response) {
+
   var results = JSON.parse(response);
   console.log(results);
-
+$("#recipe-search-wrapper").empty();
   $(".recipe-search-container").removeClass("hidden");
   recipeCount = results.count;
   newRecipes = results.recipes;
@@ -106,30 +114,30 @@ function displayRecipes(response) {
     newP = newRecipes[i].title;
     newSourceURL = newRecipes[i].source_url;
     newImage = $("<img>")
-    .attr("src", newRecipes[i].image_url)
-    .addClass("card-img-top")
-    .attr("alt", "an image of the cooked recipe")
+      .attr("src", newRecipes[i].image_url)
+      .addClass("card-img-top")
+      .attr("alt", "an image of the cooked recipe")
     divBody = $("<div>")
-    .addClass("card-body");
+      .addClass("card-body");
     cardTitle = $("<h5>")
-    .addClass("card-title")
-    .text(newRecipes[i].title);
+      .addClass("card-title")
+      .text(newRecipes[i].title);
     sourceLink = $("<a>")
-    .attr("href", newSourceURL)
-    .attr("target", "_blank")
-    .text(newSourceURL);
+      .attr("href", newSourceURL)
+      .attr("target", "_blank")
+      .text(newSourceURL);
     cardText = $("<p>")
-    .addClass("card-text")
-    .prepend("Source URL: ")
-    .append(sourceLink)
-    .append("<p> Popularity Rank: " + newRecipes[i].social_rank + "</p>");
+      .addClass("card-text")
+      .prepend("Source URL: ")
+      .append(sourceLink)
+      .append("<p> Popularity Rank: " + (newRecipes[i].social_rank).toFixed(3) + "</p>");
     newButton = $("<button>")
-    .attr("id", newRecipes[i].recipe_id)
-    .attr("recipe-name", newRecipes[i].title)
-    .addClass("recipe-btn btn btn-primary")
-    .attr("data-toggle", "modal")
-    .attr("data-target", "#recipeModal")
-    .text("Click here to see the recipe");
+      .attr("id", newRecipes[i].recipe_id)
+      .attr("recipe-name", newRecipes[i].title)
+      .addClass("recipe-btn btn btn-primary")
+      .attr("data-toggle", "modal")
+      .attr("data-target", "#recipeModal")
+      .text("Click here to see the recipe");
     newDiv.append(newImage, divBody);
     divBody.append(cardTitle, cardText, newButton)
     $("#recipe-search-wrapper").append(newDiv);
@@ -191,7 +199,8 @@ function dismissIngredient() {
 // to send to the Edamam API for nutritional information
 // Should also use this to save to firebase.
 function saveUserRecipe() {
-  var recipeTitle = $(".form-title").val();
+  var recipeTitle= "";
+  recipeTitle = $(".form-title").val();
   var ingredientArray = [];
   $(".form-item").each(function() {
     var ingredient = $(this).val();
@@ -260,19 +269,6 @@ function displaySingleRecipe(response) {
     });
 
 
-  //   // selectedRecipe = new recipeConstructor(results.recipe.title, results.recipe.recipe_id, results.recipe.source_url, results.recipe.image_url, 0);
-  //   currentUser.push({
-  //     recipe_name: results.recipe.title,
-  //     recipe_id: results.recipe.recipe_id,
-  //     recipe_url: results.recipe.source_url,
-  //     recipe_image: results.recipe.image_url,
-  //     usage_count: 0
-      
-
-  // });
- 
-  //   });
-
 
 //Added call to display calorie data   
 displayCaloriesJSON (recipeIngredients,results.recipe.title);
@@ -286,33 +282,11 @@ function hideArea() {
 }
 
 
-  // Testing firebase
-  // $(document).ready(function() {
-
-    // this function allows the page to smoothly scroll to whichever
-// id or class you call it from.
-// $.fn.scrollView = function () {
-//   return this.each(function () {
-//       $('html, body').animate({
-//           scrollTop: $(this).offset().top
-//       }, 1000);
-//   });
-// }
-
-// $("#recipe-search-btn").on("click", function() {
-//   $("#recipe-search-display").scrollView();
-// })
-
-
-
 
 // Sticky Nav: When it is at top, make visible
-
 var distance = 750;
-
 $(window).scroll(function() {
     if ( $(this).scrollTop() >= distance ) {
-      console.log("is in top");
         $("#sticky-nav").removeClass("hidden-nav");
         $("#sticky-nav").addClass("visible-nav");
     } else {
@@ -321,20 +295,18 @@ $(window).scroll(function() {
     }
 });
 
-$("#recipe-search-btn").on("click", function() {
-  $(".recipe-search-container").scrollView();
-});
-// })
-    // database.ref().push({
-    //     username: name,
-    // });
-  // });
+  function scrolltoCustomRecipeArea() {
+    $('html, body').animate({
+      scrollTop: $("#custom-recipe-container").offset().top
+  }, 800);
+  }
 
+  $(document).on("click", "#recipe-img-button, #recipe-nav-custom-btn", scrolltoCustomRecipeArea);
   $(document).on("click", ".recipe-btn", retrieveSingleRecipe);
   $(document).on("click", ".form-close", dismissIngredient);
   $(document).on("click", "#saveRecipe", saveUserRecipe);
-  $(document).on("click", "#top-recipe-img-button", retreiveRecipes);
-  $(document).on("click", "#recipe-search-btn", retreiveRecipes);
+  $(document).on("click", "#top-recipe-img-button, #top-recipe-nav-btn", retreiveRecipes);
+  $(document).on("click", "#recipe-search-btn, #recipe-nav-search-btn", retreiveRecipes);
   // $(document).on("click", "#new-user-btn", hideArea);
   // $(document).on("click", "#existing-user-btn", hideArea);
 
@@ -343,9 +315,9 @@ $("#recipe-search-btn").on("click", function() {
 
 //Retrieve Nutrition Data for single ingredient
 
- function displayCaloriesJSON (recipeIngredients,title){
+ function displayCaloriesJSON(recipeIngredients, title){
+  $("#nutrition-modal-body").empty();
 
-  
   var data = {
     title: title,
     ingr: recipeIngredients

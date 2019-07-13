@@ -6,6 +6,7 @@
     --olive: #92a361;
     --olive-light: #b7ce73;
     --olive-dark: #7b8a50;
+    --main-title-font:'Abril Fatface', cursive;
     --title-font: 'Playfair Display', serif;
     --body-font: 'Montserrat', sans-serif;
 }
@@ -44,9 +45,9 @@ body {
 }
 
 .landing-container h1 {
-    font-family: var(--title-font);
+    font-family: var(--main-title-font);
     text-align: center;
-    font-size: 5rem;
+    font-size: 7rem;
     color: var(--olive-dark);
     margin-bottom: 1.5rem;
 }
@@ -150,7 +151,6 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-
 }
 
 .img-button {
@@ -176,6 +176,7 @@ body {
 .img-button p:hover {
     color: var(--dark-cream);
 }
+
 a:hover {
     text-decoration: none;
 }
@@ -193,7 +194,7 @@ a:hover {
 }
 
 #recipe-img-button {
-    background-image: url(../images/cookie_and_coffee.jpg);
+    background-image: url(../images/burger.jpg);
     background-size: auto 150%;
     background-position: center;
 }
@@ -264,6 +265,15 @@ a:hover {
 }
 .card button:focus {
     outline-color: var(--olive-light);
+}
+
+.card .recipe-btn:active {
+    background-color: var(--olive-dark) !important;
+}
+
+.card .recipe-btn:focus {
+    border: 0px solid white !important;
+    box-shadow: 1px 1px 5px 2px rgba(120, 115, 111,0.50);
 }
 
 .card button:hover {
@@ -369,6 +379,7 @@ width: 40rem;
     background-color: var(--cream);
     padding: 2rem;
     padding-left: 4rem;
+    border-radius: 3px;
 }
 
 #custom-recipe-container h2 {
@@ -437,6 +448,24 @@ width: 40rem;
     padding: 25px;
 }
 
+#custom-recipe-close {
+float: right;
+margin-top: -3.5rem;
+background-color: var(--dark-taupe);
+color: var(--cream);
+font-family: var(--body-font);
+font-size: 1.7rem;
+font-weight: 900;
+width: 37px;
+height: 37px;
+text-align: center;
+border-radius: 35px;
+}
+
+#custom-recipe-close:hover {
+    background-color: var(--olive-dark);
+    color: var(--dark-cream);
+}
 
 /* Styling related to the sticky nav */
 
@@ -447,7 +476,7 @@ width: 40rem;
 }
 
 .visible-nav {
-    display: block;
+    display: flex;
     height: auto;
     max-height: 15rem;
 }
@@ -457,7 +486,6 @@ width: 40rem;
     color: var(--cream);
     border-bottom: 2px solid var(--dark-cream);
     transition: max-height 0.2s ease-out;
-
 }
 
 #sticky-nav a {
@@ -472,11 +500,23 @@ width: 40rem;
 }
 
 #sticky-nav input {
+   align-self: right;
    margin-bottom: 0rem;
-   margin-left: 5rem;
+   margin-left: 25rem;
    font-family: var(--body-font);
    color: var(--charcoal);
    background-color: var(--cream);
    padding: 5px 5px;
-   margin-top: 0.25rem;
+}
+
+#recipe-nav-search-btn {
+    font-size: 1rem;
+    margin: 0;
+    width: 6rem;
+    margin-left: 0.5rem;
+    background-color: var(--olive-dark);
+}
+#recipe-nav-search-btn:hover {
+    color: var(--dark-cream);
+    box-shadow: 1px 1px 5px 2px rgba(120, 115, 111,0.50);
 }
