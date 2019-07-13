@@ -63,6 +63,7 @@ $("#new-user-btn").on("click", function() {
   currentUser.set({
       username : $("#new-user-input").val().trim()
   });
+  $("#users-name").text($("#existing-user-input").val().trim());
   } else alert('Username Already Exists');
 });
 
@@ -77,6 +78,7 @@ $("#existing-user-btn").on("click", function() {
       currentUserRecipes = database.ref("/" + tempUserName + "/recipes");
       currentUserCustomRecipes = database.ref("/" + tempUserName + "/custom-recipes") ;
       console.log('you are "logged in"');
+      $("#users-name").text($("#existing-user-input").val().trim());
   } else alert("Username not found");
 });
 
