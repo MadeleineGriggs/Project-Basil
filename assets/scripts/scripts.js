@@ -29,7 +29,7 @@
 
 
 
-$(document).on("click", "#fav-recipe-img-button", function(){
+$(document).on("click", "#fav-recipe-img-button, #fav-recipe-nav-btn", function(){
   currentUserRecipes.once("value", function(snapshot){
     snapshot.forEach((child) => {
       console.log(child.val().recipe_name, 'recipe id', child.val().recipe_id);
@@ -40,12 +40,14 @@ $(document).on("click", "#fav-recipe-img-button", function(){
 
 
 function displaySavedRecipes(rName, rID, rURL, rImageURL){
+
+  $("#recipe-search-wrapper").empty();
   $(".recipe-search-container").removeClass("hidden")
   newCard = $("<div class='card'></div>");
   $(newCard).append("<img class='card-img-top' src='"+ rImageURL +"' alt=Card Image Cap>");
   $(newCard).append("<div class='card-body'>");
   $(newCard).append("<h5 class='card-title'>" + rName + "</h5>");
-  $(newCard).append("<p class='card-text'>" + 'test' + "</p>");
+  $(newCard).append("<p class='card-text'>" + rURL + "</p>");
   $(newCard).append("<button id='" + rID + "' recipe-name='" + rName + "' class='recipe-btn btn btn-primary' data-toggle='modal' data-target='#recipeModal'>" + 'Click here to see the recipe' + "</button>");
   $("#recipe-search-wrapper").append(newCard);
   
@@ -92,7 +94,11 @@ currentUser.on("value", function(snapshot){
 //   Food2Fork API Key (Main): 6c25094e2b7ba0e57995415ce749ed94
 //   Second Test API Key: b11d8301b0ecfac319569f557e520e48
 
+<<<<<<< HEAD
 var key = "b11d8301b0ecfac319569f557e520e48";
+=======
+var key = "6c25094e2b7ba0e57995415ce749ed94"
+>>>>>>> master
 
 
 
@@ -331,7 +337,7 @@ $(window).scroll(function() {
   $(document).on("click", "#recipe-img-button, #recipe-nav-custom-btn", scrolltoCustomRecipeArea);
   $(document).on("click", ".recipe-btn", retrieveSingleRecipe);
   $(document).on("click", ".form-close", dismissIngredient);
-  $(document).on("click", "#saveRecipe", saveUserRecipe);
+  $(document).on("click", "#saveUserRecipe", saveUserRecipe);
   $(document).on("click", "#top-recipe-img-button, #top-recipe-nav-btn", retreiveRecipes);
   $(document).on("click", "#recipe-search-btn, #recipe-nav-search-btn", retreiveRecipes);
   // $(document).on("click", "#new-user-btn", hideArea);
@@ -477,11 +483,11 @@ console.log(data);
 
   };
 
-  
-  var tableBody = $("<tbody>").append(); 
+  var tableDiv= $("<div>").attr("class", " table-responsive table-bordered table-hover" );
+  var tableBody = $("<tbody>"); 
   var nutritionalTable = $("<table>").append(tableBody);
   nutritionalTable.attr("id","nutitritionTable") 
-  .attr("class", "table-responsive table-bordered table-hover")
+  .attr("class", "table")
 
    yieldDisplay=   $("<h3>").html('<th colspan="3"> Servings :' + result.yield + "</th>");
      calDisplay=   $("<h3>").html('<th colspan="3"> Calories:' + result.calories + "</th>");  
@@ -494,7 +500,7 @@ console.log(data);
     if(key.subcategory === 0){
 
     var newRow = $("<tr>")
-      .html('<th colspan="3"> <b>' + value.label + '</b>  '
+      .html('<th scope="col"> <b>' + value.label + '</b>  '
         + Math.round(value.totalNutrients)
         + '</th> <td>'
         + Math.round(value.totalDaily) +'%'+ '</td>');
@@ -505,7 +511,7 @@ console.log(data);
     else{
       
     var newRow = $("<tr>")
-    .html('<th colspan="3">' + value.label + '  '
+    .html('<th scope="col">' + value.label + '  '
       + Math.round(value.totalNutrients)
       + '</th> <td>'
       + Math.round(value.totalDaily) +'%'+ '</td>');
@@ -514,8 +520,8 @@ console.log(data);
     nutritionalTable.append(newRow);
     
   }
-
-  $("#nutrition-modal-body").append(yieldDisplay, calDisplay, nutritionalTable);
+  $(tableDiv).append(nutritionalTable);
+  $("#nutrition-modal-body").append(yieldDisplay, calDisplay, tableDiv);
   
 
 
