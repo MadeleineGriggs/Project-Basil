@@ -67,8 +67,11 @@ currentUser.on("value", function(snapshot){
 
 //   Food2Fork API Key (Main): 6c25094e2b7ba0e57995415ce749ed94
 //   Second Test API Key: b11d8301b0ecfac319569f557e520e48
-var key = "6c25094e2b7ba0e57995415ce749ed94";
-// 4247b53c340768859ea9ae29a96ea93f third key
+
+var key = "4fd67c41f3d8810dc0255a68010ca17d"
+
+
+
 
 
 // Food2Fork Search API Call
@@ -268,7 +271,7 @@ function displaySingleRecipe(response) {
 
 
 //Added call to display calorie data   
- displayCaloriesJSON(recipeIngredients, results.recipe.title);
+displayCaloriesJSON (recipeIngredients,results.recipe.title);
 
 }
 
@@ -308,18 +311,19 @@ $(window).scroll(function() {
   // $(document).on("click", "#existing-user-btn", hideArea);
 
 
-/* ---------------Edamam--------------- */
 
 
 //Retrieve Nutrition Data for single ingredient
+
  function displayCaloriesJSON(recipeIngredients, title){
   $("#nutrition-modal-body").empty();
+
   var data = {
     title: title,
     ingr: recipeIngredients
   }; 
 
-var  url = 'https://api.edamam.com/api/nutrition-details?app_id=b134a78c&app_key=ef4e767c7f1d336096dc31d4396b7964'
+var  url = 'https://api.edamam.com/api/nutrition-details?app_id=fca693b2&app_key=d8f84042894a6b3d6e6e9be1aef536b4'
    $.ajax({
       'type': 'POST',
       'url': url,
@@ -328,19 +332,165 @@ var  url = 'https://api.edamam.com/api/nutrition-details?app_id=b134a78c&app_key
       'dataType': 'json',
       'success': function(data) {
         console.log(data);
-        var calDisplay = "<p> Calories: " + data.calories + "</p>";
-        var fatDisplay = "<p> Total Fat: " + Math.round(data.totalNutrients.FAT.quantity) + " grams</p>";
-        var fatSatDisplay = "<p> Total Saturated Fat: " + Math.round(data.totalNutrients.FASAT.quantity) + " grams</p>";
-        var fatPolyDisplay = "<p> Total Polyunsaturated Fat: " + Math.round(data.totalNutrients.FAPU.quantity) + " grams</p>";
-        var fatMonoDisplay = "<p> Total Monounsaturated Fat: " + Math.round(data.totalNutrients.FAMS.quantity) + " grams</p>";
-        // var fatTrnDisplay = "<p> Total Trans Fat: " + Math.round(data.totalNutrients.FATRN.quantity) + " grams</p>";
-        var carbsDisplay = "<p> Total Carbs: " + Math.round(data.totalNutrients.CHOCDF.quantity) + " grams</p>";
-        $("#nutrition-modal-body").append(calDisplay, fatDisplay, fatSatDisplay, fatPolyDisplay, fatMonoDisplay, carbsDisplay);   
+
+      // var NutritionalData =  $("<table>");
+      // NutritionalData.attr("class", "table");
+      // NutritionalData.append("");
+      displayNutrition(data);
+
     },
     'error': function(data) {
-        successmessage = 'Error';
-        $("label#successmessage").text(successmessage);
+
+      console.log("Nothing!!!")
+
     },
   });
+}
+
+
+
+function displayNutrition (data) {
+
+console.log(data);
+
+  var result = {
+ 
+    yield: data.yield  ? data.yield: 0 ,
+    calories: data.calories  ? data.calories: 0 ,
+    categories: {
+    fat: {
+      label: "Fat",
+      totalNutrients:
+        data.totalNutrients.FAT.quantity  ? data.totalNutrients.FAT.quantity : 0,
+      totalDaily:
+        data.totalDaily.FAT.totalDaily  ? data.totalDaily.FAT.quantity : 0,
+        subcategory: 0
+    },
+    FASAT: {
+      label: "Saturated",
+      totalNutrients:
+        data.totalNutrients.FASAT.quantity  ? data.totalNutrients.FASAT.quantity : 0,
+      totalDaily:
+        data.totalDaily.FASAT ? data.totalDaily.FASAT.quantity : 0,
+        subcategory: 1
+    },
+    FATRN: {
+      label: "Trans Fat",
+      totalNutrients:
+        data.totalNutrients.FATRN.quantity  ? data.totalNutrients.FATRN.quantity : 0,
+      totalDaily:
+        data.totalDaily.FATRN  ? data.totalDaily.FATRN.quantity : 0,
+        subcategory: 1
+    },
+    FAMS: {
+      label: "Monounsaturated",
+      totalNutrients:
+        data.totalNutrients.FAMS.quantity  ? data.totalNutrients.FAMS.quantity : 0,
+      totalDaily:
+        data.totalDaily.FAMS ? data.totalDaily.FAMS.quantity : 0,
+        subcategory: 1
+    },
+    FAPU: {
+      label: "Polyunsaturated",
+      totalNutrients:
+        data.totalNutrients.FAMS.quantity  ? data.totalNutrients.FAMS.quantity : 0,
+      totalDaily:
+        data.totalDaily.FAMS  ? data.totalDaily.FAMS.quantity : 0,
+        subcategory: 1
+    },
+    carbs: {
+      label: "Carbohydrate",
+      totalNutrients:
+        data.totalNutrients.CHOCDF.quantity  ? data.totalNutrients.CHOCDF.quantity : 0,
+      totalDaily:
+        data.totalDaily.CHOCDF  ? data.totalDaily.CHOCDF.quantity : 0,
+        subcategory: 0
+    },
+    SUGAR: {
+      label: "Sugars",
+      totalNutrients:
+        data.totalNutrients.SUGAR.quantity  ? data.totalNutrients.SUGAR.quantity : 0,
+      totalDaily:
+        data.totalDaily.SUGAR  ? data.totalDaily.SUGAR.quantity : 0,
+        subcategory: 1
+    },
+    FIBTG: {
+      label: "Fibre",
+      totalNutrients:
+        data.totalNutrients.FIBTG.quantity  ? data.totalNutrients.FIBTG.quantity : 0,
+      totalDaily:
+        data.totalDaily.FIBTG  ? data.totalDaily.FIBTG.quantity : 0,
+        subcategory: 1
+    },
+    NA: {
+      label: "Sodium",
+      totalNutrients:
+        data.totalNutrients.NA.quantity  ? data.totalNutrients.NA.quantity : 0,
+      totalDaily:
+        data.totalDaily.NA  ? data.totalDaily.NA.quantity : 0,
+        subcategory: 0
+    },
+    CHOLE: {
+      label: "Cholestrol",
+      totalNutrients:
+        data.totalNutrients.CHOLE.quantity  ? data.totalNutrients.CHOLE.quantity : 0,
+      totalDaily:
+        data.totalDaily.CHOLE  ? data.totalDaily.CHOLE.quantity : 0,
+        subcategory: 0
+    },
+    PROCNT: {
+      label: "Protein",
+      totalNutrients:
+        data.totalNutrients.PROCNT.quantity  ? data.totalNutrients.PROCNT.quantity : 0,
+      totalDaily:
+        data.totalDaily.PROCNT  ? data.totalDaily.PROCNT.quantity : 0,
+        subcategory: 0
+    }
+    }
+
+  };
+
+  
+  var tableBody = $("<tbody>").append(); 
+  var nutritionalTable = $("<table>").append(tableBody);
+  nutritionalTable.attr("id","nutitritionTable") 
+  .attr("class", "table-responsive table-bordered table-hover")
+
+   yieldDisplay=   $("<h3>").html('<th colspan="3"> Servings :' + result.yield + "</th>");
+     calDisplay=   $("<h3>").html('<th colspan="3"> Calories:' + result.calories + "</th>");  
+
+  for (let key in result.categories) {
+
+    let value = result.categories[key];
+    console.log(key, value);
+
+    if(key.subcategory === 0){
+
+    var newRow = $("<tr>")
+      .html('<th colspan="3"> <b>' + value.label + '</b>  '
+        + Math.round(value.totalNutrients)
+        + '</th> <td>'
+        + Math.round(value.totalDaily) +'%'+ '</td>');
+     newRow.addClass("Main-Category");   
+     
+    }
+
+    else{
+      
+    var newRow = $("<tr>")
+    .html('<th colspan="3">' + value.label + '  '
+      + Math.round(value.totalNutrients)
+      + '</th> <td>'
+      + Math.round(value.totalDaily) +'%'+ '</td>');
+      newRow.addClass("Sub-Category"); 
+    }
+    nutritionalTable.append(newRow);
+    
+  }
+
+  $("#nutrition-modal-body").append(yieldDisplay, calDisplay, nutritionalTable);
+  
+
+
 }
 
