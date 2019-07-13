@@ -15,6 +15,9 @@
   var database = firebase.database();
   var currentUser = null;
   var currentUserRecipes = null;
+  
+  var currentUserCustomRecipes = null;
+
   var dbState;
   var tempUserName;
 
@@ -23,14 +26,31 @@
 });
 
 
-$(document).on("click", "#fav-recipe-img-button, #fav-recipe-nav-btn", function(){
+
+
+
+$(document).on("click", "#fav-recipe-img-button", function(){
   currentUserRecipes.once("value", function(snapshot){
-    
     snapshot.forEach((child) => {
       console.log(child.val().recipe_name, 'recipe id', child.val().recipe_id);
+      displaySavedRecipes(child.val().recipe_name, child.val().recipe_id, child.val().recipe_url, child.val().recipe_image );
     });
   });
 });
+
+
+function displaySavedRecipes(rName, rID, rURL, rImageURL){
+  $(".recipe-search-container").removeClass("hidden")
+  newCard = $("<div class='card'></div>");
+  $(newCard).append("<img class='card-img-top' src='"+ rImageURL +"' alt=Card Image Cap>");
+  $(newCard).append("<div class='card-body'>");
+  $(newCard).append("<h5 class='card-title'>" + rName + "</h5>");
+  $(newCard).append("<p class='card-text'>" + 'test' + "</p>");
+  $(newCard).append("<button id='" + rID + "' recipe-name='" + rName + "' class='recipe-btn btn btn-primary' data-toggle='modal' data-target='#recipeModal'>" + 'Click here to see the recipe' + "</button>");
+  $("#recipe-search-wrapper").append(newCard);
+  
+  
+}
 
 
 $("#new-user-btn").on("click", function() {
@@ -39,9 +59,11 @@ $("#new-user-btn").on("click", function() {
     hideArea();
   currentUser = database.ref("/" +tempUserName );
   currentUserRecipes = database.ref("/" + tempUserName + "/recipes");
+  currentUserCustomRecipes = database.ref("/" + tempUserName + "/custom-recipes");
   currentUser.set({
       username : $("#new-user-input").val().trim()
   });
+  $("#users-name").text($("#existing-user-input").val().trim());
   } else alert('Username Already Exists');
 });
 
@@ -54,7 +76,9 @@ $("#existing-user-btn").on("click", function() {
     hideArea();
       currentUser = database.ref("/" + tempUserName);
       currentUserRecipes = database.ref("/" + tempUserName + "/recipes");
+      currentUserCustomRecipes = database.ref("/" + tempUserName + "/custom-recipes") ;
       console.log('you are "logged in"');
+      $("#users-name").text($("#existing-user-input").val().trim());
   } else alert("Username not found");
 });
 
@@ -212,6 +236,11 @@ function saveUserRecipe() {
   } 
   displayCaloriesJSON(ingredientArray, recipeTitle);
   displayNewUserRecipe(customRecipedata);
+  console.log(customRecipedata);
+  currentUserCustomRecipes.push({
+    recipe_name: customRecipedata.title,
+    ingrents: customRecipedata.ingr
+  });
 }
 
 
