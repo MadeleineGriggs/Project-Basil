@@ -68,7 +68,7 @@ currentUser.on("value", function(snapshot){
 //   Food2Fork API Key (Main): 6c25094e2b7ba0e57995415ce749ed94
 //   Second Test API Key: b11d8301b0ecfac319569f557e520e48
 
-var key = "4fd67c41f3d8810dc0255a68010ca17d"
+var key = "6c25094e2b7ba0e57995415ce749ed94"
 
 
 
@@ -450,11 +450,11 @@ console.log(data);
 
   };
 
-  
-  var tableBody = $("<tbody>").append(); 
+  var tableDiv= $("<div>").attr("class", " table-responsive table-bordered table-hover" );
+  var tableBody = $("<tbody>"); 
   var nutritionalTable = $("<table>").append(tableBody);
   nutritionalTable.attr("id","nutitritionTable") 
-  .attr("class", "table-responsive table-bordered table-hover")
+  .attr("class", "table")
 
    yieldDisplay=   $("<h3>").html('<th colspan="3"> Servings :' + result.yield + "</th>");
      calDisplay=   $("<h3>").html('<th colspan="3"> Calories:' + result.calories + "</th>");  
@@ -467,7 +467,7 @@ console.log(data);
     if(key.subcategory === 0){
 
     var newRow = $("<tr>")
-      .html('<th colspan="3"> <b>' + value.label + '</b>  '
+      .html('<th scope="col"> <b>' + value.label + '</b>  '
         + Math.round(value.totalNutrients)
         + '</th> <td>'
         + Math.round(value.totalDaily) +'%'+ '</td>');
@@ -478,7 +478,7 @@ console.log(data);
     else{
       
     var newRow = $("<tr>")
-    .html('<th colspan="3">' + value.label + '  '
+    .html('<th scope="col">' + value.label + '  '
       + Math.round(value.totalNutrients)
       + '</th> <td>'
       + Math.round(value.totalDaily) +'%'+ '</td>');
@@ -487,8 +487,8 @@ console.log(data);
     nutritionalTable.append(newRow);
     
   }
-
-  $("#nutrition-modal-body").append(yieldDisplay, calDisplay, nutritionalTable);
+  $(tableDiv).append(nutritionalTable);
+  $("#nutrition-modal-body").append(yieldDisplay, calDisplay, tableDiv);
   
 
 
