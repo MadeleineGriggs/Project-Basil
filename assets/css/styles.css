@@ -256,12 +256,11 @@ a:hover {
     color: var(--olive);
 }
 
-.card button {
-    width: 17rem;
+.card .recipe-btn {
+    width: 16rem;
     padding: 5px 10px;
     margin-top: 1.5rem;
-    margin-left: -0.8rem;
-    font-size: 1.25rem;
+    font-size: 1.15rem;
 }
 .card button:focus {
     outline-color: var(--olive-light);

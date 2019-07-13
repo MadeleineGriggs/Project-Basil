@@ -29,7 +29,7 @@
 
 
 
-$(document).on("click", "#fav-recipe-img-button", function(){
+$(document).on("click", "#fav-recipe-img-button, #fav-recipe-nav-btn", function(){
   currentUserRecipes.once("value", function(snapshot){
     snapshot.forEach((child) => {
       console.log(child.val().recipe_name, 'recipe id', child.val().recipe_id);
@@ -40,12 +40,14 @@ $(document).on("click", "#fav-recipe-img-button", function(){
 
 
 function displaySavedRecipes(rName, rID, rURL, rImageURL){
+
+  $("#recipe-search-wrapper").empty();
   $(".recipe-search-container").removeClass("hidden")
   newCard = $("<div class='card'></div>");
   $(newCard).append("<img class='card-img-top' src='"+ rImageURL +"' alt=Card Image Cap>");
   $(newCard).append("<div class='card-body'>");
   $(newCard).append("<h5 class='card-title'>" + rName + "</h5>");
-  $(newCard).append("<p class='card-text'>" + 'test' + "</p>");
+  $(newCard).append("<p class='card-text'>" + rURL + "</p>");
   $(newCard).append("<button id='" + rID + "' recipe-name='" + rName + "' class='recipe-btn btn btn-primary' data-toggle='modal' data-target='#recipeModal'>" + 'Click here to see the recipe' + "</button>");
   $("#recipe-search-wrapper").append(newCard);
   
@@ -333,7 +335,7 @@ $(window).scroll(function() {
   $(document).on("click", "#recipe-img-button, #recipe-nav-custom-btn", scrolltoCustomRecipeArea);
   $(document).on("click", ".recipe-btn", retrieveSingleRecipe);
   $(document).on("click", ".form-close", dismissIngredient);
-  $(document).on("click", "#saveRecipe", saveUserRecipe);
+  $(document).on("click", "#saveUserRecipe", saveUserRecipe);
   $(document).on("click", "#top-recipe-img-button, #top-recipe-nav-btn", retreiveRecipes);
   $(document).on("click", "#recipe-search-btn, #recipe-nav-search-btn", retreiveRecipes);
   // $(document).on("click", "#new-user-btn", hideArea);
