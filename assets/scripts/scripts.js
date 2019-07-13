@@ -15,6 +15,9 @@
   var database = firebase.database();
   var currentUser = null;
   var currentUserRecipes = null;
+  
+  var currentUserCustomRecipes = null;
+
   var dbState;
   var tempUserName;
 
@@ -56,6 +59,7 @@ $("#new-user-btn").on("click", function() {
     hideArea();
   currentUser = database.ref("/" +tempUserName );
   currentUserRecipes = database.ref("/" + tempUserName + "/recipes");
+  currentUserCustomRecipes = database.ref("/" + tempUserName + "/custom-recipes");
   currentUser.set({
       username : $("#new-user-input").val().trim()
   });
@@ -71,6 +75,7 @@ $("#existing-user-btn").on("click", function() {
     hideArea();
       currentUser = database.ref("/" + tempUserName);
       currentUserRecipes = database.ref("/" + tempUserName + "/recipes");
+      currentUserCustomRecipes = database.ref("/" + tempUserName + "/custom-recipes") ;
       console.log('you are "logged in"');
   } else alert("Username not found");
 });
@@ -230,7 +235,7 @@ function saveUserRecipe() {
   displayCaloriesJSON(ingredientArray, recipeTitle);
   displayNewUserRecipe(customRecipedata);
   console.log(customRecipedata);
-  currentUserRecipes.push({
+  currentUserCustomRecipes.push({
     recipe_name: customRecipedata.title,
     ingrents: customRecipedata.ingr
   });
