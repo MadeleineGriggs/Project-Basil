@@ -29,6 +29,7 @@ body {
     left: 0;
     top: 0;
     background-image: url("../images/flatlay_baking.jpg");
+    background-color: var(--olive-dark);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -114,6 +115,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-bottom: 2rem;
 }
 
 .recipe-area-container h1 {
@@ -239,12 +241,14 @@ a:hover {
     margin-right: 1rem;
     border-radius: 3px;
     padding: 15px;
+    max-width: 20rem;
     background-color: var(--cream);
 }
 
 .card a {
     color: var(--olive-light);
     font-size: 0.75rem;
+    white-space: normal;
 }
 
 .card a:hover {
@@ -252,9 +256,11 @@ a:hover {
 }
 
 .card button {
-    width: 23rem;
-    padding: 5px 30px;
+    width: 17rem;
+    padding: 5px 10px;
     margin-top: 1.5rem;
+    margin-left: -0.8rem;
+    font-size: 1.25rem;
 }
 .card button:focus {
     outline-color: var(--olive-light);
@@ -276,9 +282,9 @@ a:hover {
 }
 .card img {
     border-radius: 3px;
-    max-width: 100%;
+    max-width: 500px;
     height: auto;
-    max-height: 400px;
+    max-height: 300px;
     object-fit: cover;
 }
 
@@ -300,6 +306,9 @@ a:hover {
     padding: 3rem;
 }
 
+.modal-body span a{
+    color: var(--olive-dark)!important;
+}
 .modal-footer .btn-secondary {
     font-family: var(--title-font);
     font-size: 1.15rem;
@@ -350,4 +359,124 @@ width: 40rem;
 .nutrition-modal-content {
     margin-left: 3rem;
     width: 40rem;
+}
+
+/* Styling related to the custom user recipe area. */
+
+#custom-recipe-container {
+    width: 80vw;
+    margin-top: 3rem;
+    background-color: var(--cream);
+    padding: 2rem;
+    padding-left: 4rem;
+}
+
+#custom-recipe-container h2 {
+    font-family: var(--title-font);
+    text-align: center;
+    font-size: 2rem;
+    color: var(--olive);
+}
+#custom-recipe-container .form-control {
+    width: 70%;
+}
+
+#custom-recipe-container .close {
+    background-color: var(--dark-taupe);
+    color: var(--cream);
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    margin-top: -2rem;
+    padding-bottom: 5px;
+    float: left;
+    margin-left: 75%;
+    
+}
+
+#custom-recipe-container button {
+    margin-top: 2rem;
+    margin-right: 1.5rem;
+}
+
+#custom-recipe-container #saveRecipe {
+    font-family: var(--title-font);
+    font-size: 1.15rem;
+    background-color: var(--olive);
+    color: var(--cream);
+    padding-left: 20px;
+    padding-right: 20px;
+    border: 0px solid white;
+    border-radius: 3px;
+}
+
+#custom-recipe-container #add-recipe-item-btn {
+    font-family: var(--title-font);
+    font-size: 1.15rem;
+    background-color: var(--dark-taupe);
+    color: var(--cream);
+    padding-left: 20px;
+    padding-right: 20px;
+    border: 0px solid white;
+    border-radius: 3px;
+}
+
+#custom-recipe-container label {
+    font-family: var(--title-font);
+    color: var(--dark-taupe);
+    font-size: 1.15rem;
+}
+
+#custom-recipe-container label[for="recipe-form-item-title"] {
+    font-family: var(--title-font);
+    font-size: 1.5rem;
+    color: var(--olive-dark);
+}
+
+#custom-recipe-container .form-title {
+    padding: 25px;
+}
+
+
+/* Styling related to the sticky nav */
+
+.hidden-nav {
+    height: 0;
+    max-height: 0;
+    display: none;
+}
+
+.visible-nav {
+    display: block;
+    height: auto;
+    max-height: 15rem;
+}
+
+#sticky-nav {
+    background-color: var(--olive);
+    color: var(--cream);
+    border-bottom: 2px solid var(--dark-cream);
+    transition: max-height 0.2s ease-out;
+
+}
+
+#sticky-nav a {
+    color: var(--cream);
+    font-family: var(--title-font);
+    font-size: 1.25rem;
+}
+
+#sticky-nav a:hover {
+    color: var(--dark-cream);
+    background-color: var(--olive-dark);
+}
+
+#sticky-nav input {
+   margin-bottom: 0rem;
+   margin-left: 5rem;
+   font-family: var(--body-font);
+   color: var(--charcoal);
+   background-color: var(--cream);
+   padding: 5px 5px;
+   margin-top: 0.25rem;
 }

@@ -12,8 +12,8 @@
 </head>
 <body>
 
+  <!-- User log in area -->
   <div class="landing-container">
-
     <div class="landing-card">
 
         <h1>Project Basil</h1>
@@ -36,8 +36,34 @@
     </div>
   </div>
 
+  <!-- Custom User Recipes Form Area -->
+  <div class="container-fluid collapse" id="custom-recipe-container">
+    <h2>Create a New Recipe</h2>
+    <form id="recipe-form-group">
+        <div class="form-group form-group-title">
+            <label for="recipe-form-item-title">Title</label>
+            <input type="text" class="form-control form-title" id="recipe-form-item-title" placeholder="Recipe Title">
+          </div>
+      <div class="form-group form-group-item">
+        <label for="recipe-form-item-1">Ingredient</label>
+        <input type="text" class="form-control form-item" placeholder="1 cup flour">
+      </div>
+      <div class="form-group form-group-item">
+        <label for="recipe-form-item-2">Ingredient</label>
+        <input type="text" class="form-control form-item" placeholder="2 cups sugar">
+        <button type="button" class="close form-close" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
 
-<div class="recipe-area-container hidden">
+    </form>
+    <button type="button" class="btn btn-primary" id="add-recipe-item-btn">Add Another Item</button>
+    <button type="button" class="btn btn-primary" id="saveRecipe"  data-toggle="modal" data-target="#recipeModal">Save Recipe</button>
+  </div>
+
+
+<!-- Main App Area, where users can search etc. -->
+<div class="recipe-area-container">
     <h1>Welcome, <span id="users-name">User</span>.</h1>
     <label for="recipe-search">
     Discover New Recipes
@@ -58,13 +84,33 @@
                     <p>Top Recipes This Week</p>
                 </div>
         </a>
-        <a href="#">
+        <a data-toggle="collapse" href="#custom-recipe-container" role="button" aria-expanded="false" aria-controls="custom-recipe-container">
             <div class="img-button" id="recipe-img-button">
-                    <p>Another Button to Click</p>
+                    <p>Add a Custom Recipe</p>
                 </div>
         </a>
     </div>
 
+    <!-- A Nav that becomes visible once the user has scrolled past the main navigation area-->
+    <div class="fixed-top hidden-nav" id="sticky-nav">
+        <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Your Favourite Recipes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Top Recipes This Week</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Create a Custom Recipe</a>
+            </li>
+            <li class="nav-item">
+                <input type="text"placeholder="search">
+              </li>
+        </ul>
+      </div>
+
+
+<!-- Where the searched recipes get displayed. -->
     <div class="recipe-search-container hidden">
         <div id="recipe-search-display">
         <h2>Searched Recipes</h2>
@@ -100,7 +146,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save Recipe</button>
+          <button type="button" id="saveRecipe" class="btn btn-primary">Save Recipe</button>
         </div>
       </div>
 
