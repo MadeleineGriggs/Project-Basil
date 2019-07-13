@@ -212,6 +212,11 @@ function saveUserRecipe() {
   } 
   displayCaloriesJSON(ingredientArray, recipeTitle);
   displayNewUserRecipe(customRecipedata);
+  console.log(customRecipedata);
+  currentUserRecipes.push({
+    recipe_name: customRecipedata.title,
+    ingrents: customRecipedata.ingr
+  });
 }
 
 
