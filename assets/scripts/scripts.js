@@ -92,7 +92,7 @@ currentUser.on("value", function(snapshot){
 //   Food2Fork API Key (Main): 6c25094e2b7ba0e57995415ce749ed94
 //   Second Test API Key: b11d8301b0ecfac319569f557e520e48
 
-var key = "4fd67c41f3d8810dc0255a68010ca17d"
+var key = "b11d8301b0ecfac319569f557e520e48";
 
 
 
@@ -239,7 +239,7 @@ function saveUserRecipe() {
   console.log(customRecipedata);
   currentUserCustomRecipes.push({
     recipe_name: customRecipedata.title,
-    ingrents: customRecipedata.ingr
+    ingredients: customRecipedata.ingr
   });
 }
 
@@ -290,11 +290,9 @@ function displaySingleRecipe(response) {
     console.log(results.recipe.title, results.recipe.recipe_id, results.recipe.source_url, results.recipe.image_url);
     // selectedRecipe = new recipeConstructor(results.recipe.title, results.recipe.recipe_id, results.recipe.source_url, results.recipe.image_url, 0);
     currentUserRecipes.push({
-      
       recipe_name: results.recipe.title, recipe_id: results.recipe.recipe_id, recipe_url: results.recipe.source_url, recipe_image: results.recipe.image_url, usage_count: 0
-    
   });
- results= null;
+ results = null;
     });
 
 
