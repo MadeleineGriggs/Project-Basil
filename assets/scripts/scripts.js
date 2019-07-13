@@ -36,7 +36,21 @@ $(document).on("click", "#fav-recipe-img-button, #fav-recipe-nav-btn", function(
       displaySavedRecipes(child.val().recipe_name, child.val().recipe_id, child.val().recipe_url, child.val().recipe_image );
     });
   });
+  currentUserCustomRecipes.once("value", function(snapshot){
+    snapshot.forEach((child) => {
+      displaySavedCustomRecipes(child.val().recipe_name, child.val().ingredients);
+    })
+  });
 });
+
+function displaySavedCustomRecipes(name, ingredients) {
+  customCard = $("<div class='card'></div>");
+  $(customCard).append("<div class='card-body'></div>");
+  $(customCard).append("<h5 class='card-title'>" + name + "</h5>");
+  $(customCard).append("<h6 class='card-subtitle mb-2 text-muted'>" + 'Custom Recipe' + "</h6>");
+  $(customCard).append("<p class='card-text'>" + ingredients + "</p>");
+  $("#recipe-search-wrapper").append(customCard);
+}
 
 
 function displaySavedRecipes(rName, rID, rURL, rImageURL){
@@ -47,12 +61,12 @@ function displaySavedRecipes(rName, rID, rURL, rImageURL){
   $(newCard).append("<img class='card-img-top' src='"+ rImageURL +"' alt=Card Image Cap>");
   $(newCard).append("<div class='card-body'>");
   $(newCard).append("<h5 class='card-title'>" + rName + "</h5>");
-  $(newCard).append("<p class='card-text'>" + rURL + "</p>");
+  $(newCard).append("<a href='" + rURL + "'>" + 'Explore Recipe' + "</a>");
+  // $(newCard).append("<p class='card-text'>" + rURL + "</p>");
   $(newCard).append("<button id='" + rID + "' recipe-name='" + rName + "' class='recipe-btn btn btn-primary' data-toggle='modal' data-target='#recipeModal'>" + 'Click here to see the recipe' + "</button>");
   $("#recipe-search-wrapper").append(newCard);
-  
-  
 }
+
 
 
 $("#new-user-btn").on("click", function() {
@@ -94,11 +108,7 @@ currentUser.on("value", function(snapshot){
 //   Food2Fork API Key (Main): 6c25094e2b7ba0e57995415ce749ed94
 //   Second Test API Key: b11d8301b0ecfac319569f557e520e48
 
-<<<<<<< HEAD
-var key = "b11d8301b0ecfac319569f557e520e48";
-=======
 var key = "6c25094e2b7ba0e57995415ce749ed94"
->>>>>>> master
 
 
 
