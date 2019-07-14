@@ -56,11 +56,7 @@ function displaySavedCustomRecipes(name, ingredients) {
   }).then(function(response){
     var randomPic;
     var results = response.data;
-    console.log(results);
     randomPic = results.images.original.url;
-    console.log("also rand "+randomPic);
-  
-    console.log("this is random pic: " + randomPic);
     customCard = $("<div class='card'></div>");
     $(customCard).append("<img class='card-img-top' src='" + randomPic +"' alt=Card Image Cap>");
     $(customCard).append("<div class='card-body'></div>");
@@ -99,7 +95,10 @@ $("#new-user-btn").on("click", function() {
       username : $("#new-user-input").val().trim()
   });
   $("#users-name").text($("#existing-user-input").val().trim());
-  } else alert('Username Already Exists');
+  } else {
+    userAlert = $("<div class='alert alert-warning alert-dismissible fade show' role='alert'><strong>Username Already Exists</strong><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
+    $(".landing-card").prepend(userAlert)
+  };
 });
 
 
@@ -114,7 +113,12 @@ $("#existing-user-btn").on("click", function() {
       currentUserCustomRecipes = database.ref("/" + tempUserName + "/custom-recipes") ;
       console.log('you are "logged in"');
       $("#users-name").text($("#existing-user-input").val().trim());
-  } else alert("Username not found");
+  } else {
+    userAlert = $("<div class='alert alert-warning alert-dismissible fade show' role='alert'><strong>Username Not Found</strong><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
+    $(".landing-card").prepend(userAlert);
+    // alert("Username not found");
+  } 
+    
 });
 
 if (currentUser !== null){
