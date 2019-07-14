@@ -36,7 +36,36 @@ $(document).on("click", "#fav-recipe-img-button, #fav-recipe-nav-btn", function(
       displaySavedRecipes(child.val().recipe_name, child.val().recipe_id, child.val().recipe_url, child.val().recipe_image );
     });
   });
+  currentUserCustomRecipes.once("value", function(snapshot){
+    snapshot.forEach((child) => {
+      displaySavedCustomRecipes(child.val().recipe_name, child.val().ingredients);
+    })
+  });
 });
+
+
+
+
+function displaySavedCustomRecipes(name, ingredients) {
+  $.ajax({
+    url: "https://api.giphy.com/v1/gifs/translate",
+    method: "GET",
+    data: {"api_key" : "BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9",
+    "s": name,
+    "weirdness": "10"}
+  }).then(function(response){
+    var randomPic;
+    var results = response.data;
+    randomPic = results.images.original.url;
+    customCard = $("<div class='card'></div>");
+    $(customCard).append("<img class='card-img-top' src='" + randomPic +"' alt=Card Image Cap>");
+    $(customCard).append("<div class='card-body'></div>");
+    $(customCard).append("<h5 class='card-title'>" + name + "</h5>");
+    $(customCard).append("<h6 class='card-subtitle mb-2 text-muted'>" + 'You Custom Recipe' + "</h6>");
+    $(customCard).append("<p class='card-text'>" + ingredients + "</p>");
+    $("#recipe-search-wrapper").append(customCard);
+  });
+}
 
 
 function displaySavedRecipes(rName, rID, rURL, rImageURL){
@@ -47,12 +76,12 @@ function displaySavedRecipes(rName, rID, rURL, rImageURL){
   $(newCard).append("<img class='card-img-top' src='"+ rImageURL +"' alt=Card Image Cap>");
   $(newCard).append("<div class='card-body'>");
   $(newCard).append("<h5 class='card-title'>" + rName + "</h5>");
-  $(newCard).append("<p class='card-text'>" + rURL + "</p>");
+  $(newCard).append("<a href='" + rURL + "'>" + 'Explore Recipe' + "</a>");
+  // $(newCard).append("<p class='card-text'>" + rURL + "</p>");
   $(newCard).append("<button id='" + rID + "' recipe-name='" + rName + "' class='recipe-btn btn btn-primary' data-toggle='modal' data-target='#recipeModal'>" + 'Click here to see the recipe' + "</button>");
   $("#recipe-search-wrapper").append(newCard);
-  
-  
 }
+
 
 
 $("#new-user-btn").on("click", function() {
@@ -66,7 +95,10 @@ $("#new-user-btn").on("click", function() {
       username : $("#new-user-input").val().trim()
   });
   $("#users-name").text($("#existing-user-input").val().trim());
-  } else alert('Username Already Exists');
+  } else {
+    userAlert = $("<div class='alert alert-warning alert-dismissible fade show' role='alert'><strong>Username Already Exists</strong><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
+    $(".landing-card").prepend(userAlert)
+  };
 });
 
 
@@ -81,7 +113,12 @@ $("#existing-user-btn").on("click", function() {
       currentUserCustomRecipes = database.ref("/" + tempUserName + "/custom-recipes") ;
       console.log('you are "logged in"');
       $("#users-name").text($("#existing-user-input").val().trim());
-  } else alert("Username not found");
+  } else {
+    userAlert = $("<div class='alert alert-warning alert-dismissible fade show' role='alert'><strong>Username Not Found</strong><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
+    $(".landing-card").prepend(userAlert);
+    // alert("Username not found");
+  } 
+    
 });
 
 if (currentUser !== null){
@@ -241,7 +278,7 @@ function saveUserRecipe() {
   console.log(customRecipedata);
   currentUserCustomRecipes.push({
     recipe_name: customRecipedata.title,
-    ingrents: customRecipedata.ingr
+    ingredients: customRecipedata.ingr
   });
 }
 
@@ -292,11 +329,9 @@ function displaySingleRecipe(response) {
     console.log(results.recipe.title, results.recipe.recipe_id, results.recipe.source_url, results.recipe.image_url);
     // selectedRecipe = new recipeConstructor(results.recipe.title, results.recipe.recipe_id, results.recipe.source_url, results.recipe.image_url, 0);
     currentUserRecipes.push({
-      
       recipe_name: results.recipe.title, recipe_id: results.recipe.recipe_id, recipe_url: results.recipe.source_url, recipe_image: results.recipe.image_url, usage_count: 0
-    
   });
- results= null;
+ results = null;
     });
 
 
