@@ -43,13 +43,32 @@ $(document).on("click", "#fav-recipe-img-button, #fav-recipe-nav-btn", function(
   });
 });
 
+
+
+
 function displaySavedCustomRecipes(name, ingredients) {
-  customCard = $("<div class='card'></div>");
-  $(customCard).append("<div class='card-body'></div>");
-  $(customCard).append("<h5 class='card-title'>" + name + "</h5>");
-  $(customCard).append("<h6 class='card-subtitle mb-2 text-muted'>" + 'Custom Recipe' + "</h6>");
-  $(customCard).append("<p class='card-text'>" + ingredients + "</p>");
-  $("#recipe-search-wrapper").append(customCard);
+  $.ajax({
+    url: "https://api.giphy.com/v1/gifs/translate",
+    method: "GET",
+    data: {"api_key" : "BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9",
+    "s": name,
+    "weirdness": "10"}
+  }).then(function(response){
+    var randomPic;
+    var results = response.data;
+    console.log(results);
+    randomPic = results.images.original.url;
+    console.log("also rand "+randomPic);
+  
+    console.log("this is random pic: " + randomPic);
+    customCard = $("<div class='card'></div>");
+    $(customCard).append("<img class='card-img-top' src='" + randomPic +"' alt=Card Image Cap>");
+    $(customCard).append("<div class='card-body'></div>");
+    $(customCard).append("<h5 class='card-title'>" + name + "</h5>");
+    $(customCard).append("<h6 class='card-subtitle mb-2 text-muted'>" + 'You Custom Recipe' + "</h6>");
+    $(customCard).append("<p class='card-text'>" + ingredients + "</p>");
+    $("#recipe-search-wrapper").append(customCard);
+  });
 }
 
 
