@@ -391,65 +391,65 @@ console.log(data);
   var servings = 0;
   var calories = 0;
   var fatQuantity = 0;
-  var fatLabel = '';
-  var fatUnit = '';
+  var  fatLabel = "Fat";
+  var    fatUnit =  "g";
   var fatPercentDaily = 0;
   var FATRNQuantity = 0;
-  var FATRNUnit = '';
-  var FATRNLabel = '';
+  var FATRNUnit = "g";
+  var  FATRNLabel = "Trans";
   var FATRNPercentDaily = 0;
   var FASATQuantity = 0;
-  var FASATUnit = '';
-  var FASATLabel = '';
+  var FASATUnit = "g";
+  var  FASATLabel = "Saturated";
   var FASATPercentDaily = 0;
   var FAMSQuantity = 0;
-  var FAMSUnit = '';
+  var  FAMSLabel = "Monounsaturated";
   var FAMSPercentDaily = 0;
-  var FAMSLabel = '';
+  var FAMSUnit = "g";
   var FAPUQuantity = 0;
-  var FAPUUnit = '';
+  var FAPUUnit = "g";
   var FAPUPercentDaily = 0;
-  var FAPULabel = '';
+  var FAPULabel = "Polyunsaturated";
   var CHOCDFQuantity = 0;
-  var CHOCDFUnit = '';
+  var CHOCDFUnit = "g";
   var CHOCDFPercentDaily = 0;
-  var CHOCDFLabel = '';
+  var CHOCDFLabel = "Carbs";
   var FIBTGQuantity = 0;
-  var FIBTGUnit = '';
+  var FIBTGUnit = "g";
   var FIBTGPercentDaily = 0;
-  var FIBTGLabel = '';
+  var FIBTGLabel = "Fibre";
   var SUGARQuantity = 0;
-  var SUGARUnit = '';
-  var SUGARLable = 0;
+  var SUGARUnit = "g";
+  var SUGARLabel = "Sugars";
   var SUGARPercentDaily = 0;
   var PROCNTQuantity = 0;
-  var PROCNTUnit = '';
-  var PROCNTLabel = '';
+  var PROCNTUnit = "g";
+  var PROCNTLabel = "Protein";
   var PROCNTPercentDaily = 0;
   var CHOLEQuantity = 0;
-  var CHOLEUnit = '';
-  var CHOLELabel = '';
+  var CHOLEUnit = "mg";
+  var CHOLELabel = "Cholesterol";
   var CHOLEPercentDaily = 0;
   var NAQuantity = 0;
-  var NALabel = '';
-  var NAUnit = '';
+  var NALabel = "Sodium";
+  var NAUnit = "mg";
   var NAPercentDaily = 0;
   var CAQuantity = 0;
-  var CAUnit = '';
-  var CALabel = '';
+  var CAUnit = "mg";
+  var CALabel = "Calcium";
   var CAPercentDaily = 0;
   var FEQuantity = 0;
   var FEUnit = '';
   var FEPercentDaily = 0;
-  var FELabel = '';
+  var FELabel = "Iron";
   var VITA_RAEQuantity = 0;
   var VITA_RAEUnit = '';
   var VITA_RAEPercentDaily = 0;
-  var VITA_RAELabel = '';
+  var VITA_RAELabel = "Vitamin A";
   var VITCQuantity = 0;
   var VITCUnit = '';
   var VITCPercentDaily = 0;
-  var VITCLabel = '';
+  var  VITCLabel = "Vitamin C";
 
   console.log("I don't need to log this");
 
@@ -465,135 +465,121 @@ console.log(data);
       //Total Fat
       if (typeof data.totalNutrients.FAT  !== 'undefined' && data.totalNutrients.FAT   !== null)
       {  fatQuantity = Math.round(data.totalNutrients.FAT.quantity) ;
-      fatLabel = "Fat";
-      fatUnit =  "g";
       if (typeof data.totalDaily.FAT  !== 'undefined' && data.totalDaily.FAT   !== null)
       {  fatPercentDaily = Math.round(data.totalDaily.FAT.quantity); }
-      } else{ console.log("N/A")}
+      } 
 
       //Total Saturated Fat
       if (typeof data.totalNutrients.FASAT  !== 'undefined' && data.totalNutrients.FASAT   !== null)
-      { FASATQuantity = Math.round(data.totalNutrients.FASAT.quantity) ;
-      FASATLabel = "Saturated";
-      FASATUnit =  "g";
+      { FASATQuantity = Math.round(data.totalNutrients.FASAT.quantity) ;  
       if (typeof data.totalDaily.FASAT  !== 'undefined' && data.totalDaily.FASAT   !== null)
       {  FASATPercentDaily = Math.round(data.totalDaily.FASAT.quantity) ;} 
-      } else{ console.log("N/A")}
+      } 
 
       //Trans Fat
       if (typeof data.totalNutrients.FATRN  !== 'undefined' && data.totalNutrients.FATRN   !== null)
-      {       FATRNQuantity = Math.round(data.totalNutrients.FATRN.quantity) ;
-      FATRNLabel = "Trans";
-      FATRNUnit =  "g";
-      } else{ console.log("N/A")}
+      {       FATRNQuantity = Math.round(data.totalNutrients.FATRN.quantity) ;   
+      if (typeof data.totalDaily.FATRN  !== 'undefined' && data.totalDaily.FATRN   !== null)
+      {  FATRNPercentDaily = Math.round(data.totalDaily.FATRN.quantity) ;} 
+      } 
 
       //Monounsaturated Fat       
       if (typeof data.totalNutrients.FAMS !== 'undefined' && data.totalNutrients.FAMS  !== null)
       {      FAMSQuantity = Math.round(data.totalNutrients.FAMS.quantity ) ;
-      FAMSLabel = "MonoUnsaturated";
-      FAMSUnit =  "g";
+          
       if (typeof data.totalDaily.FAMS !== 'undefined' && data.totalDaily.FAMS  !== null)
       {FAMSPercentDaily = Math.round(data.totalDaily.FAMS.quantity) ;}
-      } else{ console.log("N/A")}  
+      } 
 
       //Polyunsaturated Fat     
       if (typeof data.totalNutrients.FAPU  !== 'undefined'  &&  data.totalNutrients.FAPU   !== null)
       {      FAPUQuantity = Math.round(data.totalNutrients.FAPU.quantity ) ;
-      FAPULabel = "Polyunsaturated";
-      FAPUUnit =  "g";
+  
       if (typeof data.totalDaily.FAPU !== 'undefined' && data.totalDaily.FAPU  !== null)
       {FAPUPercentDaily = Math.round(data.totalDaily.FAPU.quantity) ;}
-      } else{ console.log("N/A")}  
+      } 
 
       //Carbs
       if (typeof data.totalNutrients.CHOCDF  !== 'undefined'  &&  data.totalNutrients.CHOCDF   !== null)
       {      CHOCDFQuantity = Math.round(data.totalNutrients.CHOCDF.quantity ) ;
-      CHOCDFLabel = "Carbs";
-      CHOCDFUnit =  "g";
+     
       if (typeof data.totalDaily.CHOCDF !== 'undefined' && data.totalDaily.CHOCDF  !== null)
       {CHOCDFPercentDaily = Math.round(data.totalDaily.CHOCDF.quantity) ;}
-      } else{ console.log("N/A")}  
+      } 
 
         //Sugar
        if (typeof data.totalNutrients.SUGAR  !== 'undefined' &&  data.totalNutrients.SUGAR   !== null)
        {      SUGARQuantity = Math.round(data.totalNutrients.SUGAR.quantity ) ;
-        SUGARLabel = "Sugars";
-        SUGARUnit =  "g";
+     
         if (typeof data.totalDaily.SUGAR !== 'undefined' && data.totalDaily.SUGAR  !== null)
         {SUGARPercentDaily = Math.round(data.totalDaily.SUGAR.quantity) ;}
-        } else{ console.log("N/A")}  
+        } 
 
         //Fiber
         if (typeof data.totalNutrients.FIBTG  !== 'undefined'  &&  data.totalNutrients.FIBTG   !== null)
         {      FIBTGQuantity = Math.round(data.totalNutrients.FIBTG.quantity ) ;
-        FIBTGLabel = "Fiber";
-        FIBTGUnit =  "g";
+       
         if (typeof data.totalDaily.FIBTG !== 'undefined' && data.totalDaily.FIBTG  !== null)
         {FIBTGPercentDaily = Math.round(data.totalDaily.FIBTG.quantity) ;}
-        } else{ console.log("N/A")}  
+        } 
 
         //Protein
         if (typeof data.totalNutrients.PROCNT  !== 'undefined'  &&  data.totalNutrients.PROCNT   !== null)
         {      PROCNTQuantity = Math.round(data.totalNutrients.PROCNT.quantity ) ;
-        PROCNTLabel = "Protein";
-        PROCNTUnit =  "g";
+      
         if (typeof data.totalDaily.PROCNT !== 'undefined' && data.totalDaily.PROCNT  !== null)
         {PROCNTPercentDaily = Math.round(data.totalDaily.PROCNT.quantity) ;}
-        } else{ console.log("N/A")}  
+        } 
 
         //Cholestrol  
         if (typeof data.totalNutrients.CHOLE  !== 'undefined'  &&  data.totalNutrients.CHOLE   !== null)
         {      CHOLEQuantity = Math.round(data.totalNutrients.CHOLE.quantity ) ;
-        CHOLELabel = "Cholestrol";
-        CHOLEUnit =  "mg";
+   
         if (typeof data.totalDaily.CHOLE !== 'undefined' && data.totalDaily.CHOLE  !== null)
         {CHOLEPercentDaily = Math.round(data.totalDaily.CHOLE.quantity) ;}
-        } else{ console.log("N/A")}  
+        } 
 
         //Sodium
         if (typeof data.totalNutrients.NA  !== 'undefined'  &&  data.totalNutrients.NA   !== null)
         {      NAQuantity = Math.round(data.totalNutrients.FAPU.quantity ) ;
-        NALabel = "Sodium";
-        NAUnit =  "mg";
+     
         if (typeof data.totalDaily.NA !== 'undefined' && data.totalDaily.NA  !== null)
         {NAPercentDaily = Math.round(data.totalDaily.NA.quantity) ;}
-        } else{ console.log("N/A")}  
+        } 
 
         //Calcium
         if (typeof data.totalNutrients.CA  !== 'undefined'  &&  data.totalNutrients.CA   !== null)
         {      CAQuantity = Math.round(data.totalNutrients.CA.quantity ) ;
-        CALabel = "Calcium";
         CAUnit =  "mg";
         if (typeof data.totalDaily.CA !== 'undefined' && data.totalDaily.CA  !== null)
         {CAPercentDaily = Math.round(data.totalDaily.CA.quantity) ;}
-        } else{ console.log("N/A")}  
+        }   
 
         //Iron
         if (typeof data.totalNutrients.FE  !== 'undefined'  &&  data.totalNutrients.FE   !== null)
         {      FEQuantity = Math.round(data.totalNutrients.FE.quantity ) ;
-        FELabel = "Iron";
         FEUnit =  "mg";
         if (typeof data.totalDaily.FE !== 'undefined' && data.totalDaily.FE  !== null)
         {FEPercentDaily = Math.round(data.totalDaily.FE.quantity) ;}
-        } else{ console.log("N/A")}  
+        } 
 
         //Vitamin C
         if (typeof data.totalNutrients.VITC  !== 'undefined'  &&  data.totalNutrients.VITC   !== null)
         {      VITCQuantity = Math.round(data.totalNutrients.VITC.quantity ) ;
-        VITCLabel = "Vitamin C";
+       
         VITCUnit =  "mg";
         if (typeof data.totalDaily.VITC !== 'undefined' && data.totalDaily.VITC  !== null)
         {VITCPercentDaily = Math.round(data.totalDaily.VITC.quantity) ;}
-        } else{ console.log("N/A")}  
+        } 
 
         //VITA_RAE
         if (typeof data.totalNutrients.VITA_RAE  !== 'undefined'  &&  data.totalNutrients.VITA_RAE   !== null)
         {      VITA_RAEQuantity = Math.round(data.totalNutrients.VITA_RAE.quantity ) ;
-        VITA_RAELabel = "Vitamin A";
-        VITA_RAEUnit =  "µg";
+  
+        VITA_RAEUnit =  data.totalNutrients.VITA_RAE.unit;
         if (typeof data.totalDaily.VITA_RAE !== 'undefined' && data.totalDaily.VITA_RAE  !== null)
         {VITA_RAEPercentDaily = Math.round(data.totalDaily.VITA_RAE.quantity) ;}
-        } else{ console.log("N/A")}  
+        } 
 
 
   } 
