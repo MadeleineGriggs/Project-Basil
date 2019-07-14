@@ -131,7 +131,7 @@ currentUser.on("value", function(snapshot){
 //   Food2Fork API Key (Main): 6c25094e2b7ba0e57995415ce749ed94
 //   Second Test API Key: b11d8301b0ecfac319569f557e520e48
 
-var key = "6c25094e2b7ba0e57995415ce749ed94"
+var key = "49d0a6d68d5cc628b7d10db08a79038e"
 
 
 
@@ -336,7 +336,7 @@ function displaySingleRecipe(response) {
 
 
 
-//Added call to display calorie data   
+//Added call to display Edamam data   
 displayCaloriesJSON (recipeIngredients,results.recipe.title);
 
 }
@@ -379,7 +379,7 @@ $(window).scroll(function() {
 
 
 
-//Retrieve Nutrition Data for single ingredient
+//Retrieve Nutrition Data for recipe
 
  function displayCaloriesJSON(recipeIngredients, title){
   $("#nutrition-modal-body").empty();
@@ -389,7 +389,11 @@ $(window).scroll(function() {
     ingr: recipeIngredients
   }; 
 
-var  url = 'https://api.edamam.com/api/nutrition-details?app_id=fca693b2&app_key=d8f84042894a6b3d6e6e9be1aef536b4'
+  var appID  = '2c72283c';
+  var appkey  = '4930a8654583355204b5c2c1e7a61d18';
+  
+  
+  var  url = 'https://api.edamam.com/api/nutrition-details?app_id=' + appID +'&app_key=' +appkey ;  
    $.ajax({
       'type': 'POST',
       'url': url,
@@ -407,7 +411,7 @@ var  url = 'https://api.edamam.com/api/nutrition-details?app_id=fca693b2&app_key
     },
     'error': function(data) {
 
-      console.log("Nothing!!!")
+      $("#nutrition-modal-body").html("<p>Nutrition Data not available for this recipe!</p>");
 
     },
   });
@@ -419,144 +423,253 @@ function displayNutrition (data) {
 
 console.log(data);
 
-  var result = {
- 
-    yield: data.yield  ? data.yield: 0 ,
-    calories: data.calories  ? data.calories: 0 ,
-    categories: {
-    fat: {
-      label: "Fat",
-      totalNutrients:
-        data.totalNutrients.FAT.quantity  ? data.totalNutrients.FAT.quantity : 0,
-      totalDaily:
-        data.totalDaily.FAT.totalDaily  ? data.totalDaily.FAT.quantity : 0,
-        subcategory: 0
-    },
-    FASAT: {
-      label: "Saturated",
-      totalNutrients:
-        data.totalNutrients.FASAT.quantity  ? data.totalNutrients.FASAT.quantity : 0,
-      totalDaily:
-        data.totalDaily.FASAT ? data.totalDaily.FASAT.quantity : 0,
-        subcategory: 1
-    },
-    FATRN: {
-      label: "Trans Fat",
-      totalNutrients:
-        data.totalNutrients.FATRN.quantity  ? data.totalNutrients.FATRN.quantity : 0,
-      totalDaily:
-        data.totalDaily.FATRN  ? data.totalDaily.FATRN.quantity : 0,
-        subcategory: 1
-    },
-    FAMS: {
-      label: "Monounsaturated",
-      totalNutrients:
-        data.totalNutrients.FAMS.quantity  ? data.totalNutrients.FAMS.quantity : 0,
-      totalDaily:
-        data.totalDaily.FAMS ? data.totalDaily.FAMS.quantity : 0,
-        subcategory: 1
-    },
-    FAPU: {
-      label: "Polyunsaturated",
-      totalNutrients:
-        data.totalNutrients.FAMS.quantity  ? data.totalNutrients.FAMS.quantity : 0,
-      totalDaily:
-        data.totalDaily.FAMS  ? data.totalDaily.FAMS.quantity : 0,
-        subcategory: 1
-    },
-    carbs: {
-      label: "Carbohydrate",
-      totalNutrients:
-        data.totalNutrients.CHOCDF.quantity  ? data.totalNutrients.CHOCDF.quantity : 0,
-      totalDaily:
-        data.totalDaily.CHOCDF  ? data.totalDaily.CHOCDF.quantity : 0,
-        subcategory: 0
-    },
-    SUGAR: {
-      label: "Sugars",
-      totalNutrients:
-        data.totalNutrients.SUGAR.quantity  ? data.totalNutrients.SUGAR.quantity : 0,
-      totalDaily:
-        data.totalDaily.SUGAR  ? data.totalDaily.SUGAR.quantity : 0,
-        subcategory: 1
-    },
-    FIBTG: {
-      label: "Fibre",
-      totalNutrients:
-        data.totalNutrients.FIBTG.quantity  ? data.totalNutrients.FIBTG.quantity : 0,
-      totalDaily:
-        data.totalDaily.FIBTG  ? data.totalDaily.FIBTG.quantity : 0,
-        subcategory: 1
-    },
-    NA: {
-      label: "Sodium",
-      totalNutrients:
-        data.totalNutrients.NA.quantity  ? data.totalNutrients.NA.quantity : 0,
-      totalDaily:
-        data.totalDaily.NA  ? data.totalDaily.NA.quantity : 0,
-        subcategory: 0
-    },
-    CHOLE: {
-      label: "Cholestrol",
-      totalNutrients:
-        data.totalNutrients.CHOLE.quantity  ? data.totalNutrients.CHOLE.quantity : 0,
-      totalDaily:
-        data.totalDaily.CHOLE  ? data.totalDaily.CHOLE.quantity : 0,
-        subcategory: 0
-    },
-    PROCNT: {
-      label: "Protein",
-      totalNutrients:
-        data.totalNutrients.PROCNT.quantity  ? data.totalNutrients.PROCNT.quantity : 0,
-      totalDaily:
-        data.totalDaily.PROCNT  ? data.totalDaily.PROCNT.quantity : 0,
-        subcategory: 0
-    }
-    }
+  var servings = 0;
+  var calories = 0;
+  var fatQuantity = 0;
+  var  fatLabel = "Fat";
+  var    fatUnit =  "g";
+  var fatPercentDaily = 0;
+  var FATRNQuantity = 0;
+  var FATRNUnit = "g";
+  var  FATRNLabel = "Trans";
+  var FATRNPercentDaily = 0;
+  var FASATQuantity = 0;
+  var FASATUnit = "g";
+  var  FASATLabel = "Saturated";
+  var FASATPercentDaily = 0;
+  var FAMSQuantity = 0;
+  var  FAMSLabel = "Monounsaturated";
+  var FAMSPercentDaily = 0;
+  var FAMSUnit = "g";
+  var FAPUQuantity = 0;
+  var FAPUUnit = "g";
+  var FAPUPercentDaily = 0;
+  var FAPULabel = "Polyunsaturated";
+  var CHOCDFQuantity = 0;
+  var CHOCDFUnit = "g";
+  var CHOCDFPercentDaily = 0;
+  var CHOCDFLabel = "Carbs";
+  var FIBTGQuantity = 0;
+  var FIBTGUnit = "g";
+  var FIBTGPercentDaily = 0;
+  var FIBTGLabel = "Fibre";
+  var SUGARQuantity = 0;
+  var SUGARUnit = "g";
+  var SUGARLabel = "Sugars";
+  var SUGARPercentDaily = 0;
+  var PROCNTQuantity = 0;
+  var PROCNTUnit = "g";
+  var PROCNTLabel = "Protein";
+  var PROCNTPercentDaily = 0;
+  var CHOLEQuantity = 0;
+  var CHOLEUnit = "mg";
+  var CHOLELabel = "Cholesterol";
+  var CHOLEPercentDaily = 0;
+  var NAQuantity = 0;
+  var NALabel = "Sodium";
+  var NAUnit = "mg";
+  var NAPercentDaily = 0;
+  var CAQuantity = 0;
+  var CAUnit = "mg";
+  var CALabel = "Calcium";
+  var CAPercentDaily = 0;
+  var FEQuantity = 0;
+  var FEUnit = '';
+  var FEPercentDaily = 0;
+  var FELabel = "Iron";
+  var VITA_RAEQuantity = 0;
+  var VITA_RAEUnit = '';
+  var VITA_RAEPercentDaily = 0;
+  var VITA_RAELabel = "Vitamin A";
+  var VITCQuantity = 0;
+  var VITCUnit = '';
+  var VITCPercentDaily = 0;
+  var  VITCLabel = "Vitamin C";
 
-  };
+  console.log("I don't need to log this");
+
+  //Serving Size 
+  if (typeof data.yield !== 'undefined' && data.yield !== null) {
+    servings = data.yield;
+    console.log(servings);
+
+    //Total Calories  
+    if (typeof data.calories  !== 'undefined' && data.calories  !== null) {
+      calories = data.calories;
+
+      //Total Fat
+      if (typeof data.totalNutrients.FAT  !== 'undefined' && data.totalNutrients.FAT   !== null)
+      {  fatQuantity = Math.round(data.totalNutrients.FAT.quantity) ;
+      if (typeof data.totalDaily.FAT  !== 'undefined' && data.totalDaily.FAT   !== null)
+      {  fatPercentDaily = Math.round(data.totalDaily.FAT.quantity); }
+      } 
+
+      //Total Saturated Fat
+      if (typeof data.totalNutrients.FASAT  !== 'undefined' && data.totalNutrients.FASAT   !== null)
+      { FASATQuantity = Math.round(data.totalNutrients.FASAT.quantity) ;  
+      if (typeof data.totalDaily.FASAT  !== 'undefined' && data.totalDaily.FASAT   !== null)
+      {  FASATPercentDaily = Math.round(data.totalDaily.FASAT.quantity) ;} 
+      } 
+
+      //Trans Fat
+      if (typeof data.totalNutrients.FATRN  !== 'undefined' && data.totalNutrients.FATRN   !== null)
+      {       FATRNQuantity = Math.round(data.totalNutrients.FATRN.quantity) ;   
+      if (typeof data.totalDaily.FATRN  !== 'undefined' && data.totalDaily.FATRN   !== null)
+      {  FATRNPercentDaily = Math.round(data.totalDaily.FATRN.quantity) ;} 
+      } 
+
+      //Monounsaturated Fat       
+      if (typeof data.totalNutrients.FAMS !== 'undefined' && data.totalNutrients.FAMS  !== null)
+      {      FAMSQuantity = Math.round(data.totalNutrients.FAMS.quantity ) ;
+          
+      if (typeof data.totalDaily.FAMS !== 'undefined' && data.totalDaily.FAMS  !== null)
+      {FAMSPercentDaily = Math.round(data.totalDaily.FAMS.quantity) ;}
+      } 
+
+      //Polyunsaturated Fat     
+      if (typeof data.totalNutrients.FAPU  !== 'undefined'  &&  data.totalNutrients.FAPU   !== null)
+      {      FAPUQuantity = Math.round(data.totalNutrients.FAPU.quantity ) ;
+  
+      if (typeof data.totalDaily.FAPU !== 'undefined' && data.totalDaily.FAPU  !== null)
+      {FAPUPercentDaily = Math.round(data.totalDaily.FAPU.quantity) ;}
+      } 
+
+      //Carbs
+      if (typeof data.totalNutrients.CHOCDF  !== 'undefined'  &&  data.totalNutrients.CHOCDF   !== null)
+      {      CHOCDFQuantity = Math.round(data.totalNutrients.CHOCDF.quantity ) ;
+     
+      if (typeof data.totalDaily.CHOCDF !== 'undefined' && data.totalDaily.CHOCDF  !== null)
+      {CHOCDFPercentDaily = Math.round(data.totalDaily.CHOCDF.quantity) ;}
+      } 
+
+        //Sugar
+       if (typeof data.totalNutrients.SUGAR  !== 'undefined' &&  data.totalNutrients.SUGAR   !== null)
+       {      SUGARQuantity = Math.round(data.totalNutrients.SUGAR.quantity ) ;
+     
+        if (typeof data.totalDaily.SUGAR !== 'undefined' && data.totalDaily.SUGAR  !== null)
+        {SUGARPercentDaily = Math.round(data.totalDaily.SUGAR.quantity) ;}
+        } 
+
+        //Fiber
+        if (typeof data.totalNutrients.FIBTG  !== 'undefined'  &&  data.totalNutrients.FIBTG   !== null)
+        {      FIBTGQuantity = Math.round(data.totalNutrients.FIBTG.quantity ) ;
+       
+        if (typeof data.totalDaily.FIBTG !== 'undefined' && data.totalDaily.FIBTG  !== null)
+        {FIBTGPercentDaily = Math.round(data.totalDaily.FIBTG.quantity) ;}
+        } 
+
+        //Protein
+        if (typeof data.totalNutrients.PROCNT  !== 'undefined'  &&  data.totalNutrients.PROCNT   !== null)
+        {      PROCNTQuantity = Math.round(data.totalNutrients.PROCNT.quantity ) ;
+      
+        if (typeof data.totalDaily.PROCNT !== 'undefined' && data.totalDaily.PROCNT  !== null)
+        {PROCNTPercentDaily = Math.round(data.totalDaily.PROCNT.quantity) ;}
+        } 
+
+        //Cholestrol  
+        if (typeof data.totalNutrients.CHOLE  !== 'undefined'  &&  data.totalNutrients.CHOLE   !== null)
+        {      CHOLEQuantity = Math.round(data.totalNutrients.CHOLE.quantity ) ;
+   
+        if (typeof data.totalDaily.CHOLE !== 'undefined' && data.totalDaily.CHOLE  !== null)
+        {CHOLEPercentDaily = Math.round(data.totalDaily.CHOLE.quantity) ;}
+        } 
+
+        //Sodium
+        if (typeof data.totalNutrients.NA  !== 'undefined'  &&  data.totalNutrients.NA   !== null)
+        {      NAQuantity = Math.round(data.totalNutrients.FAPU.quantity ) ;
+     
+        if (typeof data.totalDaily.NA !== 'undefined' && data.totalDaily.NA  !== null)
+        {NAPercentDaily = Math.round(data.totalDaily.NA.quantity) ;}
+        } 
+
+        //Calcium
+        if (typeof data.totalNutrients.CA  !== 'undefined'  &&  data.totalNutrients.CA   !== null)
+        {      CAQuantity = Math.round(data.totalNutrients.CA.quantity ) ;
+        CAUnit =  "mg";
+        if (typeof data.totalDaily.CA !== 'undefined' && data.totalDaily.CA  !== null)
+        {CAPercentDaily = Math.round(data.totalDaily.CA.quantity) ;}
+        }   
+
+        //Iron
+        if (typeof data.totalNutrients.FE  !== 'undefined'  &&  data.totalNutrients.FE   !== null)
+        {      FEQuantity = Math.round(data.totalNutrients.FE.quantity ) ;
+        FEUnit =  "mg";
+        if (typeof data.totalDaily.FE !== 'undefined' && data.totalDaily.FE  !== null)
+        {FEPercentDaily = Math.round(data.totalDaily.FE.quantity) ;}
+        } 
+
+        //Vitamin C
+        if (typeof data.totalNutrients.VITC  !== 'undefined'  &&  data.totalNutrients.VITC   !== null)
+        {      VITCQuantity = Math.round(data.totalNutrients.VITC.quantity ) ;
+       
+        VITCUnit =  "mg";
+        if (typeof data.totalDaily.VITC !== 'undefined' && data.totalDaily.VITC  !== null)
+        {VITCPercentDaily = Math.round(data.totalDaily.VITC.quantity) ;}
+        } 
+
+        //VITA_RAE
+        if (typeof data.totalNutrients.VITA_RAE  !== 'undefined'  &&  data.totalNutrients.VITA_RAE   !== null)
+        {      VITA_RAEQuantity = Math.round(data.totalNutrients.VITA_RAE.quantity ) ;
+  
+        VITA_RAEUnit =  data.totalNutrients.VITA_RAE.unit;
+        if (typeof data.totalDaily.VITA_RAE !== 'undefined' && data.totalDaily.VITA_RAE  !== null)
+        {VITA_RAEPercentDaily = Math.round(data.totalDaily.VITA_RAE.quantity) ;}
+        } 
+
+
+  } 
+  else{ calories = 0;}
+
+  } 
+  else{ servings = 0;}
+
+
+
 
   var tableDiv= $("<div>").attr("class", " table-responsive table-bordered table-hover" );
   var tableBody = $("<tbody>"); 
-  var nutritionalTable = $("<table>").append(tableBody);
+  var tableHead = $("<thead>"); 
+  var nutritionalTable = $("<table>")
   nutritionalTable.attr("id","nutitritionTable") 
   .attr("class", "table")
 
-   yieldDisplay=   $("<h3>").html('<th colspan="3"> Servings :' + result.yield + "</th>");
-     calDisplay=   $("<h3>").html('<th colspan="3"> Calories:' + result.calories + "</th>");  
-
-  for (let key in result.categories) {
-
-    let value = result.categories[key];
-    console.log(key, value);
-
-    if(key.subcategory === 0){
-
-    var newRow = $("<tr>")
-      .html('<th scope="col"> <b>' + value.label + '</b>  '
-        + Math.round(value.totalNutrients)
-        + '</th> <td>'
-        + Math.round(value.totalDaily) +'%'+ '</td>');
-     newRow.addClass("Main-Category");   
-     
-    }
-
-    else{
-      
-    var newRow = $("<tr>")
-    .html('<th scope="col">' + value.label + '  '
-      + Math.round(value.totalNutrients)
-      + '</th> <td>'
-      + Math.round(value.totalDaily) +'%'+ '</td>');
-      newRow.addClass("Sub-Category"); 
-    }
-    nutritionalTable.append(newRow);
-    
-  }
-  $(tableDiv).append(nutritionalTable);
-  $("#nutrition-modal-body").append(yieldDisplay, calDisplay, tableDiv);
+  calDisplay=   $("<tr>").html(' Calories: ' + calories + "</th>");  
+  calDisplay.attr("id","calDisplay");
+  // calDisplay.addClass("col-2")
   
+  yieldDisplay=   $("<tr>").html(' Servings per container: ' + servings + "</th>");
+  yieldDisplay.attr("id","yieldDisplay");
+  // calDisplay.addClass("col-2")
 
+  dailyPercentage = $("<tr>").html("<td></td><td>% Daily Value </td>");
+  dailyPercentage.attr("id","dailyPercentage");
+  // calDisplay.addClass("col-2")
+  tableHead.append(calDisplay,yieldDisplay,dailyPercentage)
+
+  fatDisplay =  $("<tr>").html('<th scope="col" class="maininfo">' + fatLabel + ' ' + fatQuantity + fatUnit +'</th> <td class="percentage"> '   + fatPercentDaily +'%'+ '</td>');
+  FASATDisplay =  $("<tr>").html(' <th scope="col" class="subinfo">' + FASATLabel + ' ' + FASATQuantity + FASATUnit +'</th> <td class="percentage"> ' + FASATPercentDaily +'%'+ '</td>');
+  FATRNDisplay =  $("<tr>").html(' <th scope="col" class="subinfo">' + FATRNLabel + ' ' + FATRNQuantity + FATRNUnit +'</th> <td class="percentage"> '   + FATRNPercentDaily +'%'+ '</td>');
+  FAMSDisplay =  $("<tr>").html(' <th scope="col" class="subinfo">' + FAMSLabel + ' ' + FAMSQuantity + FAMSUnit +'</th> <td class="percentage"> '   + FAMSPercentDaily +'%'+ '</td>');
+  FAPUDisplay =  $("<tr>").html(' <th scope="col" class="subinfo">' + FAPULabel + ' ' + FAPUQuantity + FAPUUnit +'</th> <td class="percentage"> '   + FAPUPercentDaily +'%'+ '</td>');
+  CHOCDFDisplay =  $("<tr>").html('<th scope="col"  class="maininfo">' + CHOCDFLabel + ' ' + CHOCDFQuantity + CHOCDFUnit +'</th> <td class="percentage"> ' + CHOCDFPercentDaily +'%'+ '</td>');
+  SUGARDisplay =  $("<tr>").html(' <th scope="col" class="subinfo">' + SUGARLabel + ' ' + SUGARQuantity + SUGARUnit +'</th> <td class="percentage"> '   + SUGARPercentDaily +'%'+ '</td>');
+  FIBTGDisplay =  $("<tr>").html(' <th scope="col" class="subinfo">' + FIBTGLabel + ' ' + FIBTGQuantity + FIBTGUnit +'</th> <td class="percentage"> '   + FIBTGPercentDaily +'%'+ '</td>');
+  CHOLEDisplay =  $("<tr>").html('<th scope="col" class="maininfo">  ' + CHOLELabel + ' ' + CHOLEQuantity + CHOLEUnit +'</th> <td class="percentage"> '  + CHOLEPercentDaily +'%'+ '</td>');
+  PROCNTDisplay =  $("<tr>").html('<th scope="col" class="maininfo">' + PROCNTLabel + ' ' + PROCNTQuantity + PROCNTUnit +'</th> <td class="percentage"> '  + PROCNTPercentDaily +'%'+ '</td>');
+  NADisplay =  $("<tr>").html('<th scope="col" class="maininfo">  ' + NALabel + ' ' + NAQuantity + NAUnit +'</th> <td class="percentage"> '  + NAPercentDaily +'%'+ '</td>');
+  CADisplay =  $("<tr>").html('<th scope="col" class="subinfo">' + CALabel + ' ' + CAQuantity + CAUnit +'</th> <td class="percentage"> '  + CAPercentDaily +'%'+ '</td>');
+  FEDisplay =  $("<tr>").html('<th scope="col" class="subinfo">' + FELabel + ' ' + FEQuantity + FEUnit +'</th> <td class="percentage"> ' + FEPercentDaily +'%'+ '</td>');  
+  VITCDisplay =  $("<tr>").html('<th scope="col" class="subinfo">' + VITCLabel + ' ' + VITCQuantity + VITCUnit +'</th> <td class="percentage"> '+ VITCPercentDaily +'%'+ '</td>');
+  VITA_RAEDisplay =  $("<tr>").html('<th scope="col" class="subinfo">' + VITA_RAELabel + ' ' + VITA_RAEQuantity + VITA_RAEUnit +'</th> <td class="percentage"> ' + VITA_RAEPercentDaily +'%'+ '</td>');
+
+  tableBody.append(fatDisplay, FASATDisplay, FATRNDisplay,FAMSDisplay,
+    FAPUDisplay, CHOCDFDisplay, SUGARDisplay,FIBTGDisplay, CHOLEDisplay, PROCNTDisplay
+    ,NADisplay, CADisplay, FEDisplay, VITCDisplay, VITA_RAEDisplay )
+
+
+    nutritionalTable.append(tableHead,tableBody);
+
+  $(tableDiv).append(nutritionalTable);
+  $("#nutrition-modal-body").append(tableDiv); 
 
 }
-

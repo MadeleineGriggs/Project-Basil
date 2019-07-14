@@ -521,4 +521,34 @@ border-radius: 35px;
 }
 
 /* Styling related to the nutritional information table */
+#nutitritionTable {
+    text-align: left; 
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  }
+ #dailyPercentage{
+    text-align: right;
+    font-size: 0.75rem;
+    font-weight: normal;
+    border-left: 0;
 
+ } 
+#calDisplay{
+    font-size: 1.5rem; 
+    font-weight: bold; 
+
+}
+#yieldDisplay{
+    font-size: 1rem;  
+}
+.subinfo{
+    font-size: 0.9rem;  
+    font-weight: normal;
+}
+.maininfo{
+    font-size: 1rem;
+    /* text-align: left;   */
+}
+
+.percentage{
+    text-align: right
+}
