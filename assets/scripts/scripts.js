@@ -28,11 +28,15 @@
 
 
 
-
+// When the user clicks to see their favourited recipes, this function runs to retreive that information from firebase.
 $(document).on("click", "#fav-recipe-img-button, #fav-recipe-nav-btn", function(){
+  event.preventDefault();
+  $('html, body').animate({
+    scrollTop: $("#recipe-search-display").offset().top
+}, 800);
+
   currentUserRecipes.once("value", function(snapshot){
     snapshot.forEach((child) => {
-      console.log(child.val().recipe_name, 'recipe id', child.val().recipe_id);
       displaySavedRecipes(child.val().recipe_name, child.val().recipe_id, child.val().recipe_url, child.val().recipe_image );
     });
   });
@@ -45,7 +49,7 @@ $(document).on("click", "#fav-recipe-img-button, #fav-recipe-nav-btn", function(
 
 
 
-
+// This displays the recipes that a user has made. For the image, it retrieves one from GIPHY based on the title of the recipe.
 function displaySavedCustomRecipes(name, ingredients) {
   $.ajax({
     url: "https://api.giphy.com/v1/gifs/translate",
@@ -61,15 +65,14 @@ function displaySavedCustomRecipes(name, ingredients) {
     $(customCard).append("<img class='card-img-top' src='" + randomPic +"' alt=Card Image Cap>");
     $(customCard).append("<div class='card-body'></div>");
     $(customCard).append("<h5 class='card-title'>" + name + "</h5>");
-    $(customCard).append("<h6 class='card-subtitle mb-2 text-muted'>" + 'You Custom Recipe' + "</h6>");
+    $(customCard).append("<h6 class='card-subtitle mb-2 text-muted'>" + 'Your Custom Recipe' + "</h6>");
     $(customCard).append("<p class='card-text'>" + ingredients + "</p>");
     $("#recipe-search-wrapper").append(customCard);
   });
 }
 
-
+// This displays the recipes that the user has saved from a standard recipe search.
 function displaySavedRecipes(rName, rID, rURL, rImageURL){
-
   $("#recipe-search-wrapper").empty();
   $(".recipe-search-container").removeClass("hidden")
   newCard = $("<div class='card'></div>");
@@ -77,46 +80,44 @@ function displaySavedRecipes(rName, rID, rURL, rImageURL){
   $(newCard).append("<div class='card-body'>");
   $(newCard).append("<h5 class='card-title'>" + rName + "</h5>");
   $(newCard).append("<a href='" + rURL + "'>" + 'Explore Recipe' + "</a>");
-  // $(newCard).append("<p class='card-text'>" + rURL + "</p>");
   $(newCard).append("<button id='" + rID + "' recipe-name='" + rName + "' class='recipe-btn btn btn-primary' data-toggle='modal' data-target='#recipeModal'>" + 'Click here to see the recipe' + "</button>");
   $("#recipe-search-wrapper").append(newCard);
 }
 
 
-
+// When the user clicks that they are a new user, it checks firebase to see if the username inputted is already taken or not. If not,
+// Then it stores a new user in firebase. If so, it shows a message that the username is already taken.
 $("#new-user-btn").on("click", function() {
   tempUserName = $("#new-user-input").val().toUpperCase().trim();
   if (!dbState.child("/" + tempUserName).exists()) {
     hideArea();
-  currentUser = database.ref("/" +tempUserName );
-  currentUserRecipes = database.ref("/" + tempUserName + "/recipes");
-  currentUserCustomRecipes = database.ref("/" + tempUserName + "/custom-recipes");
-  currentUser.set({
+    currentUser = database.ref("/" +tempUserName );
+    currentUserRecipes = database.ref("/" + tempUserName + "/recipes");
+    currentUserCustomRecipes = database.ref("/" + tempUserName + "/custom-recipes");
+    currentUser.set({
       username : $("#new-user-input").val().trim()
   });
-  $("#users-name").text($("#existing-user-input").val().trim());
+    $("#users-name").text($("#new-user-input").val().trim());
   } else {
-    userAlert = $("<div class='alert alert-warning alert-dismissible fade show' role='alert'><strong>Username Already Exists</strong><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
-    $(".landing-card").prepend(userAlert)
+    userAlert = $("<div class='alert alert-warning alert-dismissible fade show' role='alert'>Username Already Exists<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
+    $("#alert-area").prepend(userAlert)
   };
 });
 
-
-
+// When the user clicks that they are an existing user, it checks firebase to see if the username inputted is already taken or not.
+// If not, it shows a message that the username is not yet made.
+// If the username does exist in firebase, it logs in that user, so they can see their saved recipes.
 $("#existing-user-btn").on("click", function() {
   tempUserName = $("#existing-user-input").val().toUpperCase().trim();
-  console.log(tempUserName);
   if (dbState.child("/" + tempUserName).exists()) {
     hideArea();
       currentUser = database.ref("/" + tempUserName);
       currentUserRecipes = database.ref("/" + tempUserName + "/recipes");
       currentUserCustomRecipes = database.ref("/" + tempUserName + "/custom-recipes") ;
-      console.log('you are "logged in"');
       $("#users-name").text($("#existing-user-input").val().trim());
   } else {
-    userAlert = $("<div class='alert alert-warning alert-dismissible fade show' role='alert'><strong>Username Not Found</strong><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
-    $(".landing-card").prepend(userAlert);
-    // alert("Username not found");
+    userAlert = $("<div class='alert alert-warning alert-dismissible fade show' role='alert'>Username Not Found<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div>");
+    $("#alert-area").prepend(userAlert);
   } 
     
 });
@@ -132,10 +133,6 @@ currentUser.on("value", function(snapshot){
 //   Second Test API Key: b11d8301b0ecfac319569f557e520e48
 
 var key = "2fe943e19f2274574012873be158e1e3"
-
-
-
-
 
 // Food2Fork Search API Call
 function retreiveRecipes() {
@@ -161,11 +158,10 @@ function retreiveRecipes() {
 
 }
 
-// Displays the recipes the user is searching for.
+// Displays the recipes the user is searching for that we retrieved from the Food2Fork API
 function displayRecipes(response) {
 
   var results = JSON.parse(response);
-  console.log(results);
 $("#recipe-search-wrapper").empty();
   $(".recipe-search-container").removeClass("hidden");
   recipeCount = results.count;
@@ -207,7 +203,7 @@ $("#recipe-search-wrapper").empty();
   }
 }
 
-// Retrieves the ingredient information of a single recipe.
+// Retrieves the ingredient information of a single recipe from Food2Fork API.
 function retrieveSingleRecipe() {
   event.preventDefault();
   recipeID = $(this).attr("id");
@@ -226,11 +222,10 @@ function retrieveSingleRecipe() {
   });
 }
 
-var recipeItemCounter = 2;
+
 // Adds another ingredient field to the custom recipe maker form
 $("#add-recipe-item-btn").on("click", function() {
   var recipeForm = $("#recipe-form-group");
-  recipeItemCounter++;
   var newFormGroup = $("<div>")
     .addClass("form-group form-group-item");
   var newLabel = $("<label>")
@@ -260,14 +255,13 @@ function dismissIngredient() {
 
 // When the user clicks to save a recipe, this function creates a json object
 // to send to the Edamam API for nutritional information
-// Should also use this to save to firebase.
 function saveUserRecipe() {
   var recipeTitle= "";
   recipeTitle = $(".form-title").val();
   var ingredientArray = [];
   $(".form-item").each(function() {
     var ingredient = $(this).val();
-    ingredientArray.push(ingredient);
+    ingredientArray.push(" " + ingredient);
   })
   var customRecipedata = {
     title: recipeTitle,
@@ -275,7 +269,6 @@ function saveUserRecipe() {
   } 
   displayCaloriesJSON(ingredientArray, recipeTitle);
   displayNewUserRecipe(customRecipedata);
-  console.log(customRecipedata);
   currentUserCustomRecipes.push({
     recipe_name: customRecipedata.title,
     ingredients: customRecipedata.ingr
@@ -294,9 +287,8 @@ function displayNewUserRecipe(recipeData) {
     newP = $("<p>").text(recipeData.ingr[i]);
     $("#ingredient-modal-body").append(newP);
   }
-
-  
 }
+
 
 class recipeConstructor {
   constructor(name, id, url, image, count) {
@@ -310,12 +302,8 @@ class recipeConstructor {
 
 // Displays a single recipe's ingredients in a modal window.
 function displaySingleRecipe(response) {
-  results = JSON.parse(response);
-  var results = JSON.parse(response);
-  console.log(results.title);
-  
-  
-  // recipeIngredients is an array. We will need to send this information to Edamam for nutritional information.
+
+  var results = JSON.parse(response); 
   recipeIngredients = results.recipe.ingredients;
   newSource = $("<p>")
   .html("See Full Recipe at: " + "<span><a href='" + results.recipe.source_url +"' target='_blank'>" + results.recipe.source_url + "</span>");
@@ -326,20 +314,18 @@ function displaySingleRecipe(response) {
     $("#ingredient-modal-body").append(newP);
   }
   $("#saveRecipe").on("click", function(){
-    console.log(results.recipe.title, results.recipe.recipe_id, results.recipe.source_url, results.recipe.image_url);
-    // selectedRecipe = new recipeConstructor(results.recipe.title, results.recipe.recipe_id, results.recipe.source_url, results.recipe.image_url, 0);
     currentUserRecipes.push({
       recipe_name: results.recipe.title, recipe_id: results.recipe.recipe_id, recipe_url: results.recipe.source_url, recipe_image: results.recipe.image_url, usage_count: 0
   });
  results = null;
     });
 
-
-
 //Added call to display Edamam data   
 displayCaloriesJSON (recipeIngredients,results.recipe.title);
 
 }
+
+
 
 function hideArea() {
   event.preventDefault();
@@ -361,26 +347,24 @@ $(window).scroll(function() {
     }
 });
 
+// Smooth scroll to the custom recipe container area.
   function scrolltoCustomRecipeArea() {
     $('html, body').animate({
       scrollTop: $("#custom-recipe-container").offset().top
   }, 800);
   }
 
+
+  //Various click events for functions above.
   $(document).on("click", "#recipe-img-button, #recipe-nav-custom-btn", scrolltoCustomRecipeArea);
   $(document).on("click", ".recipe-btn", retrieveSingleRecipe);
   $(document).on("click", ".form-close", dismissIngredient);
   $(document).on("click", "#saveUserRecipe", saveUserRecipe);
   $(document).on("click", "#top-recipe-img-button, #top-recipe-nav-btn", retreiveRecipes);
   $(document).on("click", "#recipe-search-btn, #recipe-nav-search-btn", retreiveRecipes);
-  // $(document).on("click", "#new-user-btn", hideArea);
-  // $(document).on("click", "#existing-user-btn", hideArea);
 
 
-
-
-//Retrieve Nutrition Data for recipe
-
+//Retrieve Nutrition Data for recipe from Edamam.
  function displayCaloriesJSON(recipeIngredients, title){
   $("#nutrition-modal-body").empty();
 
@@ -403,9 +387,6 @@ $(window).scroll(function() {
       'success': function(data) {
         console.log(data);
 
-      // var NutritionalData =  $("<table>");
-      // NutritionalData.attr("class", "table");
-      // NutritionalData.append("");
       displayNutrition(data);
 
     },
@@ -417,11 +398,8 @@ $(window).scroll(function() {
   });
 }
 
-
-
+// This function takes the information provided by Edamam and displays it if it is available in a nutrition table format.
 function displayNutrition (data) {
-
-console.log(data);
 
   var servings = 0;
   var calories = 0;
@@ -502,12 +480,10 @@ console.log(data);
   var VITB6PercentDaily = 0;
   var VITB6Label = "Vitamin B6";
  
-  console.log("I don't need to log this");
 
   //Serving Size 
   if (typeof data.yield !== 'undefined' && data.yield !== null) {
     servings = data.yield;
-    console.log(servings);
 
     //Total Calories  
     if (typeof data.calories  !== 'undefined' && data.calories  !== null) {
@@ -749,6 +725,7 @@ vitDisplay =  $('<tbody>').html('<tr class="maininfo"> <th scope="col"> Vitamins
 
 }
 
+// Toggles the plus and minus buttons on the nutrition table subcategories.
 $(document).on("click", ".clickable", changeIcon);
 
 function changeIcon(){
