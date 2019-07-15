@@ -533,12 +533,12 @@ border-radius: 35px;
 
  } 
 #calDisplay{
-    font-size: 1.5rem; 
+    font-size: 1.25rem; 
     font-weight: bold; 
 
 }
 #yieldDisplay{
-    font-size: 1rem;  
+    font-size: 0.75rem;  
 }
 .subinfo{
     font-size: 0.9rem;  
@@ -552,3 +552,21 @@ border-radius: 35px;
 .percentage{
     text-align: right
 }
+
+.maininfo:hover {
+    background-color: rgb(182, 182, 174);
+    transition:background-color 1s;
+}
+tbody.collapse.in {
+    display: table-row-group;
+  } 
+
+  .fa-plus,.fa-minus{
+    font-size:0.75rem; color:#556B2F
+  } 
+
+  #yieldDisplay{
+    text-align: left;
+    /* font-weight: 600; */
+    font-size: .9rem;  
+  }
