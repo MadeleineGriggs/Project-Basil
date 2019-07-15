@@ -108,6 +108,33 @@ body {
     margin-bottom: 1rem;
 }
 
+    /* styling related to the alery area in the login area*/
+
+    #alert-area {
+        overflow: hidden;
+        margin: 0 auto;
+        width: 21rem;
+    }
+
+    #alert-area .alert {
+        background-color: var(--cream);
+        color: var(--olive);
+        position: relative;
+        font-family: var(--body-font);
+        font-size: 1.2rem;
+        padding: 0;
+    }
+
+    #alert-area .close {
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        border-radius: 30px;
+        background-color: var(--dark-taupe);
+        color: var(--cream);
+        position: relative;
+    }
+
 /* Styling related to the recipe-area-container */
 
 
@@ -170,7 +197,10 @@ body {
     font-family: var(--title-font);
     font-size: 2.5rem;
     text-align: center;
-    text-shadow: -1px -1px 0 rgba(36, 36, 36, 0.25), 1px -1px 0 rgba(36, 36, 36, 0.25), -1px 1px 0 rgba(36, 36, 36, 0.25), 1px 1px 0 rgba(36, 36, 36, 0.25);
+    text-shadow: -1px -1px 0 rgba(36, 36, 36, 0.25), 
+    1px -1px 0 rgba(36, 36, 36, 0.25), 
+    -1px 1px 0 rgba(36, 36, 36, 0.25), 
+    1px 1px 0 rgba(36, 36, 36, 0.25);
 }
 
 .img-button p:hover {
@@ -198,7 +228,6 @@ a:hover {
     background-size: auto 150%;
     background-position: center;
 }
-
 
 .recipe-area-container button {
     width: 20rem;
@@ -409,7 +438,7 @@ width: 40rem;
     margin-right: 1.5rem;
 }
 
-#custom-recipe-container #saveRecipe {
+#custom-recipe-container #saveUserRecipe {
     font-family: var(--title-font);
     font-size: 1.15rem;
     background-color: var(--olive);
@@ -521,54 +550,76 @@ border-radius: 35px;
 }
 
 /* Styling related to the nutritional information table */
+
+.table-bordered {
+    border-color: var(--dark-cream);
+}
 #nutitritionTable {
     text-align: left; 
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    border-color: var(--dark-cream);
   }
- #dailyPercentage{
-    text-align: right;
-    font-size: 0.75rem;
-    font-weight: normal;
-    border-left: 0;
 
- } 
-#calDisplay{
-    font-size: 1.25rem; 
-    font-weight: bold; 
-
+#nutitritionTable tr {
+    border-color: var(--dark-cream);
 }
-#yieldDisplay{
+
+ #dailyPercentage {
+    text-align: right;
+    font-size: 1rem;
+    font-family: var(--body-font);
+    color: var(--charcoal);
+    border-left: 0;
+ } 
+
+#calDisplay {
+    font-size: 1.25rem; 
+    font-family: var(--body-font);
+    color: var(--charcoal);
+}
+ 
+#yieldDisplay {
     font-size: 0.75rem;  
 }
-.subinfo{
-    font-size: 0.9rem;  
-    font-weight: normal;
+
+.subinfo {
+    font-size: 0.75rem;  
+    font-family: var(--body-font);
+    color: var(--dark-taupe);
+
 }
-.maininfo{
+
+.maininfo {
+    font-family: var(--body-font);
+    color: var(--charcoal);
     font-size: 1rem;
-    /* text-align: left;   */
 }
 
 .percentage{
-    text-align: right
+    font-family: var(--body-font);
+    color: var(--charcoal);
+    text-align: right;
 }
 
 .maininfo:hover {
     background-color: rgb(182, 182, 174);
-    transition:background-color 1s;
+    transition: background-color 1s;
 }
+
 tbody.collapse.in {
     display: table-row-group;
-  } 
+} 
 
-  .fa-plus,.fa-minus{
-    font-size:0.75rem; color:#556B2F
-  } 
+.fa-plus,.fa-minus {
+    font-size:0.75rem; 
+    color:var(--olive-dark);
+} 
 
-  #yieldDisplay{
+#yieldDisplay {
     text-align: left;
-    /* font-weight: 600; */
     font-size: .9rem;  
-  }
+}
 
- .expanded{    background-color:rgb(182, 182, 174);}
+.expanded {    
+     background-color:rgb(182, 182, 174);
+}
