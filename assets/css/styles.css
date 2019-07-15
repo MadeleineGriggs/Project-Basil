@@ -570,3 +570,5 @@ tbody.collapse.in {
     /* font-weight: 600; */
     font-size: .9rem;  
   }
+
+ .expanded{    background-color:rgb(182, 182, 174);}

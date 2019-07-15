@@ -94,7 +94,7 @@ currentUser.on("value", function(snapshot){
 //   Food2Fork API Key (Main): 6c25094e2b7ba0e57995415ce749ed94
 //   Second Test API Key: b11d8301b0ecfac319569f557e520e48
 
-var key = "49d0a6d68d5cc628b7d10db08a79038e"
+var key = "2fe943e19f2274574012873be158e1e3"
 
 
 
@@ -483,21 +483,21 @@ console.log(data);
       {  fatQuantity = Math.round(data.totalNutrients.FAT.quantity) ;
       if (typeof data.totalDaily.FAT  !== 'undefined' && data.totalDaily.FAT   !== null)
       {  fatPercentDaily = Math.round(data.totalDaily.FAT.quantity); } else{fatPercentDaily = ""}
-      } 
-
+      }   else{fatQuantity = ""; fatUnit =  "";}
+      
       //Total Saturated Fat
       if (typeof data.totalNutrients.FASAT  !== 'undefined' && data.totalNutrients.FASAT   !== null)
       { FASATQuantity = Math.round(data.totalNutrients.FASAT.quantity) ;  
       if (typeof data.totalDaily.FASAT  !== 'undefined' && data.totalDaily.FASAT   !== null)
       {  FASATPercentDaily = Math.round(data.totalDaily.FASAT.quantity) ;}  else{FASATPercentDaily = ""}
-      } 
+      }  else{FASATQuantity = ""; FASATUnit =  "";}
 
       //Trans Fat
       if (typeof data.totalNutrients.FATRN  !== 'undefined' && data.totalNutrients.FATRN   !== null)
       {       FATRNQuantity = Math.round(data.totalNutrients.FATRN.quantity) ;   
       if (typeof data.totalDaily.FATRN  !== 'undefined' && data.totalDaily.FATRN   !== null)
       {  FATRNPercentDaily = Math.round(data.totalDaily.FATRN.quantity) ;}  else{FATRNPercentDaily = ""}
-      } 
+      } else{  FATRNQuantity = ""; FATRNUnit =  "";}
 
       //Monounsaturated Fat       
       if (typeof data.totalNutrients.FAMS !== 'undefined' && data.totalNutrients.FAMS  !== null)
@@ -505,7 +505,7 @@ console.log(data);
           
       if (typeof data.totalDaily.FAMS !== 'undefined' && data.totalDaily.FAMS  !== null)
       {FAMSPercentDaily = Math.round(data.totalDaily.FAMS.quantity) ;}  else{FAMSPercentDaily = ""}
-      } 
+      } else{  FAMSQuantity = ""; FAMSUnit =  "";}
 
       //Polyunsaturated Fat     
       if (typeof data.totalNutrients.FAPU  !== 'undefined'  &&  data.totalNutrients.FAPU   !== null)
@@ -513,7 +513,7 @@ console.log(data);
   
       if (typeof data.totalDaily.FAPU !== 'undefined' && data.totalDaily.FAPU  !== null)
       {FAPUPercentDaily = Math.round(data.totalDaily.FAPU.quantity) ;}  else{FAPUPercentDaily = ""}
-      } 
+      } else{  FAPUQuantity = ""; FAPUUnit =  "";}
 
       //Carbs
       if (typeof data.totalNutrients.CHOCDF  !== 'undefined'  &&  data.totalNutrients.CHOCDF   !== null)
@@ -521,7 +521,7 @@ console.log(data);
      
       if (typeof data.totalDaily.CHOCDF !== 'undefined' && data.totalDaily.CHOCDF  !== null)
       {CHOCDFPercentDaily = Math.round(data.totalDaily.CHOCDF.quantity) ;}  else{CHOCDFPercentDaily = ""}
-      } 
+      } else{  CHOCDFQuantity = ""; CHOCDFUnit =  "";}
 
         //Sugar
        if (typeof data.totalNutrients.SUGAR  !== 'undefined' &&  data.totalNutrients.SUGAR   !== null)
@@ -529,7 +529,7 @@ console.log(data);
      
         if (typeof data.totalDaily.SUGAR !== 'undefined' && data.totalDaily.SUGAR  !== null)
         {SUGARPercentDaily = Math.round(data.totalDaily.SUGAR.quantity) ;}  else{SUGARPercentDaily = ""}
-        } 
+        } else{  SUGARQuantity = ""; SUGARUnit =  "";}
 
         //Fiber
         if (typeof data.totalNutrients.FIBTG  !== 'undefined'  &&  data.totalNutrients.FIBTG   !== null)
@@ -537,7 +537,7 @@ console.log(data);
        
         if (typeof data.totalDaily.FIBTG !== 'undefined' && data.totalDaily.FIBTG  !== null)
         {FIBTGPercentDaily = Math.round(data.totalDaily.FIBTG.quantity) ;}  else{FIBTGPercentDaily = ""}
-        } 
+        } else{  FIBTGQuantity = ""; FIBTGUnit =  "";}
 
         //Protein
         if (typeof data.totalNutrients.PROCNT  !== 'undefined'  &&  data.totalNutrients.PROCNT   !== null)
@@ -545,7 +545,7 @@ console.log(data);
       
         if (typeof data.totalDaily.PROCNT !== 'undefined' && data.totalDaily.PROCNT  !== null)
         {PROCNTPercentDaily = Math.round(data.totalDaily.PROCNT.quantity) ;}  else{PROCNTPercentDaily = ""}
-        } 
+        } else{  PROCNTQuantity = ""; PROCNTUnit =  "";}
 
         //Cholestrol  
         if (typeof data.totalNutrients.CHOLE  !== 'undefined'  &&  data.totalNutrients.CHOLE   !== null)
@@ -553,7 +553,7 @@ console.log(data);
    
         if (typeof data.totalDaily.CHOLE !== 'undefined' && data.totalDaily.CHOLE  !== null)
         {CHOLEPercentDaily = Math.round(data.totalDaily.CHOLE.quantity) ;}  else{CHOLEPercentDaily = ""}
-        } 
+        } else{  CHOLEQuantity = ""; CHOLEUnit =  "";}
 
         //Sodium
         if (typeof data.totalNutrients.NA  !== 'undefined'  &&  data.totalNutrients.NA   !== null)
@@ -561,7 +561,7 @@ console.log(data);
      
         if (typeof data.totalDaily.NA !== 'undefined' && data.totalDaily.NA  !== null)
         {NAPercentDaily = Math.round(data.totalDaily.NA.quantity) ;}  else{NAPercentDaily = ""}
-        } 
+        } else{  NAQuantity = ""; NAUnit =  "";}
 
         //Calcium
         if (typeof data.totalNutrients.CA  !== 'undefined'  &&  data.totalNutrients.CA   !== null)
@@ -569,7 +569,7 @@ console.log(data);
         CAUnit =  "mg";
         if (typeof data.totalDaily.CA !== 'undefined' && data.totalDaily.CA  !== null)
         {CAPercentDaily = Math.round(data.totalDaily.CA.quantity) ;}  else{CAPercentDaily = ""}
-        }   
+        }   else{  CAQuantity = ""; CAUnit =  "";}
 
         //Iron
         if (typeof data.totalNutrients.FE  !== 'undefined'  &&  data.totalNutrients.FE   !== null)
@@ -577,7 +577,7 @@ console.log(data);
         FEUnit =  "mg";
         if (typeof data.totalDaily.FE !== 'undefined' && data.totalDaily.FE  !== null)
         {FEPercentDaily = Math.round(data.totalDaily.FE.quantity) ;} else{FEPercentDaily = ""}
-        } 
+        } else{  FEQuantity = ""; FEUnit =  "";}
 
         //Vitamin C
         if (typeof data.totalNutrients.VITC  !== 'undefined'  &&  data.totalNutrients.VITC   !== null)
@@ -586,7 +586,7 @@ console.log(data);
         VITCUnit =  "mg";
         if (typeof data.totalDaily.VITC !== 'undefined' && data.totalDaily.VITC  !== null)
         {VITCPercentDaily = Math.round(data.totalDaily.VITC.quantity) ;}  else{VITCPercentDaily = ""}
-        } 
+        } else{  VITCQuantity = ""; VITCUnit =  "";}
 
         //Vitamin D
         if (typeof data.totalNutrients.VITD  !== 'undefined'  &&  data.totalNutrients.VITD   !== null)
@@ -595,7 +595,7 @@ console.log(data);
         VITDUnit =  "mg";
         if (typeof data.totalDaily.VITD !== 'undefined' && data.totalDaily.VITD  !== null)
         {VITDPercentDaily = Math.round(data.totalDaily.VITD.quantity) ;}  else{VITDPercentDaily = ""}
-        } 
+        } else{  VITDQuantity = ""; VITDUnit =  "";}
 
         //Vitamin K
         if (typeof data.totalNutrients.VITK1  !== 'undefined'  &&  data.totalNutrients.VITK1   !== null)
@@ -604,7 +604,7 @@ console.log(data);
         VITKUnit =  "mg";
         if (typeof data.totalDaily.VITK1 !== 'undefined' && data.totalDaily.VITK1  !== null)
         {VITKPercentDaily = Math.round(data.totalDaily.VITK1.quantity) ;}  else{VITKPercentDaily = ""}
-        } 
+        } else{  VITKQuantity = ""; VITKUnit =  "";}
 
         //Vitamin B12
         if (typeof data.totalNutrients.VITB12  !== 'undefined'  &&  data.totalNutrients.VITB12   !== null)
@@ -613,7 +613,7 @@ console.log(data);
           VITB12Unit =  data.totalNutrients.VITB12.unit;
         if (typeof data.totalDaily.VITB12 !== 'undefined' && data.totalDaily.VITB12  !== null)
         {VITKPercentDaily = Math.round(data.totalDaily.VITB12.quantity) ;}  else{VITKPercentDaily = ""}
-        } 
+        } else{  VITB12Quantity = ""; VITB12Unit =  "";}
 
         //Vitamin B6
         if (typeof data.totalNutrients.VITB6A  !== 'undefined'  &&  data.totalNutrients.VITB6A   !== null)
@@ -622,7 +622,7 @@ console.log(data);
           VITB6Unit =  data.totalNutrients.VITB6A.unit;
         if (typeof data.totalDaily.VITB6A !== 'undefined' && data.totalDaily.VITB6A  !== null)
         {VITB6PercentDaily = Math.round(data.totalDaily.VITB6A.quantity) ;}  else{VITB6PercentDaily = ""}
-        } 
+        } else{  VITB6Quantity = ""; VITB6Unit =  "";}
 
         //VITA_RAE
         if (typeof data.totalNutrients.VITA_RAE  !== 'undefined'  &&  data.totalNutrients.VITA_RAE   !== null)
@@ -631,7 +631,7 @@ console.log(data);
         VITA_RAEUnit =  data.totalNutrients.VITA_RAE.unit;
         if (typeof data.totalDaily.VITA_RAE !== 'undefined' && data.totalDaily.VITA_RAE  !== null)
         {VITA_RAEPercentDaily = Math.round(data.totalDaily.VITA_RAE.quantity) ;}  else{VITA_RAEPercentDaily = ""}
-        } 
+        } else{  VITA_RAEQuantity = ""; VITA_RAEUnit =  "";}
 
 
   } 
@@ -651,59 +651,53 @@ nutritionalTable.attr("id","nutitritionTable")
 tableBody = $("<tbody>")
 
 //Calorie Display
-calDisplay=   $("<tr>").html('<th>  Calories: ' + calories+ '</th>' );  
-calDisplay.attr("id","calDisplay");
+calDisplay=   $("<tr>").html('<th id="calDisplay">  Calories: ' + calories+ '</th>' + 
+'<td id="dailyPercentage"> % Daily Value </td>' );  
 
-
-//Number of Servings Display 
-
-//Daily Percent Display
-dailyPercentage = $("<tr>").html( '"<td id="yieldDisplay">'+'*Servings per container: ' + servings + '</td><td>% Daily Value </td>');
-dailyPercentage.attr("id","dailyPercentage");
 
 //Append Calories, Servings and DailyPercent headers 
-tableHead.append(calDisplay,dailyPercentage)
+tableHead.append(calDisplay)
 
 
 //Display Total Fat 
-fatDisplay =  $('<tbody>').html('<tr class="maininfo">'+'<th scope="col">' + fatLabel + ' ' + fatQuantity + fatUnit +
+fatDisplay =  $('<tbody>').html('<tr class="maininfo">'+'<th scope="col">' + fatLabel + ' ' + fatQuantity+ ' ' + fatUnit +
 ' <i class="fa fa-plus clickable"  id="icon1" data-toggle="collapse" data-target="#group-of-rows-1"></i>' +'</th> <td class="percentage"> '   + fatPercentDaily +'%'+ '</td>');
 
 //Fat subs
-FASATDisplay =  $("<tr>").html(' <th scope="col" class="subinfo">' + FASATLabel + ' ' + FASATQuantity + FASATUnit +'</th> <td class="percentage"> ' + FASATPercentDaily +'%'+ '</td>');
-FATRNDisplay =  $("<tr>").html(' <th scope="col" class="subinfo">' + FATRNLabel + ' ' + FATRNQuantity + FATRNUnit +'</th> <td class="percentage"> '   + FATRNPercentDaily +'%'+ '</td>');
-FAMSDisplay =  $("<tr>").html(' <th scope="col" class="subinfo">' + FAMSLabel + ' ' + FAMSQuantity + FAMSUnit +'</th> <td class="percentage"> '   + FAMSPercentDaily +'%'+ '</td>');
-FAPUDisplay =  $("<tr>").html(' <th scope="col" class="subinfo">' + FAPULabel + ' ' + FAPUQuantity + FAPUUnit +'</th> <td class="percentage"> '   + FAPUPercentDaily +'%'+ '</td>');
+FASATDisplay =  $("<tr>").html(' <th scope="col" class="subinfo">' + FASATLabel + ' ' + FASATQuantity+ ' ' + FASATUnit +'</th> <td class="percentage"> ' + FASATPercentDaily +'%'+ '</td>');
+FATRNDisplay =  $("<tr>").html(' <th scope="col" class="subinfo">' + FATRNLabel + ' ' + FATRNQuantity+ ' ' + FATRNUnit +'</th> <td class="percentage"> '   + FATRNPercentDaily +'%'+ '</td>');
+FAMSDisplay =  $("<tr>").html(' <th scope="col" class="subinfo">' + FAMSLabel + ' ' + FAMSQuantity+ ' ' + FAMSUnit +'</th> <td class="percentage"> '   + FAMSPercentDaily +'%'+ '</td>');
+FAPUDisplay =  $("<tr>").html(' <th scope="col" class="subinfo">' + FAPULabel + ' ' + FAPUQuantity+ ' ' + FAPUUnit +'</th> <td class="percentage"> '   + FAPUPercentDaily +'%'+ '</td>');
 ////Make the field collapsible
 FatSubsDisplay = $("<tbody>").attr("id",'group-of-rows-1').addClass("collapse").append(FASATDisplay,FATRNDisplay,FAMSDisplay ,FAPUDisplay)
 
 //Display Total Carbs
-CHOCDFDisplay =  $('<tbody>').html('<tr class="maininfo">'+'<th scope="col">' + CHOCDFLabel + ' ' + CHOCDFQuantity + CHOCDFUnit+ 
+CHOCDFDisplay =  $('<tbody>').html('<tr class="maininfo">'+'<th scope="col">' + CHOCDFLabel + ' ' + CHOCDFQuantity+ ' ' + CHOCDFUnit+ 
 ' <i class="fa fa-plus clickable" data-toggle="collapse" data-target="#group-of-rows-2"  id="icon2"></i>' +'</th> <td class="percentage"> ' + CHOCDFPercentDaily +'%'+ '</td>');
 
 //carbs subs
-SUGARDisplay =  $("<tr>").html(' <th scope="col" class="subinfo">' + SUGARLabel + ' ' + SUGARQuantity + SUGARUnit +'</th> <td class="percentage"> '   + SUGARPercentDaily +'%'+ '</td>');
-FIBTGDisplay =  $("<tr>").html(' <th scope="col" class="subinfo">' + FIBTGLabel + ' ' + FIBTGQuantity + FIBTGUnit +'</th> <td class="percentage"> '   + FIBTGPercentDaily +'%'+ '</td>');  
+SUGARDisplay =  $("<tr>").html(' <th scope="col" class="subinfo">' + SUGARLabel + ' ' + SUGARQuantity+ ' ' + SUGARUnit +'</th> <td class="percentage"> '   + SUGARPercentDaily +'%'+ '</td>');
+FIBTGDisplay =  $("<tr>").html(' <th scope="col" class="subinfo">' + FIBTGLabel + ' ' + FIBTGQuantity+ ' ' + FIBTGUnit +'</th> <td class="percentage"> '   + FIBTGPercentDaily +'%'+ '</td>');  
 //Make the field collapsible
 CHOCDFSubsDisplay = $("<tbody>").attr("id",'group-of-rows-2').addClass("collapse").append(SUGARDisplay,FIBTGDisplay)
 
 
-CHOLEDisplay =  $("<tr>").html('<th scope="col">  ' + CHOLELabel + ' ' + CHOLEQuantity + CHOLEUnit +'</th> <td class="percentage"> '  + CHOLEPercentDaily +'%'+ '</td>').addClass("maininfo");
-PROCNTDisplay =  $("<tr>").html('<th scope="col">' + PROCNTLabel + ' ' + PROCNTQuantity + PROCNTUnit +'</th> <td class="percentage"> '  + PROCNTPercentDaily +'%'+ '</td>').addClass("maininfo");
+CHOLEDisplay =  $("<tr>").html('<th scope="col">  ' + CHOLELabel + ' ' + CHOLEQuantity+ ' ' + CHOLEUnit +'</th> <td class="percentage"> '  + CHOLEPercentDaily +'%'+ '</td>').addClass("maininfo");
+PROCNTDisplay =  $("<tr>").html('<th scope="col">' + PROCNTLabel + ' ' + PROCNTQuantity+ ' ' + PROCNTUnit +'</th> <td class="percentage"> '  + PROCNTPercentDaily +'%'+ '</td>').addClass("maininfo");
 
-NADisplay =  $("<tr>").html('<th scope="col">  ' + NALabel + ' ' + NAQuantity + NAUnit +'</th> <td class="percentage"> '  + NAPercentDaily +'%'+ '</td>').addClass("maininfo");
-CADisplay =  $("<tr>").html('<th scope="col" class="main">' + CALabel + ' ' + CAQuantity + CAUnit +'</th> <td class="percentage"> '  + CAPercentDaily +'%'+ '</td>');
-FEDisplay =  $("<tr>").html('<th scope="col" class="maininfo">' + FELabel + ' ' + FEQuantity + FEUnit +'</th> <td class="percentage"> ' + FEPercentDaily +'%'+ '</td>');  
+NADisplay =  $("<tr>").html('<th scope="col">  ' + NALabel + ' ' + NAQuantity + NAUnit+ ' ' +'</th> <td class="percentage"> '  + NAPercentDaily +'%'+ '</td>').addClass("maininfo");
+CADisplay =  $("<tr>").html('<th scope="col" class="main">' + CALabel + ' ' + CAQuantity+ ' ' + CAUnit +'</th> <td class="percentage"> '  + CAPercentDaily +'%'+ '</td>');
+FEDisplay =  $("<tr>").html('<th scope="col" class="maininfo">' + FELabel + ' ' + FEQuantity+ ' ' + FEUnit +'</th> <td class="percentage"> ' + FEPercentDaily +'%'+ '</td>');  
 
 vitDisplay =  $('<tbody>').html('<tr class="maininfo"> <th scope="col"> Vitamins'+ 
 ' <i class="fa fa-plus clickable" data-toggle="collapse" data-target="#group-of-rows-3"  id="icon3"></i>'+'</th> <td class="percentage"> </td>')
 
-  VITCDisplay =  $("<tr>").html('<th scope="col" class="subinfo">' + VITCLabel + ' ' + VITCQuantity + VITCUnit +'</th> <td class="percentage"> '+ VITCPercentDaily +'%'+ '</td>');
-  VITA_RAEDisplay =  $("<tr>").html('<th scope="col" class="subinfo">' + VITA_RAELabel + ' ' + VITA_RAEQuantity + VITA_RAEUnit +'</th> <td class="percentage"> ' + VITA_RAEPercentDaily +'%'+ '</td>');
-  VITDDisplay =  $("<tr>").html('<th scope="col" class="subinfo">' + VITDLabel + ' ' + VITDQuantity + VITDUnit +'</th> <td class="percentage"> ' + VITDPercentDaily +'%'+ '</td>');
-  VITKDisplay =  $("<tr>").html('<th scope="col" class="subinfo">' + VITKLabel + ' ' + VITKQuantity + VITKUnit +'</th> <td class="percentage"> ' + VITKPercentDaily +'%'+ '</td>');
-  VITB12Display =  $("<tr>").html('<th scope="col" class="subinfo">' + VITB12Label + ' ' + VITB12Quantity + VITB12Unit +'</th> <td class="percentage"> ' + VITB12PercentDaily +'%'+ '</td>');
-  VITB6Display =  $("<tr>").html('<th scope="col" class="subinfo">' + VITB6Label + ' ' + VITB6Quantity + VITB6Unit +'</th> <td class="percentage"> ' + VITB6PercentDaily +'%'+ '</td>');
+  VITCDisplay =  $("<tr>").html('<th scope="col" class="subinfo">' + VITCLabel + ' ' + VITCQuantity+ ' ' + VITCUnit +'</th> <td class="percentage"> '+ VITCPercentDaily +'%'+ '</td>');
+  VITA_RAEDisplay =  $("<tr>").html('<th scope="col" class="subinfo">' + VITA_RAELabel + ' ' + VITA_RAEQuantity+ ' ' + VITA_RAEUnit +'</th> <td class="percentage"> ' + VITA_RAEPercentDaily +'%'+ '</td>');
+  VITDDisplay =  $("<tr>").html('<th scope="col" class="subinfo">' + VITDLabel + ' ' + VITDQuantity + ' '+ VITDUnit +'</th> <td class="percentage"> ' + VITDPercentDaily +'%'+ '</td>');
+  VITKDisplay =  $("<tr>").html('<th scope="col" class="subinfo">' + VITKLabel + ' ' + VITKQuantity + ' '+ VITKUnit +'</th> <td class="percentage"> ' + VITKPercentDaily +'%'+ '</td>');
+  VITB12Display =  $("<tr>").html('<th scope="col" class="subinfo">' + VITB12Label + ' ' + VITB12Quantity + ' '+ VITB12Unit +'</th> <td class="percentage"> ' + VITB12PercentDaily +'%'+ '</td>');
+  VITB6Display =  $("<tr>").html('<th scope="col" class="subinfo">' + VITB6Label + ' ' + VITB6Quantity + ' '+ VITB6Unit +'</th> <td class="percentage"> ' + VITB6PercentDaily +'%'+ '</td>');
   
   
   vitSubsDisplay = $("<tbody>").attr("id",'group-of-rows-3').addClass("collapse").append(VITCDisplay,VITA_RAEDisplay,VITDDisplay, VITKDisplay,VITB12Display,VITB6Display)
@@ -723,6 +717,11 @@ vitDisplay =  $('<tbody>').html('<tr class="maininfo"> <th scope="col"> Vitamins
 $(document).on("click", ".clickable", changeIcon);
 
 function changeIcon(){
-if( $(this).hasClass("fa-plus") ){  $(this).addClass("fa-minus").removeClass("fa-plus") }
-else{$(this).addClass("fa-plus").removeClass("fa-minus") }
+if( $(this).hasClass("fa-plus") )
+{   $(this).addClass("fa-minus").removeClass("fa-plus");   
+    $(this).parent().parent().addClass("expanded");
+}
+else{$(this).addClass("fa-plus").removeClass("fa-minus") 
+$(this).parent().parent().removeClass("expanded");
+}
 }
