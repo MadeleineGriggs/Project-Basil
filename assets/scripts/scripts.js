@@ -31,6 +31,8 @@
 // When the user clicks to see their favourited recipes, this function runs to retreive that information from firebase.
 $(document).on("click", "#fav-recipe-img-button, #fav-recipe-nav-btn", function(){
   event.preventDefault();
+  $("#recipe-search-wrapper").empty();
+  $(".recipe-search-container").removeClass("hidden");
   $('html, body').animate({
     scrollTop: $("#recipe-search-display").offset().top
 }, 800);
