@@ -568,7 +568,7 @@ function displayNutrition (data) {
 
         //Sodium
         if (typeof data.totalNutrients.NA  !== 'undefined'  &&  data.totalNutrients.NA   !== null)
-        {      NAQuantity = Math.round(data.totalNutrients.FAPU.quantity ) ;
+        {      NAQuantity = Math.round(data.totalNutrients.NA.quantity ) ;
      
         if (typeof data.totalDaily.NA !== 'undefined' && data.totalDaily.NA  !== null)
         {NAPercentDaily = Math.round(data.totalDaily.NA.quantity) ;}  else{NAPercentDaily = ""}
