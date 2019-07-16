@@ -134,7 +134,7 @@ currentUser.on("value", function(snapshot){
 //   Food2Fork API Key (Main): 6c25094e2b7ba0e57995415ce749ed94
 //   Second Test API Key: b11d8301b0ecfac319569f557e520e48
 
-var key = "2fe943e19f2274574012873be158e1e3"
+var key = "6c25094e2b7ba0e57995415ce749ed94"
 
 // Food2Fork Search API Call
 function retreiveRecipes() {
@@ -375,8 +375,8 @@ $(window).scroll(function() {
     ingr: recipeIngredients
   }; 
 
-  var appID  = '2c72283c';
-  var appkey  = '4930a8654583355204b5c2c1e7a61d18';
+  var appID  = '55f79d81';
+  var appkey  = '6b0c595eec78fc4a346020bfab1ecafa';
   
   
   var  url = 'https://api.edamam.com/api/nutrition-details?app_id=' + appID +'&app_key=' +appkey ;  
