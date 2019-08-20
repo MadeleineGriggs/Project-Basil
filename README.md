@@ -1,7 +1,7 @@
 
 
 # Basil Book
-A modern recipe box for the health conscious home cook. [Try it Here](https://typicu.github.io/Project-Basil/)
+A modern recipe box for the health conscious home cook. [Try it Here](https://madeleinegriggs.github.io/Project-Basil/)
 
 ## Authors
 Saba Khan, Madeleine Griggs, Phil Blanchard
